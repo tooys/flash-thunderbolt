@@ -1,4 +1,4 @@
-import mx.utils.ClassFinder;
+
 import flash.external.ExternalInterface;
 /**
  * @author Manfred Weber - http://manfred.dschini.org
@@ -29,7 +29,7 @@ class ThunderBolt {
 				getURL('javascript:console.info("Thunderbolt enabled")');
 			}
 		
-			ThunderBolt.initialized = true;	
+			ThunderBolt.initialized = true;
 		}
 		
 		if (ThunderBolt.firebugEnabled){
@@ -47,9 +47,8 @@ class ThunderBolt {
 			
 			var time:String = date.toString().split(" ")[3];
 			
-			var out:String = ThunderBolt.stringify(traceObject);
-			
 			var logInfo:String = "{" +
+				"thunderbolt:'" + "                                              '," +  
 				"description:'" + fullClassWithMethodName + "[" + lineNumber + "] : " + objectType + " @ " + time + "'," +  
 				"method:'"		+ methodName	+ "'," +
 				"line:'"		+ lineNumber	+ "'," +
@@ -59,8 +58,41 @@ class ThunderBolt {
 				"file:'" 		+ fileName 		+ "'," +
 				"toString:"		+ "function(){return '" + className + "." + methodName + "'}" +
 				"}";
+
+			var console:String = "log";
+
+			if (objectType == "string" && traceObject.charAt(1) == " ") {
 				
-			ThunderBolt.callFirebug(ThunderBolt.getFirebugMethod(String(traceObject)), logInfo, out);
+				switch (traceObject.charAt(0).toLowerCase()) {
+				
+					case "d": console = "log";		break;
+					case "i": console = "info";		break;
+					case "w": console = "warn";		break;
+					case "e": console = "error";	break;
+					case "f": console = "error";	break;
+				}
+				
+				traceObject = String(traceObject).slice(2);
+			}
+			
+			var out:String = ThunderBolt.stringify(traceObject);
+			
+			if (objectType == "movieclip"){
+			
+				var subMovieClips:Array = new Array();
+				
+				for (var all in traceObject){
+				
+					var mc:MovieClip = MovieClip(traceObject[all]);
+					
+					subMovieClips.push(mc._name);	
+				}
+				
+				out = "{childs:" + ThunderBolt.stringify(subMovieClips)+ ",toString:function(){return '[movieclip | " + traceObject._name + "]'}}";
+				
+			}
+				
+			ThunderBolt.callFirebug(console, logInfo, out);
 		}
 	}
 	
@@ -69,26 +101,12 @@ class ThunderBolt {
 		getURL('javascript:console.' + method + '(' + infoObject + ',":",' + traceObject + ')');	
 	}
 	
-	private static function getFirebugMethod(traceObject:String):String{
-	
-		if (traceObject.charAt(1) != " ") {
-		
-			return "log";
-				
-		} else {
-			
-			switch (traceObject.charAt(0)) {
-			
-				case "d": return "log";
-				case "i": return "info";
-				case "w": return "warn";
-				case "e": return "error";
-				case "f": return "fatal";
-				
-				default: return "log";
-			}
-		}
+	public static function get enabled(Void):Boolean{
+
+		return ExternalInterface.call("function(){ return console && console.firebug}", true) > 1;
 	}
+	
+
 	
 	/**
 	 * Transform an actionscript object to a JSON string

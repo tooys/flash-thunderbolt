@@ -1,0 +1,68 @@
+ThunderBolt
+===========
+  _____ _             _         ___       _ _   
+ \_  __\ \_ _ _ ___ _| |___ ___\ _ \  ___/ / /_ 
+   | | |   | | |   | . | -_|  _| __ -| . | |  _|
+   |_| |_|_|___|_|_|___|___|_| |_____|___|_|__| 
+
+
+Debug your ActionScript projects in Firefox
+
+Project Home 
+============
+http://code.google.com/p/flash-thunderbolt/
+
+Labels
+======
+flash, firefox, debug, javascript
+
+
+Description
+===========
+By customizing the trace command of the MTASC compiler you now will be able to route 
+messages directly from your ActionScript classes to the well known Firebug console.
+
+Usage
+=====
+Simply add -trace ThunderBolt.trace to the MTASC command line arguments.
+
+
+Sample debug information
+=================
+description		my.package.MyClass::myMethod[123] : type @ 18:59:59
+file 			path/to/my/class/file.as
+fullClass 		my.package.MyClass
+line 			123
+method 			myMethod
+time 			18:59:59
+type 			string
+Log 			levels
+
+
+Debug Levels
+============
+By passing an extra literal to your trace actions, you can achieve multiple debug levels.
+
+d 	debug 		trace('d This is a simple debug message.');
+i 	info 		trace('i An info icon will appear next to this line.');
+w 	warning		trace('w This message is highlighted.');
+e 	error 		trace('e Red and highlited messages.)';
+
+... Gonna add more details about ant, fdt and future kewl stuff later...
+
+
+Subversion
+==========
+
+If you plan to make changes, use this command to check out the code as yourself using HTTPS:
+svn checkout https://flash-thunderbolt.googlecode.com/svn/trunk/ flash-thunderbolt --username kleppe
+
+When prompted, enter your generated googlecode.com password.
+
+Use this command to anonymously check out the latest project source code:
+
+# Non-members may check out a read-only working copy anonymously over HTTP.
+svn checkout http://flash-thunderbolt.googlecode.com/svn/trunk/ flash-thunderbolt
+
+
+Martin Kleppe - kleppe@gmail.com

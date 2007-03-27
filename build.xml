@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding="utf-8"?>
+<project name="ThunderBolt" default="run" basedir=".">
+	<description>
+		ThunderBolt Sample Main Build File
+	</description>
+	
+	
+	<!-- 
+		global properties "mtasc", firefox and "flash.classpath" need to be set up as global 
+		ant parameters eclipse > window > preferences > ant > runtime > properties  
+	-->
+
+	<property name="sample.classpath" 		value=".\sample\src\" /> 
+	<property name="deploy.folder" 			value=".\sample\dist\" />
+
+	<property name="thunderbolt.classpath" 	value=".\src\" /> 
+
+	<property name="targethtml" 			value="thunderbolt.html"/>
+
+	
+	<target name="deploy" description="compile a sub swf">
+		
+		<property name="targetswf" 			value="thunderbolt.swf"/>
+		<property name="mainclass" 			value="Sample.as" />	
+						
+		<exec executable="${mtasc}" failonerror="true">
+
+			<arg value="-cp"/>
+			<arg value="${sample.classpath}"/>
+
+			<arg value="-cp"/>
+			<arg value="${flash.classpath}"/>			
+			
+			<arg value="-version"/>
+			<arg value="8"/>
+			
+			<!-- add thunderbolt trace classes -->
+			<arg value="-cp"/>
+			<arg value="${thunderbolt.classpath}"/>
+			
+			<arg value="-trace"/>
+			<arg value="ThunderBolt.trace"/>
+			
+			<!-- set output file -->
+			<arg value="-swf"/>
+			<arg value="${deploy.folder}\${targetswf}"/>
+
+			<!-- create a new swf of size 400x200 at 25 fps -->
+			<arg value="-header"/>
+			<arg value="400:200:25"/>
+			
+			<!-- use precompiled MX classes -->
+			<arg value="-mx"/>
+
+			<!-- call main entry point -->
+			<arg value="-main"/>
+				
+			<arg value="${mainclass}"/>
+		
+		</exec>
+		
+	</target>
+	
+	<target name="run" depends="deploy" description="Open Firefox">
+
+		<exec executable="${firefox}" spawn="true">
+			<arg value="${deploy.folder}\${targethtml}"/>
+		</exec> 
+		
+	</target>
+			
+</project>
