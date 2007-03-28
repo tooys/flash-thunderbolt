@@ -1,0 +1,52 @@
+#summary Planned features and ideas.
+#labels Featured
+
+= Ideas =
+
+Using Firebug we could also execute JavaScript statements communicating with the embedded Flash movie. This would allow us to manipulate the movie *while* it is playing. 
+
+We can access the movie by calling `document.flashMovieName.thunderboltCommunication`. For that purpose an [http://www.adobe.com/devnet/flash/articles/external_interface_06.html ExternalInterface] needs to be set up:
+
+`ExternalInterface.addCallback(methodName:String, instance:Object,method:Function);`
+
+eg: `ExternalInterface.addCallback("thunderboltCommunication", ThunderBolt, ThunderBolt.handleCom);`
+
+I'm thinking about statements like:
+
+{{{
+TB.dir("_root");
+// Returns interactive hierarchical Movieclip structure
+// >> [{main: ["background", content:{"title", "copy", "button"}, "logo"]
+}}}
+{{{
+TB.inpect("_root.logo");
+// >> {_x:20,_y:10,_width:100,_height:40,customProperty:"customValue"]
+}}}
+{{{
+TB.keys("_root.logo");
+// Returns an array containing the names of all properties of the object.
+// >> ["_x", "_y", "_width", "_height", "customProperty"]
+}}}
+{{{
+TB.values("_root.logo");
+// Returns an array containing the values of all properties of the object.
+// >> [20, 10, 100, 40, "customValue"]
+}}}
+{{{
+TB.set("_root.logo", "_x", 200); 
+// Overrides an object attribute with the given value
+}}}
+{{{
+TB.profile("_root.content", "render"); 
+// Profiles the given method
+// >> execution of _root.content.render() tooks 123ms
+}}}
+{{{
+TB.profile("_root.content", "render"); 
+// Stop profiling the given method
+}}}
+
+( inspired by the [http://www.getfirebug.com/commandline.html Firebug command line options ])
+
+
+
