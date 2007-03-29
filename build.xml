@@ -44,10 +44,6 @@
 			<!-- set output file -->
 			<arg value="-swf"/>
 			<arg value="${deploy.folder}\${targetswf}"/>
-
-			<!-- create a new swf of size 400x200 at 25 fps -->
-			<arg value="-header"/>
-			<arg value="400:200:25"/>
 			
 			<!-- use precompiled MX classes -->
 			<arg value="-mx"/>
