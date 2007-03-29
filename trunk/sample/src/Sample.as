@@ -28,7 +28,7 @@ class Sample {
 		
 		link.onRelease = function(){
 			
-			getURL(this.text, "_blank");
+			getURL("http://code.google.com/p/flash-thunderbolt/", "_blank");
 		}
 		
 		var infoText:TextField = _root.main.infoText;
