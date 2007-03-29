@@ -8,6 +8,7 @@ class Sample {
 	private static var classes:Array = [ThunderBolt];
 
 	public static var APP:Sample;
+	
 
 	// entry point
 	public static function main(mc:MovieClip):Void {
@@ -15,29 +16,50 @@ class Sample {
 	}
 	
 	function Sample() {
+		
+		trace("Sample Class initialized");
+		
 		this.init();
 	}
 	
 	private function init():Void{
 		
-		// Generate some visual output
-		var tf:TextField = _root.createTextField("tf",0,0,0,400,200);
-		tf.text = "Open your firebug console to see the thunderbold traces!";
+		var link:TextField = _root.main.head.link;
 		
-
+		link.onRelease = function(){
+			
+			getURL(this.text, "_blank");
+		}
+		
+		var infoText:TextField = _root.main.infoText;
+		
 		//check if firebug is enabled
-		
 		if (!ThunderBolt.enabled){
 			
-			tf.html = true;
-			tf.htmlText = 'Please make sure <u><a href="http://www.getfirebug.com/" target="_blank">Firebug</a></u> is enabled!';
+			infoText.htmlText = 'Please make sure <u><a href="http://www.getfirebug.com/" target="_blank">Firebug</a></u> is enabled!';
+			
+		} else {
+			
+			infoText.text = "Open your FireBug console to see the ThunderBolt traces!";		
 		}
+			
+		trace("Firebug is enabled: " + ThunderBolt.enabled);
+		
+		this.testTraceLevel();
+		this.testObjectTypes();
+		
+	}
+	
+	private function testTraceLevel():Void{
 		
 		// simple traces
 		trace("d This is a simple debug message.");
 		trace("i An info icon will appear next to this line.");
 		trace("w This warning message is highlighted.");
-		trace("e Red and highlited error message.");
+		trace("e Red and highlited error message.");		
+	}
+	
+	private function testObjectTypes():Void{
 		
 		// trace undefined
 		var unknown;
@@ -64,12 +86,8 @@ class Sample {
 		
 		
 		// movieclip trace
-		
-		var mc1:MovieClip = _root.createEmptyMovieClip("mc1", 1);
-		var mc2:MovieClip = mc1.createEmptyMovieClip("mc2",1);
-		
-		trace(mc1);
-		
+		trace(_root);
+		trace(_root.main);			
 	}
 
 
