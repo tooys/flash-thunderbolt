@@ -18,7 +18,6 @@ class Sample {
 	function Sample() {
 		
 		trace("Sample Class initialized");
-		
 		this.init();
 	}
 	
@@ -34,16 +33,18 @@ class Sample {
 		var infoText:TextField = _root.main.infoText;
 		
 		//check if firebug is enabled
-		if (!ThunderBolt.enabled){
+		if (ThunderBolt.firebug){
 			
-			infoText.htmlText = 'Please make sure <u><a href="http://www.getfirebug.com/" target="_blank">Firebug</a></u> is enabled!';
+			infoText.text = "Open your FireBug console to see the ThunderBolt traces.";							
+			
+			ThunderBolt.init();
 			
 		} else {
 			
-			infoText.text = "Open your FireBug console to see the ThunderBolt traces!";		
+			infoText.htmlText = 'Please make sure <u><a href="http://www.getfirebug.com/" target="_blank">Firebug</a></u> is enabled!';
 		}
 			
-		trace("Firebug is enabled: " + ThunderBolt.enabled);
+		trace("Firebug is enabled: " + ThunderBolt.firebug);
 		
 		this.testTraceLevel();
 		this.testObjectTypes();
@@ -62,11 +63,14 @@ class Sample {
 	private function testObjectTypes():Void{
 		
 		// trace undefined
-		var unknown;
+		var unknown:Object;
 		trace(unknown);
 		
+		// trace date
+		trace(new Date());
+		
 		// object trace
-		var obj:Object = {
+		trace({
 			a: "Hello",
 			b: "World",
 			c: {
@@ -76,17 +80,15 @@ class Sample {
 					g: "Are"
 				}
 			}	
-		};
-		
-		trace(obj);
+		});
 		
 		// array trace
-		var arr:Array = [1, "2", "three", "IV", "101", {six:"seven"}];
-		trace(arr);
+		trace([1, "2", "three", "IV", "101", {six:"seven"}]);
 		
-		
-		// movieclip trace
+		// trace movieclip
 		trace(_root);
+		
+		// trace root
 		trace(_root.main);			
 	}
 

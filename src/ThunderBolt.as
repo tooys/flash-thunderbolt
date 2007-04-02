@@ -10,51 +10,70 @@ import flash.external.ExternalInterface;
 class ThunderBolt {
 	
 	private static var initialized:Boolean = false;
-	private static var firebugEnabled:Boolean = false;
+	private static var _firebug:Object;
+	private static var externalInitialized:Boolean = false;
+	
+	public static function init():Void{
+		
+		if (!ThunderBolt.externalInitialized){
+		
+			ExternalInterface.addCallback("inspect", ThunderBolt, ThunderBolt.inspect);
+			ExternalInterface.addCallback("set", ThunderBolt, ThunderBolt.setAttribute);
+			ExternalInterface.addCallback("run", ThunderBolt, ThunderBolt.run);
+			getURL('javascript:console.info("Thunderbolt External Interface enabled")');			
+			
+		} else {
+			
+			ThunderBolt.externalInitialized = true;
+		}
+	}
 
 	public static function trace(traceObject:Object, fullClassWithMethodName:String, fileName:String, lineNumber:Number){
 	
+		var out:String;
+	
 		if (!ThunderBolt.initialized){
 			
-			var firebugVersion:Object = ExternalInterface.call("function(){ return console && console.firebug}", true);
-			
-			ThunderBolt.firebugEnabled = Number(firebugVersion) > 1;
-			
-			if (ThunderBolt.firebugEnabled){
+			// check if Fibebug is available
+			if (ThunderBolt.firebug){
 			
 				getURL('javascript:console.info("Thunderbolt enabled")');
 			}
-		
-			ThunderBolt.initialized = true;
 		}
 		
-		if (ThunderBolt.firebugEnabled){
+		// send traces to console only if Firebug is available
+		if (ThunderBolt.firebug){
 	
+			// replace all backslashes
 			fileName = fileName.split("\\").join("/");
 			
-			var classParts:Array = fullClassWithMethodName.split("::");
-			
-			var methodName:String = classParts[1];
-			var fullClass:String = classParts[0];
-			var className:String = String(fullClass.split(".").pop());
-			var objectType:String = typeof traceObject;
-			
-			var date:Date = new Date();
-			
-			var time:String = date.toString().split(" ")[3];
-			
-			var logInfo:String = "{" +
-				"thunderbolt:'" + "                                              '," +  
-				"description:'" + fullClassWithMethodName + "[" + lineNumber + "] : " + objectType + " @ " + time + "'," +  
-				"method:'"		+ methodName	+ "'," +
-				"line:'"		+ lineNumber	+ "'," +
-				"type:'"		+ objectType	+ "'," +
-				"time:'"		+ time			+ "'," +
-				"fullClass:'" 	+ fullClass 	+ "'," +
-				"file:'" 		+ fileName 		+ "'," +
-				"toString:"		+ "function(){return '" + className + "." + methodName + "'}" +
-				"}";
+			if (fullClassWithMethodName === undefined) {
+				
+				fullClassWithMethodName = "";
+			}
 
+			if (fileName === undefined) {
+				
+				fileName = "";
+			}
+
+			if (lineNumber === undefined) {
+				
+				lineNumber = 0;
+			}
+
+			
+			// retrieve information about current trace action
+			var classParts:Array = fullClassWithMethodName.split("::");
+			var methodName:String = classParts[1] || "anonymous";
+			var fullClass:String = classParts[0] || "" ;
+			var className:String = String(fullClass.split(".").pop()) || "Thunderbolt";
+			var objectType:String = typeof traceObject;
+					
+			var time:String = (new Date()).toString().split(" ")[3];
+			
+
+			// switch between console actions: log, info, warn, error
 			var console:String = "log";
 
 			if (objectType == "string" && traceObject.charAt(1) == " ") {
@@ -70,46 +89,121 @@ class ThunderBolt {
 				
 				traceObject = String(traceObject).slice(2);
 			}
-			
-			var out:String = JSON.stringify(traceObject);
-			
-			if (objectType == "movieclip"){
-			
-				out = traceMovieClip(MovieClip(traceObject));
-			}
+
+			if (traceObject == undefined){
 				
+				out = "undefined";
+				objectType = "undefined";
+				
+			} else if (traceObject instanceof Date){
+				
+				out = 'new Date(' + traceObject.valueOf() + ')';	
+				objectType = "date";
+				
+			} else if (traceObject instanceof MovieClip){
+				
+				out = traceMovieClip(MovieClip(traceObject));
+				
+			} else {
+			
+				if (objectType == "string"){
+					
+					out = '"' + String(traceObject).split('"').join('\\"') + '"';
+					
+				} else {
+					
+					out = JSON.stringify(traceObject);
+				}					
+			}
+			
+			var description:String = fullClassWithMethodName + "[" + lineNumber + "] : " + objectType + " @ " + time;
+			
+			// cunstruct info object
+			var logInfo:String = "{" +
+				"thunderbolt:'" + "                                              '," +  
+				"description:'" + description 	+ "'," +  
+				"method:'"		+ methodName	+ "'," +
+				"line:'"		+ lineNumber	+ "'," +
+				"type:'"		+ objectType	+ "'," +
+				"time:'"		+ time			+ "'," +
+				"fullClass:'" 	+ fullClass 	+ "'," +
+				"file:'" 		+ fileName 		+ "'," +
+				"toString:"		+ "function(){return '" + className + "." + methodName + "'}" +
+				"}";			
+			
+			// send trace to console
 			ThunderBolt.callFirebug(console, logInfo, out);
 		}
 	}
+		
+	private static function inspect(target:String):Void{
+		
+		var out = _global[target] || _root[target] || eval(target);
+		trace(out);	
+	}
+
+	private static function run(expression:String):Void{
+		
+		trace(eval(expression));
+	}
 	
+	private static function setAttribute(target:String, value:String):Void{
+		
+			
+		var parts = target.split(".");
+		
+		var property = parts.pop();
+		target = parts.join(".");
+
+		var object:Object = _global[target] || _root[target] || eval(target);
+		object[property] = value;
+		
+		trace(object);
+		
+	}	
+	
+	// convert movieclip structure to object
 	private static function traceMovieClip(target:MovieClip):String {
 		
-		var subMovieClips:Object = new Object();
+		var movieclip:Object = new Object();
 		
+		// get moviescript name
 		var name:String = target._name;
-		
+		 
 		if (target == _root) {
-		
+			
+			// set moviescript name to "_root"	
 			name = "_root";	
 		}
 		
-		for (var all in target){
+		for (var properties:Object in target){
 		
-			var mc:MovieClip = MovieClip(target[all]);	
-			subMovieClips[all] = target[all];	
+			// copy all properties
+			movieclip[properties] = target[properties];	
 		}
 		
-		return "{" + name + ":" + JSON.stringify(subMovieClips)+ ",toString:function(){return '[movieclip]'}}";
+		// return movieclip information
+		return "{" + name + ":" + JSON.stringify(movieclip)+ ", toString:function(){return '[movieclip]'}}";
 
 	}
 	
 	private static function callFirebug(method:String, infoObject:Object, traceObject:Object){
 		
+		// request javascript action
 		getURL('javascript:console.' + method + '(' + infoObject + ',":",' + traceObject + ')');	
 	}
 	
-	public static function get enabled(Void):Boolean{
+	public static function get firebug(Void):Object{
 
-		return ExternalInterface.call("function(){ return console && console.firebug}", true) > 1;
+		// get the firebug version via ExternalInterface
+		// at the first time it is requested
+		
+		if (!ThunderBolt.initialized){
+
+			ThunderBolt._firebug = ExternalInterface.call("function(){ return console && console.firebug}", true);
+			ThunderBolt.initialized = true;
+		}
+		
+		return ThunderBolt._firebug;
 	}
 }
