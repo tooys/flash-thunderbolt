@@ -4,7 +4,7 @@ import flash.external.ExternalInterface;
 
  * @author Martin Kleppe - http://labs.sumaato.net
  * @link http://code.google.com/p/flash-thunderbolt/
- * @version 0.1
+ * @version 0.03
  */
  
 class ThunderBolt {
