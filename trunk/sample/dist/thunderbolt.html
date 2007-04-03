@@ -3,35 +3,25 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<title>ThunderBolt - Flash debugging in Firefox - Sample App</title>
 	
-	<script type="text/javascript">
-		
-		var TB = {
-			
-			inspect: function(target){
-				
-				document.thunderbolt.inspect(target);
-			},
-			
-			run: function(expression){
-				
-				document.thunderbolt.run(expression);
-			},
-			
-			set: function(target, value){
-					
-				document.thunderbolt.set(target, value);
-			}
-		};
-		
-	</script>
+	<script type="text/javascript" src="thunderbolt.js"></script>
 	
 	<style type="text/css">
 		
-		#code_samples a{
+		#code_samples{
 			
 			font-family: "Courier New", Courier, monospace;
 			font-size: 12px;
+			color: #666666;
+		}
+
+		#code_samples a{
 			
+			text-decoration: none;
+			color: #000099;
+		}
+		#code_samples a:hover{
+			
+			text-decoration: underline;
 		}
 		
 	</style>
@@ -47,11 +37,11 @@
 		align="middle">
 			
 		<param name="allowScriptAccess" value="always" />
-		<param name="movie" value="thunderbolt.swf" />
+		<param name="movie" value="thunderbolt.swf?v=xxx" />
 		<param name="quality" value="high" />
 		<param name="bgcolor" value="#ffffff" />
 		
-		<embed src="thunderbolt.swf" 
+		<embed src="thunderbolt.swf?v=xxx" 
 			quality="high" 
 			bgcolor="#ffffff" 
 			width="400" 
@@ -62,13 +52,18 @@
 			type="application/x-shockwave-flash" 
 			pluginspage="http://www.macromedia.com/go/getflashplayer" />
 	</object>
-	
-	<div id="code_samples">
-		Try out these commands via you console:<br/>
-		<a href='javascript:TB.inspect("main")'>TB.inspect("main");</a><br/>
-		<a href='javascript:TB.inspect("main._width");'>TB.inspect("main._width");</a><br/>
-		<a href='javascript:TB.set("main.head._x", 20);'>TB.set("main.head._x", 20);</a><br/>
-		<a href='javascript:TB.set("main.infoText.text", "New message");'>TB.set("main.infoText.text", "New message");</a>
+	<div>
+		<h3>Try out these commands via you console:</h3>
+		<div id="code_samples">
+			
+			<a href='javascript:TB.inspect("_root.main")'>TB.inspect("_root.main");</a> // inspect movieclip _level0.main <br/>
+			<a href='javascript:TB.inspect("_root.main._width");'>TB.inspect("_root.main._width");</a> // element width: 380<br/>
+			<a href='javascript:TB.set("_root.main.head._x", 20);'>TB.set("_root.main.head._x", 20);</a> // set new position<br/>
+			<a href='javascript:TB.set("_root.main.infoText.text", "New message");'>TB.set("_root.main.infoText.text", "New message");</a> // change text<br/>
+			<a href='javascript:TB.cd("_root.main.head.logo");'>TB.cd("_root.main.head");</a> // set new context<br/>
+			<a href='javascript:TB.inspect("_y");'>TB.inspect("_y");</a> // y position of current content<br/>
+			<a href='javascript:TB.cd("..");'>TB.cd("..");</a> // select parent movieclip<br/>
+		</div>
 	</div>
 </body>
 </html>
