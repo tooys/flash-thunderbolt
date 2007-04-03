@@ -68,6 +68,9 @@ class Sample {
 		
 		// trace date
 		trace(new Date());
+
+		// array trace
+		trace([1, "2", "three", "IV", "101", {six:"seven"}]);
 		
 		// object trace
 		trace({
@@ -84,14 +87,14 @@ class Sample {
 		
 		trace("multi \nline \nmessage");
 		
-		// array trace
-		trace([1, "2", "three", "IV", "101", {six:"seven"}]);
-		
 		// trace movieclip
 		trace(_root);
 		
 		// trace root
 		trace(_root.main);			
+
+		trace(new XML("<parent><child id='first'>First Paragraph</child><child id='second'><subchild>Subchild text content</subchild></child></parent>"));
+
 	}
 
 

@@ -71,7 +71,6 @@ class ThunderBolt {
 			var objectType:String = typeof traceObject;
 					
 			var time:String = (new Date()).toString().split(" ")[3];
-			
 
 			// switch between console actions: log, info, warn, error
 			var console:String = "log";
@@ -104,6 +103,11 @@ class ThunderBolt {
 				
 				out = traceMovieClip(MovieClip(traceObject));
 				
+			} else if (traceObject instanceof XML){
+				
+				objectType = "xml";
+				out = '{xml:"' + traceObject.toString().split('"').join('\\"') + '", toString:function(){return "XML";}}';
+				
 			} else {
 			
 				if (objectType == "string"){
@@ -130,9 +134,15 @@ class ThunderBolt {
 				"file:'" 		+ fileName 		+ "'," +
 				"toString:"		+ "function(){return '" + className + "." + methodName + "'}" +
 				"}";			
-			
+						
 			// send trace to console
 			ThunderBolt.callFirebug(console, logInfo, out);
+			
+			if (objectType == "xml"){
+
+				ThunderBolt.traceXML(XML(traceObject));
+					
+			}
 		}
 	}
 		
@@ -161,6 +171,21 @@ class ThunderBolt {
 		trace(object);
 		
 	}	
+	
+	private static function traceXML(xml:XML){
+		
+		var out = xml.toString().split('"').join('\\"');
+		
+		getURL("javascript:console.group();");	
+	
+		getURL("javascript:" +
+			"var tbTempNode = document.createElement('xml');" +
+			"tbTempNode.innerHTML = \"" + out + "\";" +
+			"console.dirxml(tbTempNode.firstChild); "
+		);
+		
+		getURL("javascript:console.groupEnd();");				
+	}
 	
 	// convert movieclip structure to object
 	private static function traceMovieClip(target:MovieClip):String {
