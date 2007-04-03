@@ -189,8 +189,29 @@ class ThunderBolt {
 	
 	private static function callFirebug(method:String, infoObject:Object, traceObject:Object){
 		
-		// request javascript action
-		getURL('javascript:console.' + method + '(' + infoObject + ',":",' + traceObject + ')');	
+
+
+		if (typeof traceObject == "string" && traceObject.indexOf("\n") > -1 && method == "log") {
+			
+			getURL('javascript:console.log(' + infoObject + ',":");');
+			
+			getURL("javascript:console.group();");
+
+			var lines:Array = traceObject.slice(1,-1).split("\n");
+			
+			for (var i:Number = 0; i < lines.length; i++){
+				
+				getURL('javascript:console.log("' + lines[i] + '")');		
+			}
+
+			getURL("javascript:console.groupEnd();");
+			
+		} else {
+			
+			// request javascript action
+			getURL('javascript:console.' + method + '(' + infoObject + ',":",' + traceObject + ')');				
+		}
+
 	}
 	
 	public static function get firebug(Void):Object{

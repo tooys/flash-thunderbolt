@@ -82,6 +82,8 @@ class Sample {
 			}	
 		});
 		
+		trace("multi \nline \nmessage");
+		
 		// array trace
 		trace([1, "2", "three", "IV", "101", {six:"seven"}]);
 		
