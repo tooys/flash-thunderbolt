@@ -85,15 +85,20 @@ class Sample {
 			}	
 		});
 		
-		trace("multi \nline \nmessage");
+		trace("multi \nline \nmessage");	
+
+		trace(new XML("<parent><child id='first'>First Paragraph</child><child id='second'><subchild>Subchild text content</subchild></child></parent>"));
+		
+		trace("+++ manually grouped output");
+		trace("these message was grouped");
+		trace("... with this message");
+		trace("---");
 		
 		// trace movieclip
 		trace(_root);
 		
 		// trace root
-		trace(_root.main);			
-
-		trace(new XML("<parent><child id='first'>First Paragraph</child><child id='second'><subchild>Subchild text content</subchild></child></parent>"));
+		trace(_root.main);				
 
 	}
 

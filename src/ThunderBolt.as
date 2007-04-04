@@ -13,6 +13,13 @@ class ThunderBolt {
 	private static var _firebug:Object;
 	private static var externalInitialized:Boolean = false;
 	
+	private static var frameNumber:Number;
+	private static var lastFrame:Number = -1;
+	
+	private var groupStarted:Boolean;
+	
+	private static var mc:MovieClip;
+	
 	public static function init():Void{
 		
 		if (!ThunderBolt.externalInitialized){
@@ -27,50 +34,91 @@ class ThunderBolt {
 			ThunderBolt.externalInitialized = true;
 		}
 	}
+	
+	private static function initialize():Void{
+		
+		ThunderBolt.initialized = true;	
+		
+		ThunderBolt.mc = _root.createEmptyMovieClip("thunderbolt", _root.getNextHighestDepth());
+		
+		ThunderBolt.mc.onEnterFrame = function(){
+			
+			ThunderBolt.frameNumber++;
+		};
+		
+		ThunderBolt._firebug = ExternalInterface.call("function(){ return console && console.firebug}", true);
+		
+		// check if Fibebug is available
+		if (ThunderBolt.firebug){
+		
+			getURL('javascript:console.info("Thunderbolt enabled")');
+		}
+	}
 
 	public static function trace(traceObject:Object, fullClassWithMethodName:String, fileName:String, lineNumber:Number){
 	
-		var out:String;
-	
-		if (!ThunderBolt.initialized){
-			
-			// check if Fibebug is available
-			if (ThunderBolt.firebug){
-			
-				getURL('javascript:console.info("Thunderbolt enabled")');
-			}
-		}
+		var time:String = (new Date()).toString().split(" ")[3];		
 		
-		// send traces to console only if Firebug is available
-		if (ThunderBolt.firebug){
+		if (String(traceObject).indexOf("+++") == 0){
+		
+			var message:String = String(traceObject).slice(3);
+		
+			// open group	
+			getURL("javascript:console.group('" + message + (message ? " " : "") + "(" +fullClassWithMethodName + ")');");
+			
+		} else if (traceObject == "---"){
+			
+			// close group
+			getURL("javascript:console.groupEnd();");
+			
+		} else {
 	
-			// replace all backslashes
-			fileName = fileName.split("\\").join("/");
+			if (ThunderBolt.frameNumber != ThunderBolt.lastFrame){
+				
+				getURL("javascript:console.groupEnd();");
+	
+				var movieUrl:String = _root._url.split("\\").pop().split("/").pop();
+				
+				getURL("javascript:console.group('" + movieUrl + " [frame " + ThunderBolt.frameNumber + "] @ " + time + "');");
+				
+				ThunderBolt.lastFrame = ThunderBolt.frameNumber;
+			}
+		
+			var out:String;
+		
+			if (!ThunderBolt.initialized){
+				
+				ThunderBolt.initialize();
+			}
 			
-			if (fullClassWithMethodName === undefined) {
+			// send traces to console only if Firebug is available
+			if (ThunderBolt.firebug){
+		
+				// replace all backslashes
+				fileName = fileName.split("\\").join("/");
 				
-				fullClassWithMethodName = "";
+				if (fullClassWithMethodName === undefined) {
+					
+					fullClassWithMethodName = "";
+				}
+	
+				if (fileName === undefined) {
+					
+					fileName = "";
+				}
+	
+				if (lineNumber === undefined) {
+					
+					lineNumber = 0;
+				}
 			}
-
-			if (fileName === undefined) {
 				
-				fileName = "";
-			}
-
-			if (lineNumber === undefined) {
-				
-				lineNumber = 0;
-			}
-
-			
 			// retrieve information about current trace action
 			var classParts:Array = fullClassWithMethodName.split("::");
 			var methodName:String = classParts[1] || "anonymous";
 			var fullClass:String = classParts[0] || "" ;
 			var className:String = String(fullClass.split(".").pop()) || "Thunderbolt";
 			var objectType:String = typeof traceObject;
-					
-			var time:String = (new Date()).toString().split(" ")[3];
 
 			// switch between console actions: log, info, warn, error
 			var console:String = "log";
@@ -108,6 +156,8 @@ class ThunderBolt {
 				objectType = "xml";
 				out = '{xml:"' + traceObject.toString().split('"').join('\\"') + '", toString:function(){return "XML";}}';
 				
+				console = "group";
+				
 			} else {
 			
 				if (objectType == "string"){
@@ -125,13 +175,14 @@ class ThunderBolt {
 			// cunstruct info object
 			var logInfo:String = "{" +
 				"thunderbolt:'" + "                                              '," +  
-				"description:'" + description 	+ "'," +  
-				"method:'"		+ methodName	+ "'," +
-				"line:'"		+ lineNumber	+ "'," +
-				"type:'"		+ objectType	+ "'," +
-				"time:'"		+ time			+ "'," +
-				"fullClass:'" 	+ fullClass 	+ "'," +
-				"file:'" 		+ fileName 		+ "'," +
+				"description:'" + description 				+ "'," +  
+				"method:'"		+ methodName				+ "'," +
+				"line:'"		+ lineNumber				+ "'," +
+				"type:'"		+ objectType				+ "'," +
+				"time:'"		+ time						+ "'," +
+				"frame:'"		+ ThunderBolt.frameNumber 	+ "'," +
+				"fullClass:'" 	+ fullClass 				+ "'," +
+				"file:'" 		+ fileName 					+ "'," +
 				"toString:"		+ "function(){return '" + className + "." + methodName + "'}" +
 				"}";			
 						
@@ -175,8 +226,6 @@ class ThunderBolt {
 	private static function traceXML(xml:XML){
 		
 		var out = xml.toString().split('"').join('\\"');
-		
-		getURL("javascript:console.group();");	
 	
 		getURL("javascript:" +
 			"var tbTempNode = document.createElement('xml');" +
@@ -218,9 +267,7 @@ class ThunderBolt {
 
 		if (typeof traceObject == "string" && traceObject.indexOf("\n") > -1 && method == "log") {
 			
-			getURL('javascript:console.log(' + infoObject + ',":");');
-			
-			getURL("javascript:console.group();");
+			getURL("javascript:console.group(" + infoObject + ");");
 
 			var lines:Array = traceObject.slice(1,-1).split("\n");
 			
@@ -246,8 +293,7 @@ class ThunderBolt {
 		
 		if (!ThunderBolt.initialized){
 
-			ThunderBolt._firebug = ExternalInterface.call("function(){ return console && console.firebug}", true);
-			ThunderBolt.initialized = true;
+			ThunderBolt.initialize();
 		}
 		
 		return ThunderBolt._firebug;
