@@ -83,6 +83,7 @@ class JSON
                     }
                     return '[' + s + ']';
                 } else if (typeof arg.toString != 'undefined') {
+                	              	
                     for (i in arg) {
                         v = arg[i];
                         if (typeof v != 'undefined' && typeof v != 'function') {
@@ -94,7 +95,27 @@ class JSON
                         }
                     }
                     
-                    s = (s ? s + "," : "") + "toString:function(){return ['" + typeof arg + "']}";	// added by Martin Kleppe
+                	if (typeof arg == "movieclip") {
+                	
+                		var props:Array = ["_x", "_y", "_width", "_height", "_xscale", "_yscale", "_alpha"];
+                		
+                		for (var j:Number = 0; j < props.length; j++){
+                		
+                			var value:String = props[j];
+                		
+	                        v = arg[props[j]];
+	                        if (typeof v != 'undefined' && typeof v != 'function') {
+	                            v = stringify(v);
+	                            if (s) {
+	                                s += ',';
+	                            }
+	                            s += stringify(props[j]) + ':' + v;
+	                        }	
+                		}
+                	}                    
+                    
+                   	s = (s ? s + "," : "") + "toString:function(){return '[" + typeof arg + "]'}";	// added by Martin Kleppe
+
                     
                     return '{' + s + '}';
                 }
