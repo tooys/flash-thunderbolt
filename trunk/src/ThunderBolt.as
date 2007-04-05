@@ -147,14 +147,14 @@ class ThunderBolt {
 				
 			} else {
 			
-				if (objectType == "string"){
+				switch(objectType){
 					
-					out = '"' + String(traceObject).split('"').join('\\"') + '"';
+					case "string": out = '"' + String(traceObject).split('"').join('\\"') + '"'; break;
+					case "movieclip": out = ThunderBolt.stringfyMoviclip(traceObject, true); break;
+					default: out = JSON.stringify(traceObject || "_root");
 					
-				} else {
-					
-					out = JSON.stringify(traceObject || "_root");
-				}					
+				}
+							
 			}
 			
 			var description:String = fullClassWithMethodName + "[" + lineNumber + "] : " + objectType + " @ " + time;
@@ -182,6 +182,55 @@ class ThunderBolt {
 					
 			}
 		}
+	}
+	
+	private static function stringfyMoviclip(mc:Object, topLevel:Boolean){
+		
+        var c, i, l, s = '', v;
+        
+        if (topLevel){
+        	
+        	s = "toString:function(){return '" + mc + " [movieclip] '}"; 
+        	
+        	var mcProps:Array = ["_x", "_y", "_width", "_height", "_xscale", "_yscale", "_alpha"];
+        	
+        	for (var j:Number=0; j < mcProps.length; j++){
+        		
+        		s += "," + mcProps[j] + ":" + mc[mcProps[j]];
+        	}
+        		
+        };
+
+        if (mc) {
+        	
+    		for (i in mc) {
+    			
+                v = mc[i];
+                
+                if (typeof v == "movieclip"){
+                	
+                	v = ThunderBolt.stringfyMoviclip(v);
+                	
+                    if (s) {
+                        s += ',';
+                    }
+                    
+                    s += JSON.stringify(i) + ':' + v;                	
+                	
+                } else if (typeof v != 'undefined' && typeof v != 'function') {
+                    v = JSON.stringify(v);
+                    if (s) {
+                        s += ',';
+                    }
+                    s += JSON.stringify(i) + ':' + v;
+                }
+            }
+            
+            return '{' + s + '}';
+            
+        }
+
+ 
 	}
 		
 	private static function inspect(target:String):Void{
