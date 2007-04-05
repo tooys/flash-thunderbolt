@@ -13,8 +13,8 @@ class ThunderBolt {
 	private static var _firebug:Object;
 	private static var externalInitialized:Boolean = false;
 	
-	private static var frameNumber:Number;
-	private static var lastFrame:Number = -1;
+	private static var frameNumber:Number = 1;
+	private static var lastFrame:Number = 0;
 	
 	private var groupStarted:Boolean;
 	
@@ -42,7 +42,7 @@ class ThunderBolt {
 		ThunderBolt.mc = _root.createEmptyMovieClip("thunderbolt", _root.getNextHighestDepth());
 		
 		ThunderBolt.mc.onEnterFrame = function(){
-			
+		
 			ThunderBolt.frameNumber++;
 		};
 		
@@ -56,12 +56,17 @@ class ThunderBolt {
 	}
 
 	public static function trace(traceObject:Object, fullClassWithMethodName:String, fileName:String, lineNumber:Number){
+
+		if (!ThunderBolt.initialized){
+			
+			ThunderBolt.initialize();
+		}
 	
-		var time:String = (new Date()).toString().split(" ")[3];		
+		var time:String = ThunderBolt.getTime();		
 		
 		if (String(traceObject).indexOf("+++") == 0){
 		
-			var message:String = String(traceObject).slice(3);
+			var message:String = String(traceObject).slice(String(traceObject).charAt(3) == " " ? 4 : 3);
 		
 			// open group	
 			getURL("javascript:console.group('" + message + (message ? " " : "") + "(" +fullClassWithMethodName + ")');");
@@ -72,24 +77,10 @@ class ThunderBolt {
 			getURL("javascript:console.groupEnd();");
 			
 		} else {
-	
-			if (ThunderBolt.frameNumber != ThunderBolt.lastFrame){
-				
-				getURL("javascript:console.groupEnd();");
-	
-				var movieUrl:String = _root._url.split("\\").pop().split("/").pop();
-				
-				getURL("javascript:console.group('" + movieUrl + " [frame " + ThunderBolt.frameNumber + "] @ " + time + "');");
-				
-				ThunderBolt.lastFrame = ThunderBolt.frameNumber;
-			}
 		
 			var out:String;
-		
-			if (!ThunderBolt.initialized){
-				
-				ThunderBolt.initialize();
-			}
+			
+			ThunderBolt.checkFrameGroup();
 			
 			// send traces to console only if Firebug is available
 			if (ThunderBolt.firebug){
@@ -147,10 +138,6 @@ class ThunderBolt {
 				out = 'new Date(' + traceObject.valueOf() + ')';	
 				objectType = "date";
 				
-			} else if (traceObject instanceof MovieClip){
-				
-				out = traceMovieClip(MovieClip(traceObject));
-				
 			} else if (traceObject instanceof XML){
 				
 				objectType = "xml";
@@ -166,7 +153,7 @@ class ThunderBolt {
 					
 				} else {
 					
-					out = JSON.stringify(traceObject);
+					out = JSON.stringify(traceObject || "_root");
 				}					
 			}
 			
@@ -236,35 +223,27 @@ class ThunderBolt {
 		getURL("javascript:console.groupEnd();");				
 	}
 	
-	// convert movieclip structure to object
-	private static function traceMovieClip(target:MovieClip):String {
+	private static function checkFrameGroup():Void{
 		
-		var movieclip:Object = new Object();
-		
-		// get moviescript name
-		var name:String = target._name;
-		 
-		if (target == _root) {
+		if (ThunderBolt.frameNumber != ThunderBolt.lastFrame){
 			
-			// set moviescript name to "_root"	
-			name = "_root";	
-		}
-		
-		for (var properties:Object in target){
-		
-			// copy all properties
-			movieclip[properties] = target[properties];	
-		}
-		
-		// return movieclip information
-		return "{" + name + ":" + JSON.stringify(movieclip)+ ", toString:function(){return '[movieclip]'}}";
+			getURL("javascript:console.groupEnd();");
 
+			var movieUrl:String = _root._url.split("\\").pop().split("/").pop();
+			
+			getURL("javascript:console.group('" + movieUrl + " [frame " + ThunderBolt.frameNumber + "] @ " + ThunderBolt.getTime() + "');");
+			
+			ThunderBolt.lastFrame = ThunderBolt.frameNumber;
+		}		
+	}
+	
+	private static function getTime():String{
+
+		return (new Date()).toString().split(" ")[3];		
 	}
 	
 	private static function callFirebug(method:String, infoObject:Object, traceObject:Object){
 		
-
-
 		if (typeof traceObject == "string" && traceObject.indexOf("\n") > -1 && method == "log") {
 			
 			getURL("javascript:console.group(" + infoObject + ");");
