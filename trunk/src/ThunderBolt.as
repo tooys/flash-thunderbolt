@@ -145,16 +145,17 @@ class ThunderBolt {
 				
 				console = "group";
 				
-			} else {
+			} else if (objectType == "string"){
+					
+				out = '"' + String(traceObject).split('"').join('\\"') + '"';
 			
-				switch(objectType){
-					
-					case "string": out = '"' + String(traceObject).split('"').join('\\"') + '"'; break;
-					case "movieclip": out = ThunderBolt.stringfyMoviclip(traceObject, true); break;
-					default: out = JSON.stringify(traceObject || "_root");
-					
-				}
-							
+			} else if (objectType == "movieclip" || traceObject instanceof TextField){
+				
+				out = ThunderBolt.stringfyMoviclip(traceObject, true);
+				
+			} else {
+				
+				out = JSON.stringify(traceObject || "_root");
 			}
 			
 			var description:String = fullClassWithMethodName + "[" + lineNumber + "] : " + objectType + " @ " + time;
@@ -198,7 +199,6 @@ class ThunderBolt {
         		
         		s += "," + mcProps[j] + ":" + mc[mcProps[j]];
         	}
-        		
         };
 
         if (mc) {
@@ -207,27 +207,23 @@ class ThunderBolt {
     			
                 v = mc[i];
                 
-                if (typeof v == "movieclip"){
+                if (typeof v == "movieclip" || v instanceof TextField){
+                	   
+                    s += (s ? "," : "") + JSON.stringify(i) + ':' + ThunderBolt.stringfyMoviclip(v);                	
                 	
-                	v = ThunderBolt.stringfyMoviclip(v);
-                	
-                    if (s) {
-                        s += ',';
-                    }
-                    
-                    s += JSON.stringify(i) + ':' + v;                	
-                	
-                } else if (typeof v != 'undefined' && typeof v != 'function') {
-                    v = JSON.stringify(v);
-                    if (s) {
-                        s += ',';
-                    }
-                    s += JSON.stringify(i) + ':' + v;
+                } else if (topLevel && typeof v != 'undefined' && typeof v != 'function') {
+
+                    s += (s ? "," : "") + JSON.stringify(i) + ':' + JSON.stringify(v);
                 }
             }
             
-            return '{' + s + '}';
+            var name:String = (mc == _root ? "_root" : mc._name) || mc.toString(); 
             
+            var mcType:String = (typeof mc == "movieclip") ? "movieclip" : "textfield";
+            
+            s += (s ? "," : "") + "toString:function(){return '[" + mcType + " | " + name + "]';}";
+            
+            return '{' + s + '}';
         }
 
  
