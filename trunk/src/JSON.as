@@ -39,6 +39,8 @@ USAGE:
  *       Compiles under MTASC
  *       Support for hexadecimal numbers
  *       More verbose error output, error is instance of Error
+ *       
+ *       typeof [movieclip] added by Martin Kleppe kleppe@gmail.com
  */
 
 class JSON
@@ -68,6 +70,7 @@ class JSON
         var c, i, l, s = '', v;
 
         switch (typeof arg) {
+        case 'movieclip':			// added by Martin Kleppe
         case 'object':
             if (arg) {
                 if (arg instanceof Array) {
@@ -90,6 +93,9 @@ class JSON
                             s += stringify(i) + ':' + v;
                         }
                     }
+                    
+                    s = (s ? s + "," : "") + "toString:function(){return ['" + typeof arg + "']}";	// added by Martin Kleppe
+                    
                     return '{' + s + '}';
                 }
             }
