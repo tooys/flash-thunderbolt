@@ -5,8 +5,6 @@
  */
 class Sample {
 
-	private static var classes:Array = [ThunderBolt];
-
 	public static var APP:Sample;
 	
 
@@ -18,6 +16,7 @@ class Sample {
 	function Sample() {
 		
 		trace("Sample Class initialized");
+		trace(this);
 		this.init();
 	}
 	
@@ -31,20 +30,6 @@ class Sample {
 		}
 		
 		var infoText:TextField = _root.main.infoText;
-		
-		//check if firebug is enabled
-		if (ThunderBolt.firebug){
-			
-			infoText.text = "Open your FireBug console to see the ThunderBolt traces.";							
-			
-			ThunderBolt.init();
-			
-		} else {
-			
-			infoText.htmlText = 'Please make sure <u><a href="http://www.getfirebug.com/" target="_blank">Firebug</a></u> is enabled!';
-		}
-			
-		trace("Firebug is enabled: " + ThunderBolt.firebug);
 		
 		this.testTraceLevel();
 		this.testObjectTypes();
@@ -85,7 +70,10 @@ class Sample {
 			}	
 		});
 		
-		trace("multi \nline \nmessage");	
+		trace("multi \nline \rmessage");	
+		
+		trace("Spéciâl chäráctêrs wíth \t tabs, \"inline quotes\" and ' slashes \\ ... ");
+		trace('" ... /  \\ ');
 
 		trace(new XML("<parent><child id='first'>First Paragraph</child><child id='second'><subchild>Subchild text content</subchild></child></parent>"));
 		

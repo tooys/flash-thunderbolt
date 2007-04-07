@@ -29,7 +29,7 @@
 			<arg value="${sample.classpath}"/>
 
 			<arg value="-cp"/>
-			<arg value="${flash.classpath}"/>			
+			<arg value="${flash.classpath}"/>
 			
 			<arg value="-version"/>
 			<arg value="8"/>
@@ -39,19 +39,17 @@
 			<arg value="${thunderbolt.classpath}"/>
 			
 			<arg value="-trace"/>
-			<arg value="ThunderBolt.trace"/>
+			<arg value="org.osflash.thunderbolt.Logger.trace"/>
+			<arg value="org/osflash/thunderbolt/Logger"/>
 			
 			<!-- set output file -->
 			<arg value="-swf"/>
 			<arg value="${deploy.folder}\${targetswf}"/>
 			
-			<!-- use precompiled MX classes -->
-			<arg value="-mx"/>
-
 			<!-- call main entry point -->
 			<arg value="-main"/>
-				
 			<arg value="${mainclass}"/>
+
 		
 		</exec>
 		
@@ -60,7 +58,7 @@
 	<target name="run" depends="deploy" description="Open Firefox">
 
 		<exec executable="${firefox}" spawn="true">
-			<arg value="${deploy.folder}\${targethtml}"/>
+			<arg value="${deploy.folder}${targethtml}"/>
 		</exec> 
 		
 	</target>
