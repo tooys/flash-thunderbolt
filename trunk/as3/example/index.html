@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
+	<head>	
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+		<title>thunderbold goes AS3</title>		
+		<meta http-equiv="Pragma" content="no-cache" />	
+		<meta http-equiv="imagetoolbar" content="no" />
+		<meta name="MSSmartTagsPreventParsing" content="true" />
+		<script type="text/javascript" src="js/swfobject.js"></script>		
+	</head>
+	<body style="background-color: #333; padding: 0; margin: 0;">
+		<div id="content">
+			<div id="flashcontent">
+					<p>
+						Bitte Javascript im Browser aktivieren. <br />
+						Bitte den <a href="http://www.macromedia.com/go/getflashplayer">FlashPlayer 8</a> installieren, den gibt es <a href="http://www.macromedia.com/go/getflashplayer">hier bei Macromedia</a>.
+					</p>
+			</div>
+		</div>	
+			<script type="text/javascript">		
+				//  <![CDATA[		
+				var tbas3 = new SWFObject("Application.swf", "app", "100%", 200, "9", "#000");
+				tbas3.setAttribute('redirectUrl', 'noflash9.html');
+				tbas3.addParam("scale", "noscale");
+				tbas3.addParam("quality", "best");
+				tbas3.addParam("salign", "TL");
+				tbas3.addParam("menu", "false");
+				tbas3.addParam("allowScriptAccess", "always");
+				tbas3.write("flashcontent");
+				// ]]>
+			</script>
+	</body>
+</html>
