@@ -47,3 +47,9 @@ TB.profile("_root.content", "render");
 }}}
 
 ( inspired by the [http://www.getfirebug.com/commandline.html Firebug command line options ])
+
+= AS3 / Flex 2 implemetation ==
+
+For first impressions [http://flash-thunderbolt.googlecode.com/svn/trunk/as3/example/index.html click here] ;)
+
+
