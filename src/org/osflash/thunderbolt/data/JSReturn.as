@@ -1,0 +1,1 @@
+/** * @author kleppe */class org.osflash.thunderbolt.data.JSReturn {		public var codeFragment:String;			function JSReturn(codeFrament:String){				this.codeFragment = codeFrament;	}		public function toString():String{			return "(function(){" + this.codeFragment + "})()";	}}

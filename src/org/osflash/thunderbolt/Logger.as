@@ -2,6 +2,8 @@
 import flash.external.ExternalInterface;
 import org.osflash.thunderbolt.data.Parser;
 import org.osflash.thunderbolt.data.LogInfo;
+import org.osflash.thunderbolt.io.Console;
+import org.osflash.thunderbolt.data.StringyfiedObject;
 /**
 
  * @author Martin Kleppe - http://labs.sumaato.net
@@ -19,8 +21,6 @@ class org.osflash.thunderbolt.Logger {
 	
 	private var groupStarted:Boolean;
 	
-
-	
 	public static function initExternalInterface():Void{
 		
 		if (!Logger.externalInitialized){
@@ -28,7 +28,7 @@ class org.osflash.thunderbolt.Logger {
 			ExternalInterface.addCallback("inspect", Logger, Logger.inspect);
 			ExternalInterface.addCallback("set", Logger, Logger.setAttribute);
 			ExternalInterface.addCallback("run", Logger, Logger.run);
-			getURL('javascript:console.info("Thunderbolt External Interface enabled")');			
+			Console.info("Thunderbolt External Interface enabled");			
 			
 		} else {
 			
@@ -42,14 +42,12 @@ class org.osflash.thunderbolt.Logger {
 		
 		Logger.initExternalInterface();
 		
-
-		
 		Logger._firebug = ExternalInterface.call("function(){ return console && console.firebug}", true);
 		
 		// check if Fibebug is available
 		if (Logger.firebug){
 		
-			getURL('javascript:console.info("Thunderbolt enabled")');
+			Console.info("Thunderbolt enabled", Logger.firebug);
 		}
 	}
 
@@ -60,23 +58,20 @@ class org.osflash.thunderbolt.Logger {
 			Logger.initialize();
 		}
 	
-		
 		if (String(traceObject).indexOf("+++") == 0){
 		
 			var message:String = String(traceObject).slice(String(traceObject).charAt(3) == " " ? 4 : 3);
 		
 			// open group	
-			getURL("javascript:console.group('" + message + (message ? " " : "") + "(" +fullClassWithMethodName + ")');");
+			Console.group(message + (message ? " " : "") + "(" + fullClassWithMethodName + ")");
 			
 		} else if (traceObject == "---"){
 			
 			// close group
-			getURL("javascript:console.groupEnd();");
+			 Console.groupEnd();
 			
 		} else {
 		
-			var out:String;
-			
 			// send traces to console only if Firebug is available
 			if (Logger.firebug){
 
@@ -85,36 +80,35 @@ class org.osflash.thunderbolt.Logger {
 				var objectType:String = info.objectType;
 	
 				// switch between console actions: log, info, warn, error
-				var console:String = "log";
+				var console:Function = Console.log;
 	
 				if (objectType == "string" && traceObject.charAt(1) == " ") {
 					
 					switch (traceObject.charAt(0).toLowerCase()) {
 					
-						case "d": console = "log";		break;
-						case "i": console = "info";		break;
-						case "w": console = "warn";		break;
-						case "e": console = "error";	break;
-						case "f": console = "error";	break;
+						case "d": console = Console.log;		break;
+						case "i": console = Console.info;		break;
+						case "w": console = Console.warn;		break;
+						case "e": console = Console.error;		break;
+						case "f": console = Console.error;		break;
 					}
 					
 					traceObject = String(traceObject).slice(2);
 					
-				} else if (objectType == "xml" || objectType == "xml"){
-					
-					console = "group";
-				}
-	
-				out = Parser.stringify(traceObject);
-							
+				} 
+				
 				info.checkFrameGroup();
 				
-				// send trace to console
-				Logger.callFirebug(console, info, out);
-				
 				if (objectType == "xml"){
-	
-					Logger.traceXML(XML(traceObject));
+					
+					Console.group(info, traceObject);
+					Console.dirxml(traceObject);
+					Console.groupEnd();
+									
+				} else {
+							
+					// send trace to console
+					Logger.callFirebug(console, info, traceObject);
 				}
 			}
 		}
@@ -146,43 +140,26 @@ class org.osflash.thunderbolt.Logger {
 		
 	}	
 	
-	private static function traceXML(xml:XML){
+	
+	private static function callFirebug(method:Function, infoObject:LogInfo, traceObject:Object){
 		
-		var out = xml.toString().split('"').join('\\"');
-	
-		getURL("javascript:" +
-			"var tbTempNode = document.createElement('xml');" +
-			"tbTempNode.innerHTML = \"" + out + "\";" +
-			"console.dirxml(tbTempNode.firstChild); "
-		);
-		
-		getURL("javascript:console.groupEnd();");				
-	}
-	
-
-	
-
-	
-	private static function callFirebug(method:String, infoObject:LogInfo, traceObject:Object){
-		
-		if (typeof traceObject == "string" && traceObject.indexOf("\n") > -1 && method == "log") {
+		if (typeof traceObject == "string" && traceObject.indexOf("\n") > -1 && method == Console.log) {
 			
-			// TODO: create javascript IO handler
-			getURL("javascript:console.group(" + infoObject.toString() + ");");
+			Console.group(infoObject);;
 
 			var lines:Array = traceObject.slice(1,-1).split("\n");
 			
 			for (var i:Number = 0; i < lines.length; i++){
 				
-				getURL('javascript:console.log("' + lines[i] + '")');		
+				Console.log(lines[i]);		
 			}
 
-			getURL("javascript:console.groupEnd();");
+			Console.groupEnd();
 			
 		} else {
 			
 			// request javascript action
-			getURL('javascript:console.' + method + '(' + infoObject + ',":",' + traceObject + ')');				
+			method(infoObject, new StringyfiedObject(traceObject));				
 		}
 
 	}

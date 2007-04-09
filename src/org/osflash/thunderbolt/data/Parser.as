@@ -18,7 +18,7 @@ class org.osflash.thunderbolt.data.Parser{
 		
 		if (stopAnalysing){
 			
-			return objectIsComplex(type) ? '{toString:function(){return "[' + type + ']"}}' : stringify(target);
+			return typeIsComplex(type) ? '{toString:function(){return "[' + type + ']"}}' : stringify(target);
 		}
 
         switch (type) {
@@ -108,7 +108,7 @@ class org.osflash.thunderbolt.data.Parser{
    		
     }
     
-    static function objectIsComplex(type:Object):Boolean{
+    static function typeIsComplex(type:Object):Boolean{
     	
     	return type == "object" || type == "movieclip";
     }    

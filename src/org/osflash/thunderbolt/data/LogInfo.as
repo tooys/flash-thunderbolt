@@ -1,4 +1,5 @@
 import org.osflash.thunderbolt.data.Parser;
+import org.osflash.thunderbolt.io.Console;
 /**
  * @author kleppe
  */
@@ -61,7 +62,7 @@ class org.osflash.thunderbolt.data.LogInfo {
 		this.className = String(fullClass.split(".").pop()) || "Thunderbolt";
 		
 		var description:String = fullClassWithMethodName + "[" + lineNumber + "] : " + objectType + " @ " + time;
-		
+				
 		// cunstruct info object
 		return "{" +
 		
@@ -87,11 +88,11 @@ class org.osflash.thunderbolt.data.LogInfo {
 		
 		if (LogInfo.frameNumber != LogInfo.lastFrame){
 			
-			getURL("javascript:console.groupEnd();");
+			Console.groupEnd();
 
 			var movieUrl:String = _root._url.split("\\").pop().split("/").pop();
 			
-			getURL("javascript:console.group('" + movieUrl + " [frame " + LogInfo.frameNumber + "] @ " + this.time + "');");
+			Console.group(movieUrl + " [frame " + LogInfo.frameNumber + "] @ " + this.time);
 			
 			LogInfo.lastFrame = LogInfo.frameNumber;
 		}		
