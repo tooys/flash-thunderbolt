@@ -9,36 +9,35 @@ class org.osflash.thunderbolt.io.Console {
 	
 	public static var version:Number;
 	private static var _enabled:Boolean;
-	
 
 	// Writes a message to the console.
 	public static function log(){
 	
-		Console.runJSCommand("log", arguments);	
+		Console.run("log", arguments);	
 	}
 		
 	// Writes a message to the console with the visual "info" icon and color coding.
 	public static function info(){
 	
-		Console.runJSCommand("info", arguments);	
+		Console.run("info", arguments);	
 	}
 
 	// Writes a message to the console with the visual "warning" icon and color coding.
 	public static function warn(){
 	
-		Console.runJSCommand("warn", arguments);	
+		Console.run("warn", arguments);	
 	}
 
 	// Writes a message to the console with the visual "error" icon and color coding.
 	public static function error(){
 	
-		Console.runJSCommand("error", arguments);	
+		Console.run("error", arguments);	
 	}
 	
 	// Prints an interactive listing of all properties of the object.
 	public static function dir(){
 	
-		Console.runJSCommand("dir", arguments);	
+		Console.run("dir", arguments);	
 	}	
 
 	// Prints the XML source tree of an HTML or XML element.
@@ -52,24 +51,24 @@ class org.osflash.thunderbolt.io.Console {
 			"return n;"
 		);
 				
-		Console.runJSCommand("dirxml", [returnObject]);
+		Console.run("dirxml", [returnObject]);
 	}	
 
 	// Writes a message to the console and opens a nested block 
 	// to indent all future messages sent to the console.
 	public static function group():Void{
 		
-		Console.runJSCommand("group", arguments);	
+		Console.run("group", arguments);	
 	}
 
 	// Closes the most recently opened block.
 	public static function groupEnd():Void{
 		
-		Console.runJSCommand("groupEnd");	
+		Console.run("groupEnd");	
 	}
 
 	// Executes JavaScript command
-	private static function runJSCommand(method, parameter:Array):Void{
+	private static function run(method, parameter:Array):Void{
 			
 		var parameterString:String;
 		
