@@ -7,6 +7,9 @@ import org.osflash.thunderbolt.data.JSReturn;
  */
 class org.osflash.thunderbolt.io.Console {
 	
+	public static var version:Number;
+	private static var _enabled:Boolean;
+	
 
 	// Writes a message to the console.
 	public static function log(){
@@ -70,17 +73,43 @@ class org.osflash.thunderbolt.io.Console {
 			
 		var parameterString:String;
 		
-		// check if unquoted strings are in cluded in parameters
-		for (var i:Number=0; i < parameter.length; i++) {
+		if (parameter){
 		
-			if (typeof parameter[i] == "string" && parameter[i].indexOf('"') != 0){
-				
-				parameter[i] = Parser.stringify(parameter[i]);
+			// check if unquoted strings are in cluded in parameters
+			for (var i:Number=0; i < parameter.length; i++) {
+			
+				if (typeof parameter[i] == "string" && parameter[i].indexOf('"') != 0){
+					
+					parameter[i] = Parser.stringify(parameter[i]);
+				}
 			}
+			
+		} else {
+			
+			parameterString = "";
 		}
 
 		parameterString = parameter.join(",");
 	
 		getURL("javascript:console." + method + "(" + parameterString + ");");		
 	}
+	
+	// Check if Firebug is enabled
+	public static function get enabled():Boolean{
+	
+		if (Console._enabled !== undefined){
+			
+			return Console._enabled;
+			
+		} else {
+			
+			Console.version = Number(ExternalInterface.call("function(){ return console && console.firebug}", true));
+			Console._enabled = Console.version > 0;
+			
+			if (Console._enabled){
+				
+				Console.log("Firebug enabled", Console.version);
+			} 
+		}
+	}	
 }
