@@ -7,6 +7,14 @@
 	
 	<style type="text/css">
 		
+		body {
+			background-color:#FFFFFF;
+			color:#242E35;
+			font-family:"Lucida Grande","Lucida Sans Unicode",Arial,Helvetica,sans-serif;
+			font-size:12px;
+			margin:0px 10px;
+		}		
+		
 		#code_samples{
 			
 			font-family: "Courier New", Courier, monospace;
@@ -52,18 +60,22 @@
 			type="application/x-shockwave-flash" 
 			pluginspage="http://www.macromedia.com/go/getflashplayer" />
 	</object>
+	
+	  
 	<div>
+		The see the trace output make sure you have <a href="http://www.getfirefox.com">Firefox</a> and <a href="http://www.getfirebug.com/">Firebug</a> enabled.
 		<h3>Try these commands via the Firebug console:</h3>
 		<div id="code_samples">
 			
-			<a href='javascript:TB.inspect("_root.main")'>TB.inspect("_root.main");</a> // inspect movieclip _level0.main <br/>
-			<a href='javascript:TB.inspect("_root.main._width");'>TB.inspect("_root.main._width");</a> // element width: 380<br/>
-			<a href='javascript:TB.set("_root.main.head._x", 20);'>TB.set("_root.main.head._x", 20);</a> // set new position<br/>
-			<a href='javascript:TB.set("_root.main.infoText.text", "New message");'>TB.set("_root.main.infoText.text", "New message");</a> // change text<br/>
-			<a href='javascript:TB.cd("_root.main.head.logo");'>TB.cd("_root.main.head");</a> // set new context<br/>
-			<a href='javascript:TB.inspect("_y");'>TB.inspect("_y");</a> // y position of current content<br/>
+			<a href='javascript:TB.inspect("_root")'>TB.inspect("_root");</a> // inspect movieclip _level0 <br/>
+			<a href='javascript:TB.set("_root.logo._x", 20);'>TB.set("_root.logo._x", 20);</a> // set new position<br/>
+			<a href='javascript:TB.set("_root.logo.label.text", "Live hacking made possible!");'>TB.set("_root.logo.label.text", "Live hacking made possible!");</a> // change text<br/>
+			<a href='javascript:TB.cd("_root.logo.label");'>TB.cd("_root.logo.label");</a> // set new context<br/>
+			<a href='javascript:TB.inspect("_x");'>TB.inspect("_x");</a> // y position of current content<br/>
 			<a href='javascript:TB.cd("..");'>TB.cd("..");</a> // select parent movieclip<br/>
 		</div>
+		
+		<p>Read more about <a href="http://code.google.com/p/flash-thunderbolt/">this project</a>.</p>
 	</div>
 </body>
 </html>

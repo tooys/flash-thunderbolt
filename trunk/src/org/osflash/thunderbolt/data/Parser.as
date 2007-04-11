@@ -23,6 +23,17 @@ class org.osflash.thunderbolt.data.Parser{
 
         switch (type) {
         	
+        	case 'textfield': 
+        	
+        		output = 'toString:function(){return "[textfield | ' + target + ']"}';
+        		
+                for (var all:String in target) {
+                	
+                    output += "," + all + ':' + stringify(target[all].toString());
+                } 
+        		
+        		return "{" + output + "}";     		
+        		
         	case 'movieclip':
         	
         		output = 'toString:function(){return "[movieclip | ' + target + ']"}'; 
@@ -45,6 +56,7 @@ class org.osflash.thunderbolt.data.Parser{
                 
                 return '{' + output + '}';
                 
+            
             case 'array':
                         
                 for (var i:Number = 0; i < target.length; i++) {
@@ -93,7 +105,7 @@ class org.osflash.thunderbolt.data.Parser{
 			
 		} else if(target instanceof TextField) {
 			
-			return "movieclip";
+			return "textfield";
 			
 		} else if(target instanceof XML) {
 			

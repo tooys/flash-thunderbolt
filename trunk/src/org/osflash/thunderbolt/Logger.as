@@ -32,6 +32,10 @@ class org.osflash.thunderbolt.Logger {
 	
 		// send traces to console only if Firebug is available
 		if (Console.enabled){
+
+			var info:LogInfo =  new LogInfo(traceObject, fullClassWithMethodName, fileName, lineNumber);
+			info.checkFrameGroup();
+
 				
 			if (String(traceObject).indexOf("+++") == 0){
 			
@@ -46,8 +50,6 @@ class org.osflash.thunderbolt.Logger {
 				 Console.groupEnd();
 				
 			} else {
-			
-				var info:LogInfo =  new LogInfo(traceObject, fullClassWithMethodName, fileName, lineNumber);
 	
 				var objectType:String = info.objectType;
 	
@@ -68,7 +70,6 @@ class org.osflash.thunderbolt.Logger {
 					traceObject = String(traceObject).slice(2);
 				} 
 				
-				info.checkFrameGroup();
 				
 				if (objectType == "xml"){
 					
