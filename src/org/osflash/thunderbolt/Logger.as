@@ -1,10 +1,11 @@
 
 import flash.external.ExternalInterface;
 import org.osflash.thunderbolt.data.Parser;
-import org.osflash.thunderbolt.data.LogInfo;
 import org.osflash.thunderbolt.io.Console;
 import org.osflash.thunderbolt.data.StringyfiedObject;
 import org.osflash.thunderbolt.io.Commandline;
+import org.osflash.thunderbolt.logging.LogInfo;
+import org.osflash.thunderbolt.logging.LogLevel;
 /**
 
  * @author Martin Kleppe - http://labs.sumaato.net
@@ -51,27 +52,16 @@ class org.osflash.thunderbolt.Logger {
 				
 			} else {
 	
-				var objectType:String = info.objectType;
 	
 				// switch between console actions: log, info, warn, error
-				var console:Function = Console.log;
+				var logLevel:LogLevel = new LogLevel(traceObject);
 	
-				if (objectType == "string" && traceObject.charAt(1) == " ") {
-					
-					switch (traceObject.charAt(0).toLowerCase()) {
-					
-						case "d": console = Console.log;		break;
-						case "i": console = Console.info;		break;
-						case "w": console = Console.warn;		break;
-						case "e": console = Console.error;		break;
-						case "f": console = Console.error;		break;
-					}
-					
-					traceObject = String(traceObject).slice(2);
-				} 
+				if (logLevel.messageModified){
+									
+					traceObject = logLevel.message;
+				}
 				
-				
-				if (objectType == "xml"){
+				if (info.objectType == "xml"){
 					
 					Console.group(info, traceObject);
 					Console.dirxml(traceObject);
@@ -80,7 +70,7 @@ class org.osflash.thunderbolt.Logger {
 				} else {
 							
 					// send trace to console
-					Logger.callFirebug(console, info, traceObject);
+					Logger.callFirebug(logLevel.console, info, traceObject);
 				}
 			}
 		}
@@ -92,7 +82,7 @@ class org.osflash.thunderbolt.Logger {
 			
 			Console.group(infoObject);;
 
-			var lines:Array = traceObject.slice(1,-1).split("\n");
+			var lines:Array = traceObject.split("\n");
 			
 			for (var i:Number = 0; i < lines.length; i++){
 				
