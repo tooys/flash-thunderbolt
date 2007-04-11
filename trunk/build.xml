@@ -16,7 +16,6 @@
 	<property name="thunderbolt.classpath" 	value=".\src\" /> 
 
 	<property name="targethtml" 			value="thunderbolt.html"/>
-
 	
 	<target name="deploy" description="compile a sub swf">
 		
@@ -61,6 +60,12 @@
 			<arg value="${deploy.folder}${targethtml}"/>
 		</exec> 
 		
+	</target>
+	
+	<target name="zip" depends="deploy" description="Create ZIP file of classe">
+		<zip destfile="thunderbolt_classes.zip"
+			basedir="src"
+		/>	
 	</target>
 			
 </project>
