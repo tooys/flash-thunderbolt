@@ -1,3 +1,4 @@
+import mx.utils.Delegate;
 
 
 /**
@@ -16,48 +17,66 @@ class Sample {
 	function Sample() {
 		
 		trace("Sample Class initialized");
-		trace(this);
 		this.init();
 	}
 	
 	private function init():Void{
 		
-		var link:TextField = _root.main.head.link;
-		
-		link.onRelease = function(){
-			
-			getURL("http://code.google.com/p/flash-thunderbolt/", "_blank");
+		for (var all in _root){
+				
+			_root[all].onRelease = function(){
+				Sample.APP[this._name + "Test"]();
+			};
 		}
-		
-		var infoText:TextField = _root.main.infoText;
-		
-		this.testTraceLevel();
-		this.testObjectTypes();
-		
 	}
 	
-	private function testTraceLevel():Void{
+	private function completeTest(){
 		
-		// simple traces
-		trace("d This is a simple debug message.");
-		trace("i An info icon will appear next to this line.");
-		trace("w This warning message is highlighted.");
-		trace("e Red and highlited error message.");		
+		this.logTest();
+		this.infoTest();
+		this.warnTest();
+		this.errorTest();
+		this.dateTest();
+		this.arrayTest();
+		this.objectTest();
+		this.xmlTest();
+		this.movieclipTest();
+		this.multilineTest();
+		this.groupTest();
 	}
 	
-	private function testObjectTypes():Void{
-		
-		// trace undefined
-		var unknown:Object;
-		trace(unknown);
-		
-		// trace date
-		trace(new Date());
-
-		// array trace
-		trace([1, "2", "three", "IV", "101", {six:"seven"}]);
-		
-		// object trace
+	private function logTest():Void{
+	
+		trace("d This is a simple debug message.");	
+	}
+	
+	private function infoTest():Void{
+	
+		trace("i An info icon will appear next to this line.");	
+	}
+	
+	private function warnTest():Void{
+	
+		trace("w This warning message is highlighted.");	
+	}
+	
+	private function errorTest():Void{
+	
+		trace("e Red and highlited error message.");	
+	}
+	
+	private function dateTest():Void{
+	
+		trace(new Date());	
+	}
+	
+	private function arrayTest():Void{
+	
+		trace([1, "2", "three", "IV", "101", {six:"seven"}]);	
+	}
+	
+	private function objectTest():Void{
+	
 		trace({
 			a: "Hello",
 			b: "World",
@@ -69,26 +88,29 @@ class Sample {
 				}
 			}	
 		});
-		
-		trace("multi \nline \rmessage");	
-		
-		trace("Spéciâl chäráctêrs wíth \t tabs, \"inline quotes\" and ' slashes \\ ... ");
-		trace('" ... /  \\ ');
-
+	}
+	
+	private function xmlTest():Void{
+	
 		trace(new XML("<parent><child id='first'>First Paragraph</child><child id='second'><subchild>Subchild text content</subchild></child></parent>"));
-		
+	}
+	
+	private function movieclipTest():Void{
+	
+		trace(_root);
+	}
+	
+	private function groupTest():Void{
+	
 		trace("+++ manually grouped output");
 		trace("these message was grouped");
 		trace("... with this message");
-		trace("---");
-		
-		// trace movieclip
-		trace(_root);
-		
-		// trace root
-		trace(_root.main);				
-
+		trace("---");	
 	}
-
+	
+	private function multilineTest():Void{
+	
+		trace("multi \nline \rmessage");	
+	}
 
 }
