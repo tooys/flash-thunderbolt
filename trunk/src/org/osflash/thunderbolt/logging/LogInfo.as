@@ -3,7 +3,7 @@ import org.osflash.thunderbolt.io.Console;
 /**
  * @author kleppe
  */
-class org.osflash.thunderbolt.data.LogInfo {
+class org.osflash.thunderbolt.logging.LogInfo {
 	
 	public var fullClassWithMethodName:String;
 	
