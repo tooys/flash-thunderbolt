@@ -1,17 +1,30 @@
 import org.osflash.thunderbolt.data.Parser;
 
 /**
- * @author kleppe
+ * Simple wrapper class to store parses object informations
+ * 
+ * @author Martin Kleppe <kleppe@gmail.com>
  */
 class org.osflash.thunderbolt.data.StringyfiedObject {
 	
 	private var dataString:String;
 	
-	function StringyfiedObject(data:Object){
+	/**
+	 * Creates a new instance holding the parsed object data.
+	 *
+	 * @param	data	The object to be passed
+	 * @param	depth	Level of recursion
+	 * @return 			A new instance holding the parsed object data
+	 */
+	function StringyfiedObject(data:Object, depth:Number){
 	
-		this.dataString = Parser.stringify(data);	
+		this.dataString = Parser.stringify(data, depth);	
 	}
 	
+	/**
+	 * Returns the parsed information in JavaScript Object Notation (JSON)
+	 * @return 	The parsed JSON string;
+	 */
 	public function toString():String{
 		
 		return dataString;

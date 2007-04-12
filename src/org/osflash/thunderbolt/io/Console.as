@@ -3,7 +3,7 @@ import org.osflash.thunderbolt.data.Parser;
 import org.osflash.thunderbolt.data.StringyfiedObject;
 import org.osflash.thunderbolt.data.JSReturn;
 /**
- * @author kleppe
+ * @author Martin Kleppe <kleppe@gmail.com>
  */
 class org.osflash.thunderbolt.io.Console {
 	
