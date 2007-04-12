@@ -1,9 +1,32 @@
 /**
- * @author kleppe
+ * A Parser to convert an object into its JavaScript Object Notation 
+ * (JSON) so it could be passed to JavaScipt calls.
+ * 
+ * @author Martin Kleppe <kleppe@gmail.com>
  */
+ 
 class org.osflash.thunderbolt.data.Parser{
 	
-    static function stringify(target, depth:Number):String {
+	// movieclip properties that should be displayed
+	private static var mcProperties:Array = [
+		"_x", 
+		"_y", 
+		"_width", 
+		"_height", 
+		"_xscale", 
+		"_yscale", 
+		"_alpha"
+	];
+	
+	/**
+	 * Converts an object into its JavaScript Object Notation (JSON) 
+	 * so it could be passed to JavaScipt calls.
+	 * 
+	 * @param	target	Object to stringify
+	 * @param	depth	Optional paramter specifying the level of recusion
+	 * @return 			Stringified object in JavaScript Object Notation (JSON)
+	 */
+    static function stringify(target:Object, depth:Number):String {
 
         var output:String = '';
 
@@ -11,14 +34,15 @@ class org.osflash.thunderbolt.data.Parser{
 		
 		if (depth === undefined){
 		
-			depth = 2; 	
+			depth = 2; 
 		} 
 		
+		// stop execution if depth is equal or less than zero
 		var stopAnalysing:Boolean = depth <= 0;
 		
 		if (stopAnalysing){
 			
-			return typeIsComplex(type) ? '{toString:function(){return "[' + type + ']"}}' : stringify(target);
+			return Parser.typeIsComplex(type) ? '{toString:function(){return "[' + type + ']"}}' : stringify(target);
 		}
 
         switch (type) {
@@ -38,11 +62,9 @@ class org.osflash.thunderbolt.data.Parser{
         	
         		output = 'toString:function(){return "[movieclip | ' + target + ']"}'; 
         		
-        		var mcProperties:Array = ["_x", "_y", "_width", "_height", "_xscale", "_yscale", "_alpha"];
+        		for (var i:Number=0; i< Parser.mcProperties.length; i++) {
         		
-        		for (var i:Number=0; i<mcProperties.length; i++) {
-        		
-        			var property:String = mcProperties[i];
+        			var property:String = Parser.mcProperties[i];
         			
         			output += "," + property + ":" + target[property];
         		}
@@ -79,6 +101,15 @@ class org.osflash.thunderbolt.data.Parser{
         }
     }
     
+    /**
+     * Get the "real" type of an object. Possible values are:
+     * undefined, null, number, string, boolean, number,
+     * object, array, date, movieclip, button, textfield,
+     * xml and xmlnode.
+     *
+     * @param	target	The object to analyse.
+     * @return 	Object type.
+     */
     static function getObjectType(target:Object):String{
     
 		var type = typeof(target);
@@ -117,9 +148,15 @@ class org.osflash.thunderbolt.data.Parser{
 		}
    		
    		return type;
-   		
     }
     
+    /**
+     * Test if the object type is complex. This could be used 
+     * to execute recursive code executions.
+     *
+     * @param	type	The object type
+     * @return 			True if object type is complex
+     */
     static function typeIsComplex(type:Object):Boolean{
     	
     	return type == "object" || type == "movieclip";

@@ -1,7 +1,11 @@
 import org.osflash.thunderbolt.data.Parser;
 import org.osflash.thunderbolt.io.Console;
+import org.osflash.thunderbolt.Logger;
 /**
- * @author kleppe
+ * LogInfo objects are used to parse information provided by the MTASC trace facility
+ * and provide more detailed information about the current trace action.
+ *  
+ * @author Martin Kleppe <kleppe@gmail.com>
  */
 class org.osflash.thunderbolt.logging.LogInfo {
 	
@@ -24,8 +28,14 @@ class org.osflash.thunderbolt.logging.LogInfo {
 	private static var lastFrame:Number;
 	public static var frameNumber:Number;
 	
+	private static var _movieUrl:String;
+	
 	private static var frameCounter:MovieClip;
 	
+	/**
+	 * LogInfo objects are used to parse information provided by the MTASC trace facility
+	 * and provide more detailed information about the current trace action.
+	 */
 	function LogInfo(traceObject:Object, fullClassWithMethodName:String, fileName:String, lineNumber:Number){
 		
 		this.traceObject = traceObject;
@@ -42,7 +52,11 @@ class org.osflash.thunderbolt.logging.LogInfo {
 		}
 	}
 	
-	private static function initializeFrameCounter():Void{
+	/**
+	 * Create a new empty movieclip at root level and count running frames. 
+	 * @return The movieclip that is listening.
+	 */
+	private static function initializeFrameCounter():MovieClip{
 	
 		LogInfo.frameCounter = _root.createEmptyMovieClip("thunderbolt", _root.getNextHighestDepth());
 		
@@ -51,8 +65,15 @@ class org.osflash.thunderbolt.logging.LogInfo {
 			LogInfo.frameNumber++;
 		};
 		
+		return LogInfo.frameCounter;
 	}
-		
+	
+	/**
+	 * Returns the object information as a JSON formated string 
+	 * which may be passed to JavaScript calls. 
+	 *
+	 * @return String in JavaScript object notation (JSON).
+	 */
 	public function toString():String{
 
 		// retrieve information about current trace action
@@ -79,9 +100,27 @@ class org.osflash.thunderbolt.logging.LogInfo {
 		"}";		
 	}
 	
+	/**
+	 * Get the current execution time as a well formated string.
+	 * @return	Current time
+	 */
 	private function get time():String{
 
 		return (new Date()).toString().split(" ")[3];	
+	}
+	
+	/**
+	 * Get the name of the current running SWF.
+	 * @return 	Name of the swf.
+	 */
+	private static function get movieUrl():String{
+		
+		if (!LogInfo._movieUrl){
+			
+			LogInfo._movieUrl = _root._url.split("\\").pop().split("/").pop();	
+		}
+		
+		return LogInfo._movieUrl;
 	}
 	
 	public function checkFrameGroup():Void{
@@ -90,9 +129,7 @@ class org.osflash.thunderbolt.logging.LogInfo {
 			
 			Console.groupEnd();
 
-			var movieUrl:String = _root._url.split("\\").pop().split("/").pop();
-			
-			Console.group(movieUrl + " [frame " + LogInfo.frameNumber + "] @ " + this.time);
+			Console.group(LogInfo.movieUrl + " [frame " + LogInfo.frameNumber + "] @ " + this.time);
 			
 			LogInfo.lastFrame = LogInfo.frameNumber;
 		}		

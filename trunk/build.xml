@@ -4,10 +4,9 @@
 		ThunderBolt Sample Main Build File
 	</description>
 	
-	
 	<!-- 
-		global properties "mtasc", firefox and "flash.classpath" need to be set up as global 
-		ant parameters eclipse > window > preferences > ant > runtime > properties  
+		global properties "mtasc", firefox and "flash.classpath" need to be set up as 
+		global ant parameters eclipse > window > preferences > ant > runtime > properties  
 	-->
 
 	<property name="sample.classpath" 		value=".\sample\src\" /> 
@@ -17,19 +16,22 @@
 
 	<property name="targethtml" 			value="thunderbolt.html"/>
 	
-	<target name="deploy" description="compile a sub swf">
+	<!-- compile sample swf using mtasc -->
+	<target name="deploy" description="compile sample swf using mtasc">
 		
 		<property name="targetswf" 			value="thunderbolt.swf"/>
 		<property name="mainclass" 			value="Sample.as" />	
 						
 		<exec executable="${mtasc}" failonerror="true">
 
+			<!-- add standard class paths -->
 			<arg value="-cp"/>
 			<arg value="${sample.classpath}"/>
 
 			<arg value="-cp"/>
 			<arg value="${flash.classpath}"/>
 			
+			<!-- set swf version to 8 -->
 			<arg value="-version"/>
 			<arg value="8"/>
 			
@@ -37,6 +39,7 @@
 			<arg value="-cp"/>
 			<arg value="${thunderbolt.classpath}"/>
 			
+			<!-- add thunderbolt trace classes -->
 			<arg value="-trace"/>
 			<arg value="org.osflash.thunderbolt.Logger.trace"/>
 			<arg value="org/osflash/thunderbolt/Logger"/>
@@ -48,24 +51,21 @@
 			<!-- call main entry point -->
 			<arg value="-main"/>
 			<arg value="${mainclass}"/>
-
-		
+			
 		</exec>
 		
 	</target>
 	
+	<!-- Open Firefox -->
 	<target name="run" depends="deploy" description="Open Firefox">
-
 		<exec executable="${firefox}" spawn="true">
 			<arg value="${deploy.folder}${targethtml}"/>
 		</exec> 
-		
 	</target>
 	
+	<!-- Compile a single ZIP containing all package source files -->
 	<target name="zip" depends="deploy" description="Create ZIP file of classe">
-		<zip destfile="thunderbolt_classes.zip"
-			basedir="src"
-		/>	
+		<zip destfile="thunderbolt_classes.zip" basedir="src" />	
 	</target>
 			
 </project>
