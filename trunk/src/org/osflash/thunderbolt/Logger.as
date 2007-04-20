@@ -17,6 +17,9 @@
  * - Martin Kleppe <kleppe@gmail.com>
  * - Jens Krause
  * 
+ * Project Home Page:
+ * http://code.google.com/p/flash-thunderbolt/
+ * 
  * ***** END LICENSE BLOCK *****
  */
 
