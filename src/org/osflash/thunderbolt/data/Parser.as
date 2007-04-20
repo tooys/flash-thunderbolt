@@ -101,54 +101,49 @@ class org.osflash.thunderbolt.data.Parser{
         }
     }
     
-    /**
-     * Get the "real" type of an object. Possible values are:
-     * undefined, null, number, string, boolean, number,
-     * object, array, date, movieclip, button, textfield,
-     * xml and xmlnode.
-     *
-     * @param	target	The object to analyse.
-     * @return 	Object type.
-     */
-    static function getObjectType(target:Object):String{
-    
-		var type = typeof(target);
-
-		if (type == "string" || type == "boolean" || type == "number" || type == "undefined" || type == "null") {
+	/**
+	 * Get the "real" type of an object. Possible values are:
+	 * undefined, null, number, string, boolean, number,
+	 * object, array, date, movieclip, button, textfield,
+	 * xml and xmlnode.
+	 *
+	 * @param	target	The object to analyse.
+	 * @return 	Object type.
+	 */
+	static function getObjectType(target:Object):String{
+	
+		var simpleTypes:Array = ["string", "boolean", "number", "undefined", "null"];
+		
+		var complexTypes:Object = {
 			
-			return type;			
-
-		} else if(target instanceof Date) {
+			xmlnode: 	XMLNode,
+			xml: 		XML,
+			textfield: 	TextField,
+			button: 	Button,
+			movieclip: 	MovieClip,
+			array: 		Array,
+			date: 		Date
+		};
+		
+		for (var i:Number=0; i<simpleTypes.length; i++) {
 			
-			return "date";
+			if (simpleTypes[i] == typeof(target)){
 			
-		} else if(target instanceof Array) {
-			
-			return "array";
-			
-		} else if(target instanceof Button) {
-			
-			return "button";
-			
-		} else if(target instanceof MovieClip) {
-			
-			return "movieclip";
-			
-		} else if(target instanceof TextField) {
-			
-			return "textfield";
-			
-		} else if(target instanceof XML) {
-			
-			return "xml";
-			
-		} else if(target instanceof XMLNode) {
-			
-			return "xmlnode";
+				return simpleTypes[i];	
+			}
 		}
-   		
-   		return type;
-    }
+		
+		for (var type:String in complexTypes) {
+		
+			if (target instanceof complexTypes[type]){
+			
+				return type;	
+			}
+		}
+		
+		return typeof target;
+	}
+
     
     /**
      * Test if the object type is complex. This could be used 
