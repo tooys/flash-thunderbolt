@@ -1,0 +1,37 @@
+
+
+
+global 
+{
+	font-family: Arial;
+	font-weight: normal;
+	font-size: 15px;
+	color:#FFF;
+	verticalGap: 0;
+	horizontalGap: 0;
+	padding-left: 0;
+	padding-right: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+
+Application
+{
+	background-color: #000;
+	backgroundGradientColors: #000, #333;
+	padding-top: 30px;
+	padding-left: 10;
+	padding-right: 10px;
+	padding-bottom: 30px;
+	horizontal-align: center;
+}
+
+
+Button
+{
+	themeColor: #000;
+	cornerRadius: 0;
+	highlightAlphas: 1, 0.12;
+	
+}
