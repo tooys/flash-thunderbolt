@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml">
+
+	<mx:Script>
+        <![CDATA[
+        	import org.osflash.thunderbolt.Logger;
+
+            import flash.events.Event;
+            
+            private function traceToFirebug(event:Event):void  
+            {
+				var n: int = 5;
+				var s: String = "Lorem ipsum";
+				var o: Object = {exampleArray: ["firstValue", "secondValue"], y: 10, exampleString: "Hello", nestedObject: {x: 100, y: 200}};
+				var a: Array = ["firstValue",{x: 100, y: 200}, "secondValue"];
+				
+				var label: String = event.target.label;
+				
+				switch (label)
+				{
+					case "info":
+						Logger.trace ("i a simple string", s);
+					break;
+					case "error":
+						Logger.trace ("i a number typed as int", n);
+					break;
+					case "warn":
+						Logger.trace ("e an array with a nested object: ", a);
+					break;
+					case "debug":
+						Logger.trace ("w an object with a nested object and nested array",o);
+					break;
+					default:
+
+				}
+            }
+
+      ]]>
+    </mx:Script>
+	<mx:Style source="css/logger.css"/>
+    <mx:Text htmlText="Press F12 to open Firebug" paddingBottom="20"/>    	
+    <mx:HBox horizontalGap="10">
+		 <mx:Button label="info" 
+					click="traceToFirebug(event);" id="infoButton" width="100" height="50"/> 
+		 <mx:Button label="error" 
+					click="traceToFirebug(event);" id="errorButton" width="100" height="50"/>   	
+		 <mx:Button label="warn" 
+					click="traceToFirebug(event);" id="warnButton" width="100" height="50"/> 
+		 <mx:Button label="debug" 
+					click="traceToFirebug(event);" id="debugButton" width="100" height="50"/>
+    </mx:HBox>	 			
+</mx:Application>
