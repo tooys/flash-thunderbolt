@@ -1,78 +1,78 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<title>ThunderBolt - Flash debugging in Firefox - Sample App</title>
+	<title>ThunderBolt - Flash Debugging At Your Webbrowser</title>
 	
-	<script type="text/javascript" src="thunderbolt.js"></script>
+	<script type="text/javascript" src="js/swfobject.js"></script>
+	<script type="text/javascript" src="js/thunderbolt.js"></script>
 	
-	<style type="text/css">
+	<script type="text/javascript">
 		
-		body {
-			background-color:#FFFFFF;
-			color:#242E35;
-			font-family:"Lucida Grande","Lucida Sans Unicode",Arial,Helvetica,sans-serif;
-			font-size:12px;
-			margin:10px 10px;
-		}		
+		var thunderbolt = {
+			
+			file: "thunderbolt.swf",
+			version: 0.34,
+			movie: null,
+			target: "flashcontent",
+			
+			init: function(){
+				
+				var url = this.file + "?version=" + this.version;
+				
+				this.movie = new SWFObject(
+				
+					url, "ThunderBolt", 400, 200, 8, "#fff"
+				);
+				
+				this.movie.addParam("allowScriptAccess", "always");
+				this.movie.write(this.target);
+			},
+			
+			initSampleCode: function(){
+				
+				var links = document.getElementById("code_samples").getElementsByTagName("a");
+				
+				for (var i=0; i<links.length; i++){
+					
+					var link = links[i];
+					link.href = "javascript:" + link.innerHTML; 
+				}
+			}
+		}
 		
-		#code_samples{
-			
-			font-family: "Courier New", Courier, monospace;
-			font-size: 12px;
-			color: #666666;
-		}
-
-		#code_samples a{
-			
-			text-decoration: none;
-			color: #000099;
-		}
-		#code_samples a:hover{
-			
-			text-decoration: underline;
-		}
-		
-	</style>
+	</script>
+	
+	<link type="text/css" rel="stylesheet" href="css/styles.css"/>
 	
 </head>
-<body bgcolor="#ffffff">
-	<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" 
-		codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0" 
-		width="400" 
-		height="200" 
-		allowscriptaccess="always"
-		id="thunderbolt" 
-		align="middle">
-			
-		<param name="allowScriptAccess" value="always" />
-		<param name="movie" value="thunderbolt.swf?v=0.03" />
-		<param name="quality" value="high" />
-		<param name="bgcolor" value="#ffffff" />
-		
-		<embed src="thunderbolt.swf?v=0.03" 
-			quality="high" 
-			bgcolor="#ffffff" 
-			width="400" 
-			height="200" 
-			name="thunderbolt" 
-			align="middle" 
-			allowScriptAccess="always" 
-			type="application/x-shockwave-flash" 
-			pluginspage="http://www.macromedia.com/go/getflashplayer" />
-	</object>
+
+<body onLoad="thunderbolt.initSampleCode();">
 	
+	<div id="flashcontent">
+		
+		<script type="text/javascript">		
+			thunderbolt.init();
+		</script>
+		
+	</div>
 	  
 	<div>
-		Make sure you have <a href="http://www.getfirefox.com">Firefox</a> and <a href="http://www.getfirebug.com/">Firebug</a> enabled.
+		<p>
+			Make sure you have 
+			<a href="http://www.getfirefox.com" target="_blank">Firefox</a> and 
+			<a href="http://www.getfirebug.com/" target="_blank">Firebug</a> enabled.
+		</p>
+		
 		<h3>Try these commands via the Firebug console:</h3>
+		
 		<div id="code_samples">
 			
-			<a href='javascript:TB.inspect("_root")'>TB.inspect("_root");</a> // inspect movieclip _level0 <br/>
-			<a href='javascript:TB.set("_root.logo._x", 20);'>TB.set("_root.logo._x", 20);</a> // set new position<br/>
-			<a href='javascript:TB.set("_root.logo.label.text", "Live hacking made possible!");'>TB.set("_root.logo.label.text", "Live hacking made possible!");</a> // change text<br/>
-			<a href='javascript:TB.cd("_root.logo.label");'>TB.cd("_root.logo.label");</a> // set new context<br/>
-			<a href='javascript:TB.inspect("_x");'>TB.inspect("_x");</a> // y position of current content<br/>
-			<a href='javascript:TB.cd("..");'>TB.cd("..");</a> // select parent movieclip<br/>
+			<a href="#">TB.inspect("_root");</a> 			// inspect movieclip _level0 <br/>
+			<a href="#">TB.set("_root.logo._x", 20);</a> 	// set new position <br/>
+			<a href="#">TB.set("_root.logo.label.text", "Live hacking made possible!");</a> // change text<br/>
+			<a href="#">TB.cd("_root.logo.label");</a> 		// set new context<br/>
+			<a href="#">TB.inspect("_x");</a> 				// y position of current content<br/>
+			<a href="#">TB.cd("..");</a> 					// select parent movieclip<br/>
 		</div>
 		
 		<p>Read more about <a href="http://code.google.com/p/flash-thunderbolt/">this project</a>.</p>
