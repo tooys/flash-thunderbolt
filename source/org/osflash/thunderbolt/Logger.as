@@ -91,9 +91,9 @@ class org.osflash.thunderbolt.Logger {
 				traceObject = logLevel.messageModified ? logLevel.message : traceObject;
 				
 				// start group for xml output
-				if (info.objectType == "xml"){
+				if (info.objectType == "xml" || info.objectType == "xmlnode"){
 					
-					Console.group(info, traceObject);
+					Console.group(info, new StringyfiedObject(traceObject));
 					Console.dirxml(traceObject);
 					Console.groupEnd();
 						
