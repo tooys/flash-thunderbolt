@@ -87,7 +87,7 @@ class org.osflash.thunderbolt.logging.LogInfo {
 		// cunstruct info object
 		return "{" +
 		
-			"thunderbolt:'" + "                                                    		'," +  
+			"___________:'" + "                                                    		'," +  
 			"description:'" + description 				+ "'," +  
 			"method:'"		+ methodName				+ "'," +
 			"line:'"		+ lineNumber				+ "'," +
@@ -101,7 +101,7 @@ class org.osflash.thunderbolt.logging.LogInfo {
 	}
 	
 	/**
-	 * Get the current execution time as a well formated string.
+	 * Get well formated current execution.
 	 * @return	Current time
 	 */
 	private function get time():String{
