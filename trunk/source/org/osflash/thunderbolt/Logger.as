@@ -96,35 +96,30 @@ class org.osflash.thunderbolt.Logger {
 					Console.group(info, traceObject);
 					Console.dirxml(traceObject);
 					Console.groupEnd();
-									
+						
+				// group multi line strings			
+				} else if (typeof traceObject == "string" && traceObject.indexOf("\n") > -1 && logLevel.console == Console.log) {
+					
+					// begin group
+					Console.group(info);
+		
+					// log single lines
+					var lines:Array = traceObject.split("\n");
+					
+					for (var i:Number = 0; i < lines.length; i++){
+						
+						Console.log(lines[i]);		
+					}
+					
+					// end group
+					Console.groupEnd();
+					
 				} else {
-							
-					// send trace to console
-					Logger.callFirebug(logLevel.console, info, traceObject);
+					
+					// request javascript action
+					logLevel.console(info, ":", new StringyfiedObject(traceObject));				
 				}
 			}
-		}
-	}
-	
-	private static function callFirebug(method:Function, infoObject:LogInfo, traceObject:Object){
-		
-		if (typeof traceObject == "string" && traceObject.indexOf("\n") > -1 && method == Console.log) {
-			
-			Console.group(infoObject);;
-
-			var lines:Array = traceObject.split("\n");
-			
-			for (var i:Number = 0; i < lines.length; i++){
-				
-				Console.log(lines[i]);		
-			}
-
-			Console.groupEnd();
-			
-		} else {
-			
-			// request javascript action
-			method(infoObject, new StringyfiedObject(traceObject));				
 		}
 	}
 }
