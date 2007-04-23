@@ -1,6 +1,7 @@
 import org.osflash.thunderbolt.data.Parser;
 import org.osflash.thunderbolt.io.Console;
 import org.osflash.thunderbolt.Logger;
+import org.osflash.thunderbolt.data.ObjectType;
 /**
  * LogInfo objects are used to parse information provided by the MTASC trace facility
  * and provide more detailed information about the current trace action.
@@ -43,7 +44,7 @@ class org.osflash.thunderbolt.logging.LogInfo {
 		this.fileName = fileName.split("\\").join("/") || ""; 
 		this.lineNumber = lineNumber || 0;
 
-		this.objectType = Parser.getObjectType(traceObject);
+		this.objectType = ObjectType.get(traceObject);
 		
 		if (!LogInfo.frameNumber){
 		
@@ -58,7 +59,7 @@ class org.osflash.thunderbolt.logging.LogInfo {
 	 */
 	private static function initializeFrameCounter():MovieClip{
 	
-		LogInfo.frameCounter = _root.createEmptyMovieClip("thunderbolt", _root.getNextHighestDepth());
+		LogInfo.frameCounter = _root.createEmptyMovieClip("thunderbolt_frame_listener_mc", _root.getNextHighestDepth());
 		
 		LogInfo.frameCounter.onEnterFrame = function(){
 		

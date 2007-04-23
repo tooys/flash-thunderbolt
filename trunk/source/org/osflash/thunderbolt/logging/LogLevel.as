@@ -47,10 +47,10 @@ class org.osflash.thunderbolt.logging.LogLevel {
 			switch (fullMessage.charAt(0).toLowerCase()) {
 			
 				case "d": this.level = LogLevel.LOG;		break;
-				case "i": this.level = LogLevel.INFO;	break;
+				case "i": this.level = LogLevel.INFO;		break;
 				case "w": this.level = LogLevel.WARNING;	break;
-				case "e": this.level = LogLevel.ERROR;	break;
-				case "f": this.level = LogLevel.FATAL;	break;
+				case "e": this.level = LogLevel.ERROR;		break;
+				case "f": this.level = LogLevel.FATAL;		break;
 			}
 			
 			this.message = String(fullMessage).slice(2);

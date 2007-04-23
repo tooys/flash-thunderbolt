@@ -1,3 +1,4 @@
+import org.osflash.thunderbolt.data.ObjectType;
 /**
  * A Parser to convert an object into its JavaScript Object Notation 
  * (JSON) so it could be passed to JavaScipt calls.
@@ -6,6 +7,8 @@
  */
  
 class org.osflash.thunderbolt.data.Parser{
+	
+	private static var maxDepth:Number = 10;
 	
 	// movieclip properties that should be displayed
 	private static var mcProperties:Array = [
@@ -25,16 +28,18 @@ class org.osflash.thunderbolt.data.Parser{
 	 * @param	target	Object to stringify
 	 * @param	depth	Optional paramter specifying the level of recusion
 	 * @return 			Stringified object in JavaScript Object Notation (JSON)
+	 * 
+	 * @see	http://www.json.org/json.as
 	 */
-    static function stringify(target:Object, depth:Number):String {
+    public static function stringify(target:Object, depth:Number):String {
 
         var output:String = '';
 
-		var type:String = getObjectType(target);
+		var type:String = ObjectType.get(target);
 		
 		if (depth === undefined){
 		
-			depth = 2; 
+			depth = Parser.maxDepth; 
 		} 
 		
 		// stop execution if depth is equal or less than zero
@@ -42,25 +47,25 @@ class org.osflash.thunderbolt.data.Parser{
 		
 		if (stopAnalysing){
 			
-			return Parser.typeIsComplex(type) ? '{toString:function(){return "[' + type + ']"}}' : stringify(target);
+			return ObjectType.get(type) ? Parser.returnString(type, true) : Parser.stringify(target);
 		}
 
         switch (type) {
         	
         	case 'textfield': 
         	
-        		output = 'toString:function(){return "[textfield | ' + target + ']"}';
+        		output = Parser.returnString("textfield | " + target);
         		
                 for (var all:String in target) {
                 	
-                    output += "," + all + ':' + stringify(target[all].toString());
+                    output += "," + all + ':' + Parser.stringify(target[all].toString());
                 } 
         		
         		return "{" + output + "}";     		
         		
         	case 'movieclip':
         	
-        		output = 'toString:function(){return "[movieclip | ' + target + ']"}'; 
+        		output = Parser.returnString("movieclip | " + target); 
         		
         		for (var i:Number=0; i< Parser.mcProperties.length; i++) {
         		
@@ -73,17 +78,16 @@ class org.osflash.thunderbolt.data.Parser{
 	        
                 for (var all:String in target) {
                 	
-                    output += (output ? "," : "") + all + ':' + stringify(target[all], depth-1);
+                    output += (output ? "," : "") + all + ':' + Parser.stringify(target[all], depth-1);
                 }
                 
                 return '{' + output + '}';
-                
             
             case 'array':
                         
                 for (var i:Number = 0; i < target.length; i++) {
                 	
-                    output += (output ? "," : "") + stringify(target[i], depth-1);
+                    output += (output ? "," : "") + Parser.stringify(target[i], depth-1);
                 }
                 
                 return '[' + output + ']';
@@ -93,67 +97,19 @@ class org.osflash.thunderbolt.data.Parser{
 	        case 'boolean':		return String(target);
 	        case 'date':		return 'new Date(' + target.valueOf() + ')';
 	        case 'xml':
-	        case 'xmlnode':		return '{xml:"' + target.toString().split('"').join('\\"') + '", toString:function(){return "[xml]";}}';
+	        case 'xmlnode':		return '{xml:"' + target.toString().split('"').join('\\"') + '", ' + Parser.returnString('xml') + '}';
 	        case 'undefined': 	return 'undefined';
-	       	case 'function':  	return '{toString:function(){return "[' + type + ']"}}';
+	       	case 'function':  	return Parser.returnString(type, true);
 	            
 	        default: 			return 'null';
         }
     }
     
-	/**
-	 * Get the "real" type of an object. Possible values are:
-	 * undefined, null, number, string, boolean, number,
-	 * object, array, date, movieclip, button, textfield,
-	 * xml and xmlnode.
-	 *
-	 * @param	target	The object to analyse.
-	 * @return 	Object type.
-	 */
-	static function getObjectType(target:Object):String{
-	
-		var simpleTypes:Array = ["string", "boolean", "number", "undefined", "null"];
-		
-		var complexTypes:Object = {
-			
-			xmlnode: 	XMLNode,
-			xml: 		XML,
-			textfield: 	TextField,
-			button: 	Button,
-			movieclip: 	MovieClip,
-			array: 		Array,
-			date: 		Date
-		};
-		
-		for (var i:Number=0; i<simpleTypes.length; i++) {
-			
-			if (simpleTypes[i] == typeof(target)){
-			
-				return simpleTypes[i];	
-			}
-		}
-		
-		for (var type:String in complexTypes) {
-		
-			if (target instanceof complexTypes[type]){
-			
-				return type;	
-			}
-		}
-		
-		return typeof target;
-	}
-
-    
-    /**
-     * Test if the object type is complex. This could be used 
-     * to execute recursive code executions.
-     *
-     * @param	type	The object type
-     * @return 			True if object type is complex
-     */
-    static function typeIsComplex(type:Object):Boolean{
+    private static function returnString(value:String, enclose:Boolean):String{
     	
-    	return type == "object" || type == "movieclip";
-    }    
+    	var start:String = enclose ? "{" : "";
+    	var end:String = enclose ? "}" : "";
+    	
+    	return start + 'toString:function(){return "[' + value + ']"}' + end;
+    }
 }
