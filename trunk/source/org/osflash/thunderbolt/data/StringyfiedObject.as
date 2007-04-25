@@ -13,12 +13,12 @@ class org.osflash.thunderbolt.data.StringyfiedObject {
 	 * Creates a new instance holding the parsed object data.
 	 *
 	 * @param	data	The object to be passed
-	 * @param	depth	Level of recursion
+	 * @param	depth	Level of recursion (optional)
 	 * @return 			A new instance holding the parsed object data
 	 */
-	function StringyfiedObject(data:Object, depth:Number){
+	function StringyfiedObject(data:Object, depth:Number, label:String){
 	
-		this.dataString = Parser.stringify(data, depth);	
+		this.dataString = Parser.stringify(data, depth, label);	
 	}
 	
 	/**

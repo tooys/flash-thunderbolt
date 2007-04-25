@@ -25,6 +25,16 @@ var ThunderBolt = {
 		this.getFlash().set(this.getFullTarget(target), value);
 	},
 	
+	profile: function(target){
+		
+		this.getFlash().profile(target);
+	},
+	
+	profileEnd: function(target){
+		
+		this.getFlash().profileEnd();
+	},
+	
 	// set the target for future actions
 	cd: function(path){
 		
