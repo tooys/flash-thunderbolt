@@ -60,19 +60,38 @@
 		<p>
 			Make sure you have 
 			<a href="http://www.getfirefox.com" target="_blank">Firefox</a> and 
-			<a href="http://www.getfirebug.com/" target="_blank">Firebug</a> enabled.
+			<a href="http://www.getfirebug.com/" target="_blank">Firebug</a> enabled.<br/>
+			Open Firebug to see the returned messages.
 		</p>
 		
 		<h3>Try these commands via the Firebug console:</h3>
 		
 		<div id="code_samples">
 			
-			<a href="#">TB.inspect("_root");</a> 			// inspect movieclip _level0 <br/>
-			<a href="#">TB.set("_root.logo._x", 20);</a> 	// set new position <br/>
-			<a href="#">TB.set("_root.logo.label.text", "Live hacking made possible!");</a> // change text<br/>
-			<a href="#">TB.cd("_root.logo.label");</a> 		// set new context<br/>
-			<a href="#">TB.inspect("_x");</a> 				// y position of current content<br/>
-			<a href="#">TB.cd("..");</a> 					// select parent movieclip<br/>
+			<p>
+				// inspect obejcts and set attributes <br/> 
+				<a href="#">TB.inspect("_root");</a> 								// inspect movieclip _level0 <br/>
+				<a href="#">TB.inspect("Sample.APP.profileObject");</a> 			// inspect object <br/>
+				<a href="#">TB.set("_root.logo._x", 20);</a>					 	// set new position <br/>
+				<a href="#">TB.set("_root.logo.label.text", "Live hacking made possible!");</a> // change text<br/>
+			</p>
+			<p>
+				// set context for later inspection <br/> 
+				<a href="#">TB.cd("_root.logo.label");</a> 							// set new context<br/>
+				<a href="#">TB.inspect("_x");</a> 									// x position of current content<br/>
+				<a href="#">TB.cd("..");</a> 										// select parent movieclip<br/>
+			</p>
+			<p>
+				// execute methods <br/> 
+				<a href="#">TB.run("Sample.APP.randomizeAlpha(100)");</a> 			// run a method<br/>
+				<a href="#">TB.run("Sample.APP.restoreAlpha()");</a> 				// run another method<br/>
+			</p>
+			<p>
+				// test performance <br/> 
+				<a href="#">TB.profile("Sample.APP.profileObject");</a> 			// start profiling for all methods in object<br/>
+				<a href="#">TB.run("Sample.APP.profileObject.method2()");</a> 		// execute profiling test<br/>
+				<a href="#">TB.profileEnd();</a> 									// stop profiling and see results<br/>
+			</p>
 		</div>
 		
 		<p>Read more about <a href="http://code.google.com/p/flash-thunderbolt/">this project</a>.</p>

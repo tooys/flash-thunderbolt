@@ -88,8 +88,7 @@ class org.osflash.thunderbolt.logging.LogInfo {
 		// cunstruct info object
 		return "{" +
 		
-			"___________:'" + "                                                    		'," +  
-			"description:'" + description 				+ "'," +  
+			"description:'" + description 				+ "\n'," +  
 			"method:'"		+ methodName				+ "'," +
 			"line:'"		+ lineNumber				+ "'," +
 			"type:'"		+ objectType				+ "'," +

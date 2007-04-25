@@ -31,7 +31,7 @@ class org.osflash.thunderbolt.data.Parser{
 	 * 
 	 * @see	http://www.json.org/json.as
 	 */
-    public static function stringify(target:Object, depth:Number):String {
+    public static function stringify(target:Object, depth:Number, label:String):String {
 
         var output:String = '';
 
@@ -47,14 +47,14 @@ class org.osflash.thunderbolt.data.Parser{
 		
 		if (stopAnalysing){
 			
-			return ObjectType.get(type) ? Parser.returnString(type, true) : Parser.stringify(target);
+			return ObjectType.get(type) ? Parser.returnString(type, true, true) : Parser.stringify(target);
 		}
 
         switch (type) {
         	
         	case 'textfield': 
         	
-        		output = Parser.returnString("textfield | " + target);
+        		output = Parser.returnString("textfield | " + target, false, true);
         		
                 for (var all:String in target) {
                 	
@@ -63,9 +63,10 @@ class org.osflash.thunderbolt.data.Parser{
         		
         		return "{" + output + "}";     		
         		
+        	case 'button':
         	case 'movieclip':
         	
-        		output = Parser.returnString("movieclip | " + target); 
+        		output = Parser.returnString(type + " | " + target, false, true); 
         		
         		for (var i:Number=0; i< Parser.mcProperties.length; i++) {
         		
@@ -79,6 +80,11 @@ class org.osflash.thunderbolt.data.Parser{
                 for (var all:String in target) {
                 	
                     output += (output ? "," : "") + all + ':' + Parser.stringify(target[all], depth-1);
+                }
+                
+                if (label) {
+                
+                	output += (output ? "," : "") + Parser.returnString(label);
                 }
                 
                 return '{' + output + '}';
@@ -97,19 +103,19 @@ class org.osflash.thunderbolt.data.Parser{
 	        case 'boolean':		return String(target);
 	        case 'date':		return 'new Date(' + target.valueOf() + ')';
 	        case 'xml':
-	        case 'xmlnode':		return '{xml:"' + target.toString().split('"').join('\\"') + '", ' + Parser.returnString('xml') + '}';
+	        case 'xmlnode':		return '{xml:"' + target.toString().split('"').join('\\"') + '", ' + Parser.returnString('xml', false, true) + '}';
 	        case 'undefined': 	return 'undefined';
-	       	case 'function':  	return Parser.returnString(type, true);
 	            
-	        default: 			return 'null';
+	        default: 			return Parser.returnString(type, true, true);
         }
     }
     
-    private static function returnString(value:String, enclose:Boolean):String{
+    private static function returnString(value:String, enclose:Boolean, addBrackets:Boolean):String{
     	
-    	var start:String = enclose ? "{" : "";
-    	var end:String = enclose ? "}" : "";
+    	value = addBrackets ? "[" + value + "]" : value;	
+		value = 'toString:function(){return "' + value + '"}';
+    	value = enclose ? "{" + value + "}" : value;	
     	
-    	return start + 'toString:function(){return "[' + value + ']"}' + end;
+    	return value;
     }
 }
