@@ -50,5 +50,4 @@ TB.profile("_root.content", "render");
 
 = Using ThunderBolt for AS3 / Flex 2 logging ==
 
-For first impressions [http://flash-thunderbolt.googlecode.com/svn/trunk/as3/example/index.html click here] ;)
-
+For first impressions [http://flash-thunderbolt.googlecode.com/files/thunderboltFlex2Example.html click here] ;)
