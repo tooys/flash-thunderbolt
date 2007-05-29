@@ -43,7 +43,7 @@ class org.osflash.thunderbolt.io.Console {
 	// Prints the XML source tree of an HTML or XML element.
 	public static function dirxml(node:Object){
 	
-		var out = node.toString().split('"').join('\\"');
+		var out = Parser.stringify(node.toString());
 	
 		var returnObject:JSReturn = new JSReturn(
 			"var n = document.createElement('xml');" +
@@ -78,19 +78,22 @@ class org.osflash.thunderbolt.io.Console {
 			for (var i:Number=0; i < parameter.length; i++) {
 			
 				if (typeof parameter[i] == "string" && parameter[i].indexOf('"') != 0){
-					
+
 					parameter[i] = Parser.stringify(parameter[i]);
 				}
+
+				parameter[i] = "[" + parameter[i].toString() + "][0]";
 			}
 			
 		} else {
-			
-			parameterString = "";
+		
+			parameter = [];	
 		}
-
-		parameterString = parameter.join(",");
+		
+		
 	
-		getURL("javascript:console." + method + "(" + parameterString + ");");		
+//		getURL("javascript:console." + method + "(" + parameterString + ");");		
+		ExternalInterface.call("tb_debug", method, parameter);		
 	}
 	
 	// Check if Firebug is enabled
@@ -108,6 +111,19 @@ class org.osflash.thunderbolt.io.Console {
 			if (Console._enabled){
 				
 				Console.log("Firebug enabled", Console.version);
+				
+				getURL("javascript:" +
+				"	var tb_debug = function(method, parameter){" +
+				"		var output = [];" +
+				"		try {" +
+				"			for(var i=0; i< parameter.length; i++){" +
+				"				output[i] = eval(unescape(parameter[i]));" +
+				"			};" +
+				"			console[method].apply(this, output);" +
+				"		} catch(e){" +
+				"			console.error(':::', e);"+
+				"		};" +
+				"	}");		
 			} 
 		}
 	}	
