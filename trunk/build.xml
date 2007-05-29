@@ -58,7 +58,7 @@
 	
 	<!-- Open Firefox -->
 	<target name="run" depends="deploy" description="Open Firefox">
-		<exec executable="${firefox}" spawn="true">
+		<exec executable="${firefox.app}" spawn="true">
 			<arg value="${deploy.folder}${targethtml}"/>
 		</exec> 
 	</target>

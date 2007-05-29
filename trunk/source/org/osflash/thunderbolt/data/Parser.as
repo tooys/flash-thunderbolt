@@ -54,6 +54,8 @@ class org.osflash.thunderbolt.data.Parser{
         	
         	case 'textfield': 
         	
+	        	return Parser.returnString(type, true, true);
+        	
         		output = Parser.returnString("textfield | " + target, false, true);
         		
                 for (var all:String in target) {
@@ -99,11 +101,19 @@ class org.osflash.thunderbolt.data.Parser{
                 return '[' + output + ']';
                     	            
 	        case 'number': 		return isFinite(target) ? String(target) : 'null';
-	        case 'string': 		return '"' + target.split('"').join('\\"') + '"';
+	        case 'string': 		
+	        	
+	        	output = target.split('"').join("%22");
+	        	output = output.split('\n').join("");
+	        	output = output.split('\t').join("");
+	        	output = output.split('\r').join("");
+	        
+	        	return '"' + output + '"';
 	        case 'boolean':		return String(target);
 	        case 'date':		return 'new Date(' + target.valueOf() + ')';
 	        case 'xml':
-	        case 'xmlnode':		return '{xml:"' + target.toString().split('"').join('\\"') + '", ' + Parser.returnString('xml', false, true) + '}';
+	        case 'xmlnode':		return Parser.returnString(type, true, true);
+//	        case 'xmlnode':		return '{xml:%22' + target.toString().split('"').join('%22') + '%22, ' + Parser.returnString('xml', false, true) + '}';
 	        case 'undefined': 	return 'undefined';
 	            
 	        default: 			return Parser.returnString(type, true, true);
@@ -113,7 +123,7 @@ class org.osflash.thunderbolt.data.Parser{
     private static function returnString(value:String, enclose:Boolean, addBrackets:Boolean):String{
     	
     	value = addBrackets ? "[" + value + "]" : value;	
-		value = 'toString:function(){return "' + value + '"}';
+		value = 'toString:function(){return %22' + value + '%22}';
     	value = enclose ? "{" + value + "}" : value;	
     	
     	return value;
