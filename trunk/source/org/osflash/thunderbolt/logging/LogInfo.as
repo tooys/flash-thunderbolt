@@ -2,6 +2,7 @@ import org.osflash.thunderbolt.data.Parser;
 import org.osflash.thunderbolt.io.Console;
 import org.osflash.thunderbolt.Logger;
 import org.osflash.thunderbolt.data.ObjectType;
+import org.osflash.thunderbolt.Settings;
 /**
  * LogInfo objects are used to parse information provided by the MTASC trace facility
  * and provide more detailed information about the current trace action.
@@ -49,7 +50,11 @@ class org.osflash.thunderbolt.logging.LogInfo {
 		if (!LogInfo.frameNumber){
 		
 			LogInfo.frameNumber = 1;
-			LogInfo.initializeFrameCounter();	
+			
+			if (Settings.USE_FRAME_COUNTER){
+			
+				LogInfo.initializeFrameCounter();
+			}
 		}
 	}
 	

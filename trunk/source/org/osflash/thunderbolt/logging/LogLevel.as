@@ -1,4 +1,5 @@
 import org.osflash.thunderbolt.io.Console;
+import org.osflash.thunderbolt.Settings;
 /**
  * LogLevel class based on message shorcuts:
  * 
@@ -12,11 +13,11 @@ import org.osflash.thunderbolt.io.Console;
  */
 class org.osflash.thunderbolt.logging.LogLevel {
 	
-	private static var LOG:String 		= "LOG";
-	private static var INFO:String 		= "INFO";
-	private static var WARNING:String 	= "WARNING";
-	private static var ERROR:String 	= "ERROR";
-	private static var FATAL:String 	= "FATAL";
+	public static var LOG:String 		= "LOG";
+	public static var INFO:String 		= "INFO";
+	public static var WARNING:String 	= "WARNING";
+	public static var ERROR:String 		= "ERROR";
+	public static var FATAL:String 		= "FATAL";
 	
 	public var level:String;
 	public var message:String;
@@ -55,7 +56,34 @@ class org.osflash.thunderbolt.logging.LogLevel {
 			
 			this.message = String(fullMessage).slice(2);
 			this.messageModified = true;
-		} 		
+		}	
+	}
+	
+	/**
+	 * Match string based level with numeric index. 
+	 */	
+	public static function getLevelIndex(level:String):Number{
+	
+		switch (level){
+			
+			case LogLevel.INFO: 	return 1;	
+			case LogLevel.WARNING: 	return 2;	
+			case LogLevel.ERROR: 	return 3;	
+			case LogLevel.FATAL: 	return 4;
+			
+			default: 				return 0;
+		}
+	}
+	
+	/**
+	 * Check if the log should be send to the output based on
+	 * the current and global log level.
+	 * 
+	 * @return true if log should be send to output.
+	 */
+	public function get sendToOutput():Boolean {
+		
+		return (LogLevel.getLevelIndex(this.level) >= LogLevel.getLevelIndex(Settings.LOG_LEVEL));
 	}
 	
 	/**

@@ -30,6 +30,7 @@ import org.osflash.thunderbolt.data.StringyfiedObject;
 import org.osflash.thunderbolt.io.Commandline;
 import org.osflash.thunderbolt.logging.LogInfo;
 import org.osflash.thunderbolt.logging.LogLevel;
+import org.osflash.thunderbolt.Settings;
 /**
  * @author Martin Kleppe <kleppe@gmail.com>
  * @link http://code.google.com/p/flash-thunderbolt/
@@ -72,53 +73,61 @@ class org.osflash.thunderbolt.Logger {
 				
 			if (String(traceObject).indexOf("+++") == 0){
 			
-				var message:String = String(traceObject).slice(String(traceObject).charAt(3) == " " ? 4 : 3);
+				if (Settings.LOG_LEVEL == LogLevel.LOG){
 			
-				// open group	
-				Console.group(message + (message ? " " : "") + "(" + fullClassWithMethodName + ")");
+					var message:String = String(traceObject).slice(String(traceObject).charAt(3) == " " ? 4 : 3);
+				
+					// open group	
+					Console.group(message + (message ? " " : "") + "(" + fullClassWithMethodName + ")");
+				}
 				
 			} else if (traceObject == "---"){
 				
-				// close group
-				 Console.groupEnd();
+				if (Settings.LOG_LEVEL == LogLevel.LOG){
+					// close group
+					Console.groupEnd();
+				}
 				
 			} else {
 	
 				// switch between console actions: log, info, warn, error
 				var logLevel:LogLevel = new LogLevel(traceObject);
-	
-				// check if message should be sliced									
-				traceObject = logLevel.messageModified ? logLevel.message : traceObject;
 				
-				// start group for xml output
-//				if (info.objectType == "xml" || info.objectType == "xmlnode"){
-				if (false){
+				if (logLevel.sendToOutput){
+	
+					// check if message should be sliced									
+					traceObject = logLevel.messageModified ? logLevel.message : traceObject;
 					
-					Console.group(info, new StringyfiedObject(traceObject));
-					Console.dirxml(traceObject);
-					Console.groupEnd();
+					// start group for xml output
+	//				if (info.objectType == "xml" || info.objectType == "xmlnode"){
+					if (false){
 						
-				// group multi line strings			
-				} else if (typeof traceObject == "string" && traceObject.indexOf("\n") > -1 && logLevel.console == Console.log) {
-					
-					// begin group
-					Console.group(info);
-		
-					// log single lines
-					var lines:Array = traceObject.split("\n");
-					
-					for (var i:Number = 0; i < lines.length; i++){
+						Console.group(info, new StringyfiedObject(traceObject));
+						Console.dirxml(traceObject);
+						Console.groupEnd();
+							
+					// group multi line strings			
+					} else if (typeof traceObject == "string" && traceObject.indexOf("\n") > -1 && logLevel.console == Console.log) {
 						
-						Console.log(lines[i]);		
+						// begin group
+						Console.group(info);
+			
+						// log single lines
+						var lines:Array = traceObject.split("\n");
+						
+						for (var i:Number = 0; i < lines.length; i++){
+							
+							Console.log(lines[i]);		
+						}
+						
+						// end group
+						Console.groupEnd();
+						
+					} else {
+						
+						// request javascript action
+						logLevel.console(info, ":", new StringyfiedObject(traceObject));				
 					}
-					
-					// end group
-					Console.groupEnd();
-					
-				} else {
-					
-					// request javascript action
-					logLevel.console(info, ":", new StringyfiedObject(traceObject));				
 				}
 			}
 		}
