@@ -21,5 +21,5 @@ class org.osflash.thunderbolt.Settings {
 	 * LogLevel.ERROR	- traces error and fatal messages
 	 * LogLevel.FATAL	- traces fatal messages only
 	 */
-	public static var LOG_LEVEL:String = LogLevel.WARNING;	
+	public static var LOG_LEVEL:String = LogLevel.LOG;	
 }
