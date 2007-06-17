@@ -17,7 +17,7 @@ global
 
 Application
 {
-	background-color: #000;
+	background-color: #333;
 	backgroundGradientColors: #000, #333;
 	padding-top: 30px;
 	padding-left: 10;
@@ -34,3 +34,10 @@ Button
 	highlightAlphas: 1, 0.12;
 	
 }
+
+LinkButton
+{
+	font-weight: normal;
+	font-size: 12px; 
+}
+
