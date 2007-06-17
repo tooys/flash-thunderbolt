@@ -3,7 +3,7 @@
 * 
 * @author	Jens Krause [www.websector.de]
 * @date		06/17/07
-* @see		http://www.websector.de/blog/2007/06/17/update-logging-flex-2-and-as-3-apps-with-firebug-and-thunderbolt/
+* @see		http://www.websector.de/blog/?s=thunderbolt
 * @see		http://code.google.com/p/flash-thunderbolt/
 * @source	http://flash-thunderbolt.googlecode.com/svn/trunk/as3/
 * 
