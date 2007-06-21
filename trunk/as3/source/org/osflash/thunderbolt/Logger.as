@@ -1,5 +1,5 @@
 /**
-* Logging Flex and AS3 projects with Firebug using ThunerBolt
+* Logging Flex and AS3 projects with Firebug using ThunderBolt
 * 
 * @author	Jens Krause [www.websector.de]
 * @date		06/17/07
