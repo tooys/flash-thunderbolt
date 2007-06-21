@@ -4,49 +4,60 @@
 	<mx:Script>
         <![CDATA[
         	import org.osflash.thunderbolt.Logger;
-
-            import flash.events.Event;
             
             private function traceToFirebug(event:Event):void  
             {
-				var n: int = 5;
-				var s: String = "Lorem ipsum";
-				var o: Object = {exampleArray: ["firstValue", "secondValue"], y: 10, exampleString: "Hello", nestedObject: {x: 100, y: 200}};
-				var a: Array = ["firstValue",{x: 100, y: 200}, "secondValue"];
+				//
+				// Optionally you can hide the time stamp
+				// Logger.includeTime = false;
+
+				var myNumber: int = 5;
+				var myString: String = "Lorem ipsum";
+				var myObject: Object = {exampleArray: ["firstValue", "secondValue"], y: 10, exampleString: "Hello", nestedObject: {x: 100, y: 200}};
+				var myArray: Array = ["firstValue",{x: 100, y: 200}, "secondValue"];
 				
 				var label: String = event.target.label;
 				
 				switch (label)
 				{
 					case "info":
-						Logger.trace ("i a simple string", s);
-					break;
-					case "error":
-						Logger.trace ("i a number typed as int", n);
+						Logger.info ("A simple string", myString);
 					break;
 					case "warn":
-						Logger.trace ("e an array with a nested object: ", a);
+						Logger.warn ("Two log objects: A number typed as int and a string", myNumber, myString);
+					break;
+					case "error":
+						Logger.error ("An array with a nested object: ", myArray);
 					break;
 					case "debug":
-						Logger.trace ("w an object with a nested object and nested array",o);
+						Logger.debug ("An object with a nested object and nested array", myObject);
 					break;
 					default:
 
 				}
+            }           
+            
+            private function getFireBug( ):void
+            {
+             	var url:URLRequest = new URLRequest( "http://www.getfirebug.com/" );
+                navigateToURL( url );
             }
-
+		
       ]]>
     </mx:Script>
 	<mx:Style source="css/logger.css"/>
-    <mx:Text htmlText="Press F12 to open Firebug" paddingBottom="20"/>    	
+    <mx:Text htmlText="Using ThunderBoltTarget based on the Flex 2.0 Logging Framework"  paddingBottom="15" />
     <mx:HBox horizontalGap="10">
 		 <mx:Button label="info" 
 					click="traceToFirebug(event);" id="infoButton" width="100" height="50"/> 
-		 <mx:Button label="error" 
-					click="traceToFirebug(event);" id="errorButton" width="100" height="50"/>   	
 		 <mx:Button label="warn" 
 					click="traceToFirebug(event);" id="warnButton" width="100" height="50"/> 
+		 <mx:Button label="error" 
+					click="traceToFirebug(event);" id="errorButton" width="100" height="50"/>   	
 		 <mx:Button label="debug" 
-					click="traceToFirebug(event);" id="debugButton" width="100" height="50"/>
-    </mx:HBox>	 			
+					click="traceToFirebug(event);" id="logButton" width="100" height="50"/>
+    </mx:HBox>	  
+	<mx:Text 	htmlText="Press F12 to open Firebug" 
+				paddingTop="15" paddingBottom="5"/>
+	<mx:LinkButton label="(Who the fuck is Firebug?)" id="getFirebug" click="getFireBug();" />
 </mx:Application>
