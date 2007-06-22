@@ -46,7 +46,7 @@
       ]]>
     </mx:Script>
 	<mx:Style source="css/logger.css"/>
-    <mx:Text htmlText="Using ThunderBoltTarget based on the Flex 2.0 Logging Framework"  paddingBottom="15" />
+    <mx:Text htmlText="Using ThunderBolt AS3"  paddingBottom="15" />
     <mx:HBox horizontalGap="10">
 		 <mx:Button label="info" 
 					click="traceToFirebug(event);" id="infoButton" width="100" height="50"/> 
@@ -59,5 +59,5 @@
     </mx:HBox>	  
 	<mx:Text 	htmlText="Press F12 to open Firebug" 
 				paddingTop="15" paddingBottom="5"/>
-	<mx:LinkButton label="(Who the fuck is Firebug?)" id="getFirebug" click="getFireBug();" />
+	<mx:LinkButton label="(Get Firebug!)" id="getFirebug" click="getFireBug();" />
 </mx:Application>
