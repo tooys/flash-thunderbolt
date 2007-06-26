@@ -2,6 +2,7 @@ import flash.external.ExternalInterface;
 import org.osflash.thunderbolt.data.Parser;
 import org.osflash.thunderbolt.data.StringyfiedObject;
 import org.osflash.thunderbolt.data.JSReturn;
+import org.osflash.thunderbolt.Settings;
 /**
  * @author Martin Kleppe <kleppe@gmail.com>
  */
@@ -70,8 +71,6 @@ class org.osflash.thunderbolt.io.Console {
 	// Executes JavaScript command
 	private static function run(method, parameter:Array):Void{
 			
-		var parameterString:String;
-		
 		if (parameter){
 		
 			// check if unquoted strings are in cluded in parameters
@@ -89,11 +88,34 @@ class org.osflash.thunderbolt.io.Console {
 		
 			parameter = [];	
 		}
-		
-		
 	
-//		getURL("javascript:console." + method + "(" + parameterString + ");");		
-		ExternalInterface.call("tb_debug", method, parameter);		
+		if (Settings.USE_EXTERNAL_INTERFACE){
+	
+			// the External Interface is more stable than the
+			// getURL(JavaScript) version
+			ExternalInterface.call("tb_external_interface", method, parameter);
+			
+		} else {
+		
+			getURL("javascript:console." + method + "(" + parameter + ");");	
+		}		
+	}
+	
+	// Inject some JavaScript code to pass complex objects to FireBug
+	private static function initExternalInterFace():Void{
+
+		getURL("javascript:" +
+		"	var tb_external_interface = function(method, parameter){" +
+		"		var output = [];" +
+		"		try {" +
+		"			for(var i=0; i< parameter.length; i++){" +
+		"				output[i] = eval(unescape(parameter[i]));" +
+		"			};" +
+		"			console[method].apply(this, output);" +
+		"		} catch(e){" +
+		"			console.error(':::', e);"+
+		"		};" +
+		"	}");			
 	}
 	
 	// Check if Firebug is enabled
@@ -110,20 +132,12 @@ class org.osflash.thunderbolt.io.Console {
 			
 			if (Console._enabled){
 				
-				Console.log("Firebug enabled", Console.version);
+				if (Settings.USE_EXTERNAL_INTERFACE){
 				
-				getURL("javascript:" +
-				"	var tb_debug = function(method, parameter){" +
-				"		var output = [];" +
-				"		try {" +
-				"			for(var i=0; i< parameter.length; i++){" +
-				"				output[i] = eval(unescape(parameter[i]));" +
-				"			};" +
-				"			console[method].apply(this, output);" +
-				"		} catch(e){" +
-				"			console.error(':::', e);"+
-				"		};" +
-				"	}");		
+					Console.initExternalInterFace();	
+				}
+				
+				Console.log("Firebug v" + Console.version + " enabled.");
 			} 
 		}
 	}	

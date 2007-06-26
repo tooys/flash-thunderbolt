@@ -22,4 +22,11 @@ class org.osflash.thunderbolt.Settings {
 	 * LogLevel.FATAL	- traces fatal messages only
 	 */
 	public static var LOG_LEVEL:String = LogLevel.LOG;	
+	
+	
+	/*
+	 * Set this property to false if you expect problems with the
+	 * External Interface Logger.
+	 */
+	public static var USE_EXTERNAL_INTERFACE:Boolean = false;
 }
