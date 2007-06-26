@@ -1,4 +1,5 @@
 import org.osflash.thunderbolt.data.ObjectType;
+import org.osflash.thunderbolt.Settings;
 /**
  * A Parser to convert an object into its JavaScript Object Notation 
  * (JSON) so it could be passed to JavaScipt calls.
@@ -103,7 +104,15 @@ class org.osflash.thunderbolt.data.Parser{
 	        case 'number': 		return isFinite(target) ? String(target) : 'null';
 	        case 'string': 		
 	        	
-	        	output = target.split('"').join("%22");
+	        	if (Settings.USE_EXTERNAL_INTERFACE){
+	        	
+	        		output =  target.split('"').join("''");
+	        		
+	        	} else {
+	        		
+	        		output =  target.split('"').join('\\"');
+	        	}
+	        		
 	        	output = output.split('\n').join("");
 	        	output = output.split('\t').join("");
 	        	output = output.split('\r').join("");

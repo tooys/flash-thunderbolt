@@ -102,7 +102,7 @@ class org.osflash.thunderbolt.io.Console {
 	}
 	
 	// Inject some JavaScript code to pass complex objects to FireBug
-	private static function initExternalInterFace():Void{
+	private static function initExternalInterface():Void{
 
 		getURL("javascript:" +
 		"	var tb_external_interface = function(method, parameter){" +
@@ -134,7 +134,7 @@ class org.osflash.thunderbolt.io.Console {
 				
 				if (Settings.USE_EXTERNAL_INTERFACE){
 				
-					Console.initExternalInterFace();	
+					Console.initExternalInterface();	
 				}
 				
 				Console.log("Firebug v" + Console.version + " enabled.");
