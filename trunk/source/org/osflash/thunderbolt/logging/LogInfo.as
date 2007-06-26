@@ -128,6 +128,9 @@ class org.osflash.thunderbolt.logging.LogInfo {
 		return LogInfo._movieUrl;
 	}
 	
+	/*
+	 * Test if there is an open frame group and close it
+	 */
 	public function checkFrameGroup():Void{
 		
 		if (LogInfo.frameNumber != LogInfo.lastFrame){
