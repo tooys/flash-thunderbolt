@@ -93,15 +93,15 @@ class org.osflash.thunderbolt.logging.LogInfo {
 		// cunstruct info object
 		return "{" +
 		
-			"description:'" + description 				+ "'," +  
-			"method:'"		+ methodName				+ "'," +
-			"line:'"		+ lineNumber				+ "'," +
-			"type:'"		+ objectType				+ "'," +
-			"time:'"		+ time						+ "'," +
-			"frame:'"		+ LogInfo.frameNumber 		+ "'," +
-			"fullClass:'" 	+ fullClass 				+ "'," +
-			"file:'" 		+ fileName 					+ "'," +
-			"toString:"		+ "function(){return '" + className + "." + methodName + "'}" +
+			'description:"' + description 				+ '",' +  
+			'method:"'		+ methodName				+ '",' +
+			'line:"'		+ lineNumber				+ '",' +
+			'type:"'		+ objectType				+ '",' +
+			'time:"'		+ time						+ '",' +
+			'frame:"'		+ LogInfo.frameNumber 		+ '",' +
+			'fullClass:"' 	+ fullClass 				+ '",' +
+			'file:"' 		+ fileName 					+ '",' +
+			'toString:'		+ 'function(){return "' + className + '.' + methodName + '"}' +
 		"}";		
 	}
 	
