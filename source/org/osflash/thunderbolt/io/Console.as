@@ -138,6 +138,7 @@ class org.osflash.thunderbolt.io.Console {
 				}
 				
 				Console.log("Firebug v" + Console.version + " enabled.");
+				return Console._enabled;
 			} 
 		}
 	}	
