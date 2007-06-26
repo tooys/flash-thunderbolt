@@ -127,8 +127,8 @@ class Sample {
 	private function groupTest():Void{
 	
 		trace("+++ manually grouped output");
-		trace("these message has been grouped");
-		trace("... with another message");
+		trace("these message has 'been' grouped");
+		trace("... with \"another\" message");
 		trace("---");	
 	}
 	

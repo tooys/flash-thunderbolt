@@ -28,5 +28,5 @@ class org.osflash.thunderbolt.Settings {
 	 * Set this property to false if you expect problems with the
 	 * External Interface Logger.
 	 */
-	public static var USE_EXTERNAL_INTERFACE:Boolean = false;
+	public static var USE_EXTERNAL_INTERFACE:Boolean = true;
 }
