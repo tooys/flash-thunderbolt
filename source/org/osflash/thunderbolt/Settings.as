@@ -29,4 +29,13 @@ class org.osflash.thunderbolt.Settings {
 	 * External Interface Logger.
 	 */
 	public static var USE_EXTERNAL_INTERFACE:Boolean = true;
+	
+	/*
+	 * Set a handy shortcut to call methods from the FireBug 
+	 * JavaScript console.
+	 * 
+	 * eg: 	ThunderBolt.inspect("_root");
+	 * 		TB.inspect("_root");
+	 */
+	public static var JAVASCRIPT_CONSOLE_SHORTCUT:String = "TB";
 }
