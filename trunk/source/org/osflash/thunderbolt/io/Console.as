@@ -3,6 +3,7 @@ import org.osflash.thunderbolt.data.Parser;
 import org.osflash.thunderbolt.data.StringyfiedObject;
 import org.osflash.thunderbolt.data.JSReturn;
 import org.osflash.thunderbolt.Settings;
+import org.osflash.thunderbolt.io.JavaScriptInterface;
 /**
  * @author Martin Kleppe <kleppe@gmail.com>
  */
@@ -134,8 +135,10 @@ class org.osflash.thunderbolt.io.Console {
 				
 				if (Settings.USE_EXTERNAL_INTERFACE){
 				
-					Console.initExternalInterface();	
+					Console.initExternalInterface();
 				}
+				
+				JavaScriptInterface.injectCode();
 				
 				Console.log("Firebug v" + Console.version + " enabled.");
 				return Console._enabled;
