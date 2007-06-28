@@ -78,6 +78,11 @@ class org.osflash.thunderbolt.Logger {
 			// get more detailed information about current trace
 			var info:LogInfo = new LogInfo(traceObject, fullClassWithMethodName, fileName, lineNumber);
 			
+			if (!info.matchClassFilter()){
+			
+				return;	
+			}
+			
 			// check if movie has entered a new frame
 			info.checkFrameGroup();
 				

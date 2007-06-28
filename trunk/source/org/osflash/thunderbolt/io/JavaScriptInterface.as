@@ -23,6 +23,11 @@ class org.osflash.thunderbolt.io.JavaScriptInterface {
 		// stop the logger
 		"	stop: function(){" +
 		"		this.getFlash().stop();" +
+		"	}," +
+				
+		// filter output based on class
+		"	filter: function(className){" +
+		"		this.getFlash().filter(className);" +
 		"	}," +		
 		
 		// run an expression within flash

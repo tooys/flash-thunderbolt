@@ -46,6 +46,12 @@ class org.osflash.thunderbolt.logging.LogInfo {
 		this.lineNumber = lineNumber || 0;
 
 		this.objectType = ObjectType.get(traceObject);
+
+		// retrieve information about current trace action
+		this.classParts = this.fullClassWithMethodName.split("::");
+		this.methodName = classParts[1] || "anonymous";
+		this.fullClass = classParts[0] || "" ;
+		this.className = String(fullClass.split(".").pop()) || "Thunderbolt";
 		
 		if (!LogInfo.frameNumber){
 		
@@ -55,6 +61,27 @@ class org.osflash.thunderbolt.logging.LogInfo {
 			
 				LogInfo.initializeFrameCounter();
 			}
+		}
+	}
+	
+	public function matchClassFilter():Boolean {
+		
+		if (Settings.CLASS_FILTER == "" || Settings.CLASS_FILTER == "*"){
+		
+			return true;	
+		}
+		
+		var isPackage:Boolean = Settings.CLASS_FILTER.indexOf("*") > -1;
+		
+		if (isPackage){
+			
+			var match:String = Settings.CLASS_FILTER.split("*")[0];
+			
+			return this.fullClass.indexOf(match) == 0;
+				
+		} else {
+			
+			return this.fullClass == Settings.CLASS_FILTER;
 		}
 	}
 	
@@ -82,13 +109,7 @@ class org.osflash.thunderbolt.logging.LogInfo {
 	 */
 	public function toString():String{
 
-		// retrieve information about current trace action
-		this.classParts = this.fullClassWithMethodName.split("::");
-		this.methodName = classParts[1] || "anonymous";
-		this.fullClass = classParts[0] || "" ;
-		this.className = String(fullClass.split(".").pop()) || "Thunderbolt";
-		
-		var description:String = fullClassWithMethodName + "[" + lineNumber + "] : " + objectType + " @ " + time;
+		var description:String = this.fullClassWithMethodName + "[" + this.lineNumber + "] : " + this.objectType + " @ " + this.time;
 				
 		// cunstruct info object
 		return "{" +
