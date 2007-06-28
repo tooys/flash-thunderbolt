@@ -23,6 +23,13 @@ class org.osflash.thunderbolt.Settings {
 	 */
 	public static var LOG_LEVEL:String = LogLevel.LOG;	
 	
+
+	/*
+	 * If you want to trace debug messages only at a specific time
+	 * you may set this value to "true" and later activate the debugger
+	 * calling ThunderBolt.start(); via the console. 
+	 */
+	public static var INITALLY_STOPPED:Boolean = false;
 	
 	/*
 	 * Set this property to false if you expect problems with the
