@@ -14,6 +14,16 @@ class org.osflash.thunderbolt.io.JavaScriptInterface {
 		"	inspect: function(target){" +
 		"		this.getFlash().inspect(this.getFullTarget(target));" +
 		"	}," +
+
+		// start the logger
+		"	start: function(){" +
+		"		this.getFlash().start();" +
+		"	}," +
+		
+		// stop the logger
+		"	stop: function(){" +
+		"		this.getFlash().stop();" +
+		"	}," +		
 		
 		// run an expression within flash
 		"	run: function(expression){" +

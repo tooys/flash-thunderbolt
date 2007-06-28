@@ -40,8 +40,13 @@ import org.osflash.thunderbolt.Settings;
 class org.osflash.thunderbolt.Logger {
 	
 	private static var initialized:Boolean = false;
+	
+	public static var stopped:Boolean;
 
 	private static function initialize():Void{
+		
+		
+		Logger.stopped = Settings.INITALLY_STOPPED;
 		
 		Logger.initialized = true;	
 		Commandline.initialize();
@@ -60,10 +65,15 @@ class org.osflash.thunderbolt.Logger {
 			
 			Logger.initialize();
 		}
-	
+		
 		// send traces to console 
 		// but only if Firebug is available
 		if (Console.enabled){
+
+			if (Logger.stopped){
+			
+				return;	
+			}
 
 			// get more detailed information about current trace
 			var info:LogInfo = new LogInfo(traceObject, fullClassWithMethodName, fileName, lineNumber);
