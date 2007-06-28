@@ -23,7 +23,7 @@ class org.osflash.thunderbolt.profiling.Profiler {
 		}
 		
 		// returns name of method
-		var getMethodName = function(){
+		var getMethodName = function():String{
 
 			for (var all:String in target) {
 				
@@ -56,7 +56,7 @@ class org.osflash.thunderbolt.profiling.Profiler {
 			var profile:ProfileHandle = new ProfileHandle(target, methodName);
 			
 			// override method
-			target[methodName] = function(){
+			target[methodName] = function():Object{
 				
 				var startTime:Number = getTimer();
 				

@@ -13,31 +13,31 @@ class org.osflash.thunderbolt.io.Console {
 	private static var _enabled:Boolean;
 
 	// Writes a message to the console.
-	public static function log(parameters){
+	public static function log(parameters:Object){
 	
 		Console.run("log", arguments);	
 	}
 		
 	// Writes a message to the console with the visual "info" icon and color coding.
-	public static function info(parameters){
+	public static function info(parameters:Object){
 	
 		Console.run("info", arguments);	
 	}
 
 	// Writes a message to the console with the visual "warning" icon and color coding.
-	public static function warn(parameters){
+	public static function warn(parameters:Object){
 	
 		Console.run("warn", arguments);	
 	}
 
 	// Writes a message to the console with the visual "error" icon and color coding.
-	public static function error(parameters){
+	public static function error(parameters:Object){
 	
 		Console.run("error", arguments);	
 	}
 	
 	// Prints an interactive listing of all properties of the object.
-	public static function dir(parameters){
+	public static function dir(parameters:Object){
 	
 		Console.run("dir", arguments);	
 	}	
@@ -58,7 +58,7 @@ class org.osflash.thunderbolt.io.Console {
 
 	// Writes a message to the console and opens a nested block 
 	// to indent all future messages sent to the console.
-	public static function group(parameters):Void{
+	public static function group(parameters:Object):Void{
 		
 		Console.run("group", arguments);	
 	}
@@ -70,7 +70,7 @@ class org.osflash.thunderbolt.io.Console {
 	}
 
 	// Executes JavaScript command
-	private static function run(method, parameter:Array):Void{
+	private static function run(method:String, parameter:Array):Void{
 			
 		if (parameter){
 		
