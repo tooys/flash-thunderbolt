@@ -22,7 +22,6 @@ class org.osflash.thunderbolt.Settings {
 	 * LogLevel.FATAL	- traces fatal messages only
 	 */
 	public static var LOG_LEVEL:String = LogLevel.LOG;	
-	
 
 	/*
 	 * If you want to trace debug messages only at a specific time
@@ -45,4 +44,23 @@ class org.osflash.thunderbolt.Settings {
 	 * 		TB.inspect("_root");
 	 */
 	public static var JAVASCRIPT_CONSOLE_SHORTCUT:String = "TB";
+
+	/*
+	 * Increase this property if you want more details about
+	 * complex object structures. 
+	 */
+	public static var COMPLEX_RECURSION_DEPTH:Number = 2;
+	
+	/*
+	 * Use this filter to trace messages only from specific
+	 * classes. To filter classes located in a specific
+	 * package simply add the "*" wildcard character.
+	 * 
+	 * You can later change the filter via the console:
+	 * 
+	 * eg: 	ThunderBolt.filter("org.osflash.thunderbolt.Settings");
+	 * 		ThunderBolt.filter("org.osflash.*");
+	 * 
+	 */
+	public static var CLASS_FILTER:String = "*";
 }

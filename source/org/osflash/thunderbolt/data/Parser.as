@@ -9,8 +9,6 @@ import org.osflash.thunderbolt.Settings;
  
 class org.osflash.thunderbolt.data.Parser{
 	
-	private static var maxDepth:Number = 10;
-	
 	// movieclip properties that should be displayed
 	private static var mcProperties:Array = [
 		"_x", 
@@ -40,7 +38,7 @@ class org.osflash.thunderbolt.data.Parser{
 		
 		if (depth === undefined){
 		
-			depth = Parser.maxDepth; 
+			depth = Settings.COMPLEX_RECURSION_DEPTH; 
 		} 
 		
 		// stop execution if depth is equal or less than zero
@@ -48,7 +46,7 @@ class org.osflash.thunderbolt.data.Parser{
 		
 		if (stopAnalysing){
 			
-			return ObjectType.get(type) ? Parser.returnString(type, true, true) : Parser.stringify(target);
+			return ObjectType.isComplex(type) ? Parser.returnString(type, true, true) : Parser.stringify(target);
 		}
 
         switch (type) {
