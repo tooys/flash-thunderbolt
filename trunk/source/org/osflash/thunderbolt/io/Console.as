@@ -94,19 +94,23 @@ class org.osflash.thunderbolt.io.Console {
 	
 			// the External Interface is more stable than the
 			// getURL(JavaScript) version
-			ExternalInterface.call("tb_external_interface", method, parameter);
+			var execute = ExternalInterface.call("thunderbolt_external_interface", method, parameter);
 			
-		} else {
+			if (execute) {
+			
+				return;
+			}
+		} 
 		
-			getURL("javascript:console." + method + "(" + parameter + ");");	
-		}		
+		getURL("javascript:console." + method + "(" + parameter + ");");	
+
 	}
 	
 	// Inject some JavaScript code to pass complex objects to FireBug
 	private static function initExternalInterface():Void{
 
 		getURL("javascript:" +
-		"	var tb_external_interface = function(method, parameter){" +
+		"	var thunderbolt_external_interface = function(method, parameter){" +
 		"		var output = [];" +
 		"		try {" +
 		"			for(var i=0; i< parameter.length; i++){" +
@@ -114,8 +118,9 @@ class org.osflash.thunderbolt.io.Console {
 		"			};" +
 		"			console[method].apply(this, output);" +
 		"		} catch(e){" +
-		"			console.error(':::', e);"+
+		"			console.error(e);"+
 		"		};" +
+		"		return true;" +
 		"	}");			
 	}
 	
