@@ -1,8 +1,9 @@
 /**
-* Logging Flex and AS3 projects with Firebug using ThunderBolt
+* Logging Flex and AS3 projects with Firebug using ThunderBolt AS3
 * 
+* @version	0.9.1
 * @author	Jens Krause [www.websector.de]
-* @date		06/17/07
+* @date		06/29/07
 * @see		http://www.websector.de/blog/?s=thunderbolt
 * @see		http://code.google.com/p/flash-thunderbolt/
 * @source	http://flash-thunderbolt.googlecode.com/svn/trunk/as3/
@@ -35,7 +36,8 @@ package org.osflash.thunderbolt
 		protected static const LOG: String = "log";
 
 		protected static const FIELD_SEPERATOR: String = " :: ";		
-		protected static const MAX_DEPTH: int = 255;		
+		protected static const MAX_DEPTH: int = 255;	
+		private static var _stopLog: Boolean = false;
 
 		private static var depth: int;	
 		private static var logLevel: String;						
@@ -160,12 +162,13 @@ package org.osflash.thunderbolt
 		 */	
 		private static function logObject (logObj: *, id: String = null): void
 		{	
-			++ depth;
 			
-			var propID: String = id || "";
 			
 			if (depth < Logger.MAX_DEPTH)
 			{
+				++ depth;
+				
+				var propID: String = id || "";
 				var description:XML = describeType(logObj);				
 				var type: String = description.@name;
 				
@@ -197,17 +200,25 @@ package org.osflash.thunderbolt
 				}
 				else
 				{
-					var list: XMLList = description..variable;					
+					// log private props as well - thx Rob Herman [http://www.toolsbydesign.com] ;-)
+					var list: XMLList = description..accessor;					
+					
 					if (list.length())
 					{
 						for each(var item: XML in list)
 						{
 							var propItem: String = item.@name;
-							var typeItem: String = item.@type;
-							// var ClassReference: Class = getDefinitionByName(typeItem) as Class;
-							var valueItem: * = logObj[propItem];
-	
-							logObject(valueItem, propItem);
+							var typeItem: String = item.@type;							
+							var access: String = item.@access;
+							
+							// log objects && properties accessing "readwrite" and "readonly" only 
+							if (access && access != "writeonly") 
+							{
+								//TODO: filter classes
+								// var classReference: Class = getDefinitionByName(typeItem) as Class;
+								var valueItem: * = logObj[propItem];
+								logObject(valueItem, propItem);
+							}
 						}					
 					}
 					else
@@ -219,7 +230,12 @@ package org.osflash.thunderbolt
 			}
 			else
 			{
-				ExternalInterface.call("console." + Logger.WARN, "STOP LOGGING: More than " + depth + " nested objects or properties.");
+				// call one stop message only ;-)
+				if (!_stopLog)
+				{
+					ExternalInterface.call("console." + Logger.WARN, "STOP LOGGING: More than " + depth + " nested objects or properties.");
+					_stopLog = true;
+				}			
 			}									
 		}
 			
@@ -237,26 +253,12 @@ package org.osflash.thunderbolt
 			switch (type) 
 			{
 				case "Boolean":
-					isPrimitiveType = true;
-				break;
 				case "void":
-					isPrimitiveType = true;
-				break;
 				case "int":
-					isPrimitiveType = true;
-				break;
 				case "uint":
-					isPrimitiveType = true;
-				break;
 				case "Number":
-					isPrimitiveType = true;
-				break;				
 				case "String":
-					isPrimitiveType = true;
-				break;				
 				case "undefined":
-					isPrimitiveType = true;
-				break;
 				case "null":
 					isPrimitiveType = true;
 				break;			
@@ -296,9 +298,9 @@ package org.osflash.thunderbolt
 		 * @return 	string 		A valid hour, minute or second
 		 */
 		 
-		private static function timeToValidString(num:Number):String
+		private static function timeToValidString(timeValue: Number):String
 	    {
-	        return num > 9 ? num.toString() : "0" + num.toString();
+	        return timeValue > 9 ? timeValue.toString() : "0" + timeValue.toString();
 	    }
 		
 		

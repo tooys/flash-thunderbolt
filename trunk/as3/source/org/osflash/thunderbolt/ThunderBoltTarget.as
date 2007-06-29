@@ -1,5 +1,5 @@
 /**
-* Logging Flex apps with Firebug using ThunderBolt
+* Logging Flex apps with Firebug using ThunderBolt AS3
 * 
 * @author	Jens Krause [www.websector.de]
 * @date		06/17/07
@@ -23,10 +23,10 @@ package org.osflash.thunderbolt
 	
 	public class ThunderBoltTarget extends AbstractTarget
 	{
-    	public var includeTime: Boolean = true;
-    	public var includeLevel: Boolean = true;   	    	
-    	public var includeCategory: Boolean = true;
-
+		public var includeTime: Boolean = true;
+		public var includeLevel: Boolean = true;   	    	
+		public var includeCategory: Boolean = true;
+		
 		protected static const FIELD_SEPERATOR: String = " :: ";
 		
 		 

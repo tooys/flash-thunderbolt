@@ -1,0 +1,27 @@
+/**
+* Logging Flex and AS3 projects with Firebug using ThunderBolt AS3
+* 
+* @author	Jens Krause [www.websector.de]
+* @see		http://www.websector.de/blog/?s=thunderbolt
+* @see		http://code.google.com/p/flash-thunderbolt/
+* @source	http://flash-thunderbolt.googlecode.com/svn/trunk/as3/
+*
+*/
+
+
+
+--------------------------------
+ HISTORY
+--------------------------------
+
+
+Version	0.9.1 (07/06/27)
+--------------------------------
+- Accessing private properties as well - thx Rob Herman [http://www.toolsbydesign.com] ;-)
+- Some improvements for a better performance 
+
+
+Version	0.9.0 (07/06/19)
+--------------------------------
+- ThunderBoltTarget added as a custom target for the Flex 2 Logging Framework
+- Refactoring log levels - thx Brian Lai for his hint ;-)
