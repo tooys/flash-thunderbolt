@@ -9,47 +9,48 @@ class org.osflash.thunderbolt.io.JavaScriptInterface {
 		"var ThunderBolt = {" +
 		
 		"	storedTarget: null," +
+		"	ElementID: null," +
 		
 		// display structure of flash target
-		"	inspect: function(target){" +
-		"		this.getFlash().inspect(this.getFullTarget(target));" +
+		"	inspect: function(target, id){" +
+		"		this.getFlash(id).inspect(this.getFullTarget(target));" +
 		"	}," +
 
 		// start the logger
-		"	start: function(){" +
-		"		this.getFlash().start();" +
+		"	start: function(id){" +
+		"		this.getFlash(id).start();" +
 		"	}," +
 		
 		// stop the logger
-		"	stop: function(){" +
-		"		this.getFlash().stop();" +
+		"	stop: function(id){" +
+		"		this.getFlash(id).stop();" +
 		"	}," +
 				
 		// filter output based on class
-		"	filter: function(className){" +
-		"		this.getFlash().filter(className);" +
+		"	filter: function(className, id){" +
+		"		this.getFlash(id).filter(className);" +
 		"	}," +		
 		
 		// run an expression within flash
-		"	run: function(expression){" +
-		"		this.getFlash().run(expression);" +
+		"	run: function(expression, id){" +
+		"		this.getFlash(id).run(expression);" +
 		"	}," +
 		
 		// assign a new value to the target
-		"	set: function(target, value){" +
-		"		this.getFlash().set(this.getFullTarget(target), value);" +
+		"	set: function(target, value, id){" +
+		"		this.getFlash(id).set(this.getFullTarget(target), value);" +
 		"	}," +
 		
-		"	profile: function(target){" +
-		"		this.getFlash().profile(target);" +
+		"	profile: function(target, id){" +
+		"		this.getFlash(id).profile(target);" +
 		"	}," +
 		
-		"	profileEnd: function(target){" +
-		"		this.getFlash().profileEnd();" +
+		"	profileEnd: function(target, id){" +
+		"		this.getFlash(id).profileEnd();" +
 		"	}," +
 		
 		// set the target for future actions
-		"	cd: function(path){" +
+		"	cd: function(path, id){" +
 		
 		"		if (path.indexOf('_root') == 0){" +
 		"			this.storedTarget = path;	" +
@@ -61,12 +62,17 @@ class org.osflash.thunderbolt.io.JavaScriptInterface {
 		"				default: 	this.storedTarget = this.storedTarget ? this.storedTarget + '.' + path : path;" +
 		"			}" +
 		"		}" +
-		"		this.inspect();" +
+		"		this.inspect(id);" +
 		"	}," +
 	
-		"	getFlash: function(){" +
-				// returns the first flash movie in document
-		"		return document.getElementsByTagName('embed')[0];		" +
+		"	getFlash: function(id){" +
+				// returns a reference of the flash Object or the first flash movie in document
+		"		var d = document;		" +
+		"		if( id ) {		" +
+		"			ElementID = id;"+
+		"			return d.getElementById(id);"+
+		"		} else if( ElementID ){ return d.getElementById( ElementID );"+
+		"		} else { return d.getElementsByTagName('embed')[0];}"+
 		"	}," +
 	
 		// private method" 
