@@ -143,8 +143,6 @@ class org.osflash.thunderbolt.io.Console {
 					Console.initExternalInterface();
 				}
 				
-				JavaScriptInterface.injectCode();
-				
 				Console.log("Firebug v" + Console.version + " enabled.");
 				return Console._enabled;
 			} 

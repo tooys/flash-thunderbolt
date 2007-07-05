@@ -89,9 +89,12 @@ class org.osflash.thunderbolt.io.JavaScriptInterface {
 		"	}" +
 		"};";
 		
-	public static function injectCode(){
+	public static function injectCode():Boolean{
 	
 		getURL("javascript:" + JavaScriptInterface.codeSnippet);
 		getURL("javascript:var " + Settings.JAVASCRIPT_CONSOLE_SHORTCUT + " = ThunderBolt;");
+		return true;
 	};
+	
+	private static var enabled:Boolean = JavaScriptInterface.injectCode();
 }
