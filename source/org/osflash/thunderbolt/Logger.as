@@ -39,17 +39,16 @@ import org.osflash.thunderbolt.Settings;
  
 class org.osflash.thunderbolt.Logger {
 	
-	private static var initialized:Boolean = false;
+	private static var initialized:Boolean = Logger.initialize();
+	
+	private var classes:Array = [Commandline];
 	
 	public static var stopped:Boolean;
 
-	private static function initialize():Void{
-		
+	private static function initialize():Boolean{
 		
 		Logger.stopped = Settings.INITALLY_STOPPED;
-		
-		Logger.initialized = true;	
-		Commandline.initialize();
+		return true;
 	}
 
 	/**
@@ -60,12 +59,6 @@ class org.osflash.thunderbolt.Logger {
 	 */
 	public static function trace(traceObject:Object, fullClassWithMethodName:String, fileName:String, lineNumber:Number){
 
-		// check if Logger has been initialized
-		if (!Logger.initialized){
-			
-			Logger.initialize();
-		}
-		
 		// send traces to console 
 		// but only if Firebug is available
 		if (Console.enabled){

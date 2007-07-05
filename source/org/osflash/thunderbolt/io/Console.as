@@ -11,6 +11,8 @@ class org.osflash.thunderbolt.io.Console {
 	
 	public static var version:Number;
 	private static var _enabled:Boolean;
+	
+	private var classImport:Array = [JavaScriptInterface];
 
 	// Writes a message to the console.
 	public static function log(parameters:Object){
