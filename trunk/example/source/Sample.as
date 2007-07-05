@@ -21,7 +21,6 @@ class Sample {
 	
 	function Sample() {
 		
-		trace("Sample Class initialized");
 		this.init();
 	}
 	

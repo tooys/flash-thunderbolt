@@ -49,7 +49,7 @@ class org.osflash.thunderbolt.Settings {
 	 * Increase this property if you want more details about
 	 * complex object structures. 
 	 */
-	public static var COMPLEX_RECURSION_DEPTH:Number = 2;
+	public static var COMPLEX_RECURSION_DEPTH:Number = 3;
 	
 	/*
 	 * Use this filter to trace messages only from specific

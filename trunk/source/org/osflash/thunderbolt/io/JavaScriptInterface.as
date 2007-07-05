@@ -9,7 +9,7 @@ class org.osflash.thunderbolt.io.JavaScriptInterface {
 		"var ThunderBolt = {" +
 		
 		"	storedTarget: null," +
-		"	ElementID: null," +
+		"	elementID: null," +
 		
 		// display structure of flash target
 		"	inspect: function(target, id){" +
@@ -68,11 +68,14 @@ class org.osflash.thunderbolt.io.JavaScriptInterface {
 		"	getFlash: function(id){" +
 				// returns a reference of the flash Object or the first flash movie in document
 		"		var d = document;		" +
-		"		if( id ) {		" +
-		"			ElementID = id;"+
+		"		if(id) {		" +
+		"			this.elementID = id;"+
 		"			return d.getElementById(id);"+
-		"		} else if( ElementID ){ return d.getElementById( ElementID );"+
-		"		} else { return d.getElementsByTagName('embed')[0];}"+
+		"		} else if(this.elementID){ " +
+		"			return d.getElementById(this.elementID);"+
+		"		} else { " +
+		"			return d.getElementsByTagName('embed')[0];" +
+		"		}"+
 		"	}," +
 	
 		// private method" 
@@ -87,12 +90,14 @@ class org.osflash.thunderbolt.io.JavaScriptInterface {
 		"			}" +
 		"		}" +
 		"	}" +
-		"};";
+		"};" +
+
+		// add shortcut;
+		"var " + Settings.JAVASCRIPT_CONSOLE_SHORTCUT + " = ThunderBolt;";
 		
 	public static function injectCode():Boolean{
 	
 		getURL("javascript:" + JavaScriptInterface.codeSnippet);
-		getURL("javascript:var " + Settings.JAVASCRIPT_CONSOLE_SHORTCUT + " = ThunderBolt;");
 		return true;
 	};
 	
