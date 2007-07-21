@@ -1,5 +1,5 @@
 #summary ThunderBolt AS3 for logging ActionScript 3 including Flex 2 + 3 projects
-#labels Phase-Implementation,Phase-Deploy
+#labels Phase-Implementation,Phase-Deploy,Featured
 
 = ThunderBolt AS3 =
 
@@ -58,5 +58,4 @@ _[http://www.websector.de/blog/2007/06/20/update-part-2-logging-flex-2-and-as3-a
 === Download source ===
 
 Grab the latest ThunderBolt AS3 package (two classes only) or the .swc file [http://code.google.com/p/flash-thunderbolt/source from its repository] via SVN or [http://flash-thunderbolt.googlecode.com/svn/trunk/as3/ download it] directly. 
-
 
