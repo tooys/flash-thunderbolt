@@ -1,4 +1,5 @@
 #summary ThunderBolt AS2 for logging ActionScript 2 applications
+#labels Phase-Implementation,Phase-Deploy
 
 = ThunderBolt AS2 =
 
@@ -87,4 +88,3 @@ TB.cd('..'); // select parent movieclip (main)
   * [http://manfred.dschini.org/ Manfred Weber]
   * [http://www.flashhilfe.de/ Sebastian Wichmann]
   * [http://www.websector.de/ Jens Krause]
-
