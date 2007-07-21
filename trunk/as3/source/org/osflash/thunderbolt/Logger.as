@@ -1,9 +1,9 @@
 /**
 * Logging Flex and AS3 projects with Firebug using ThunderBolt AS3
 * 
-* @version	0.9.1
+* @version	0.9.2
 * @author	Jens Krause [www.websector.de]
-* @date		06/29/07
+* @date		07/21/07
 * @see		http://www.websector.de/blog/?s=thunderbolt
 * @see		http://code.google.com/p/flash-thunderbolt/
 * @source	http://flash-thunderbolt.googlecode.com/svn/trunk/as3/
@@ -18,11 +18,7 @@ package org.osflash.thunderbolt
 {
 	import flash.external.ExternalInterface;
 	import flash.utils.describeType;
-	import flash.utils.getQualifiedClassName;
-	import flash.utils.getDefinitionByName;
-	import mx.logging.LogEventLevel;
-	import mx.logging.LogEvent;
-
+	
 	/**
 	* Thunderbolts AS3 Logger class
 	*/
@@ -30,10 +26,10 @@ package org.osflash.thunderbolt
 	{
 		//
 		// Firebug supports 4 log levels only
-		protected static const INFO: String = "info";
-		protected static const WARN: String = "warn";
-		protected static const ERROR: String = "error";
-		protected static const LOG: String = "log";
+		public static const INFO: String = "info";
+		public static const WARN: String = "warn";
+		public static const ERROR: String = "error";
+		public static const LOG: String = "log";
 
 		protected static const FIELD_SEPERATOR: String = " :: ";		
 		protected static const MAX_DEPTH: int = 255;	
@@ -47,62 +43,63 @@ package org.osflash.thunderbolt
 		/**
 		 * Logs info messages including objects for calling Firebug
 		 * 
-		 * @param 	msg				log Message 
+		 * @param 	msg				log message 
 		 * @param 	logObjects		log objects
 		 * 
 		 */		
 		public static function info (msg: String = null, ... logObjects): void
 		{
-			Logger.trace(LogEventLevel.INFO, msg, logObjects);			
+			Logger.trace(Logger.INFO, msg, logObjects);			
 		}
 		
 		/**
 		 * Logs warn messages including objects for calling Firebug
 		 * 
-		 * @param 	msg				log Message 
+		 * @param 	msg				log message 
 		 * @param 	logObjects		log objects
 		 * 
 		 */		
 		public static function warn (msg: String = null, ... logObjects): void
 		{
-			Logger.trace(LogEventLevel.WARN, msg, logObjects);			
+			Logger.trace(Logger.WARN, msg, logObjects);			
 		}
 
 		/**
 		 * Logs error messages including objects for calling Firebug
 		 * 
-		 * @param 	msg				log Message 
+		 * @param 	msg				log message 
 		 * @param 	logObjects		log objects
 		 * 
 		 */		
 		public static function error (msg: String = null, ... logObjects): void
 		{
-			Logger.trace(LogEventLevel.ERROR, msg, logObjects);			
+			Logger.trace(Logger.ERROR, msg, logObjects);			
 		}
 		
 		/**
 		 * Logs debug messages messages including objects for calling Firebug
 		 * 
-		 * @param 	msg				log Message 
+		 * @param 	msg				log message 
 		 * @param 	logObjects		log objects
 		 * 
 		 */		
 		public static function debug (msg: String = null, ... logObjects): void
 		{
-			Logger.trace(LogEventLevel.DEBUG, msg, logObjects);			
+			Logger.trace(Logger.LOG, msg, logObjects);			
 		}		
 				 
 		/**
 		 * Calls Firebugs command line API to write log information
 		 * 
-		 * @param 	msg				log Message 
+		 * @param 	level			log level 
+ 		 * @param 	msg				log message 
 		 * @param 	logObjects		log objects
 		 */			 
-		public static function trace (level: Number = 0, msg: String = null, ... logObjects): void
+		public static function trace (level: String, msg: String = null, ... logObjects): void
 		{
 		 	depth = 0;
 		 	// get log level
-		 	logLevel = Logger.getLogLevel(level);
+		 	logLevel = level;
 		 	// add log level to log messagef
 		 	var logMsg: String = "[" + logLevel.toUpperCase() + "] ";
 	    	// add time	to log message
@@ -117,48 +114,12 @@ package org.osflash.thunderbolt
 	        	Logger.logObject(logObjects[i]);
 	    	}	 	
 		}
-		
-		/**
-		 * Translates Flex log levels to Firebugs log levels
-		 * 
-		 * @param 	msg
-		 * @return 	level description
-		 * 
-		 */		
-		private static function getLogLevel (logLevel: Number): String
-		{
-			var level: String;
-			
-			switch (logLevel) 
-			{
-				case LogEventLevel.INFO:
-					level = Logger.INFO;
-				break;
-				case LogEventLevel.WARN:
-					level = Logger.WARN;
-				break;				
-				case LogEventLevel.ERROR:
-					level = Logger.ERROR;
-				break;
-				// Firebug doesn't support a fatal level
-				// so we use here Firebugs ERROR level when you're using ThunderBoltTarget
-				case LogEventLevel.FATAL:
-					level = Logger.ERROR;
-				break;
-				default:
-					// for LogEventLevel.DEBUG && LogEventLevel.ALL 
-					// so we use here Firebugs LOG level when you're using ThunderBoltTarget
-					level = Logger.LOG;
-			}
-
-			return level;
-		}
 				
 		/**
 		 * Logs nested instances and properties
 		 * 
-		 * @param 	logObj	log object
-		 * @param 	id		short description of log object
+		 * @param 	logObj		log object
+		 * @param 	id			short description of log object
 		 */	
 		private static function logObject (logObj: *, id: String = null): void
 		{	
