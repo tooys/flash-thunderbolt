@@ -1,0 +1,86 @@
+#summary ThunderBolt using ActionScript 2
+
+= ThunderBolt AS2 =
+
+=== Usage ===
+
+Simply [http://flash-thunderbolt.googlecode.com/svn/trunk/source/ download the classes] and add `-trace ThunderBolt.trace` to the MTASC command line arguments.
+
+=== Online Sample ===
+
+_[http://flash-thunderbolt.googlecode.com/files/example.html See a sample application in action.]_
+
+=== Download ===
+
+You can download the [http://flash-thunderbolt.googlecode.com/svn/trunk/thunderbolt_classes.zip zipped ActionScript Package] or access the [http://code.google.com/p/flash-thunderbolt/source subversion source].
+
+=== Join this Project ===
+
+If you like to join this project, [http://groups.google.com/groups/unlock?_done=/groups/profile%3Fenc_user%3DmV5osBAAAAAO7sexyIOTxfrFFiDzcajp drop me a line]!
+
+=== Latest Changes ===
+
+Grab one of this [http://groups.google.com/group/flash-thunderbolt/feeds RSS feeds] to stay up to date!
+
+=== Screenshots ===
+
+*Console output*
+
+http://flash-thunderbolt.googlecode.com/svn/trunk/docs/img/console_output.gif
+
+*Console inspect*
+
+http://flash-thunderbolt.googlecode.com/svn/trunk/docs/img/console_inspect.gif
+
+*Console details*
+
+http://flash-thunderbolt.googlecode.com/svn/trunk/docs/img/console_details.gif
+
+=== Debug Information ===
+	
+|| `description` || `my.package.MyClass::myMethod[123] : type @ 18:59:59` ||
+|| `file` || `./path/to/my/class/file.as`  ||
+|| `fullClass` || `my.package.MyClass` ||
+|| `line` || `123` ||
+|| `method` || `myMethod` ||
+|| `time` || `18:59:59` ||
+|| `type` || `string`  ||
+
+=== Log Levels===
+
+By passing an extra literal to your `trace` actions, you can achieve multiple debug levels.
+
+|| d || debug || `trace('d This is a simple debug message.');` ||
+|| i || info  || `trace('i An info icon will appear next to this line.');` ||
+|| w || warn  || `trace('w This message is highlighted.');` ||
+|| e || error || `trace('e Red and highlited messages.');` ||
+
+
+=== Debug in Browser ===
+
+Run this two commands to get more information on your objects during runtime:
+
+{{{
+TB.inspect(target);
+
+TB.inspect('_root'); // _root [movieclip]
+TB.inspect('_root.$version'); // WIN 9,0,28,0
+}}}
+
+{{{
+TB.set(target, value);
+
+TB.set('_root.main._x', 50);
+TB.set('_root.main.infoText.text', 'New Mssage');
+}}}
+
+{{{
+TB.cd(newContext);
+
+TB.cd('_root.main.head'); // set new context
+TB.inspect('_y'); // y position of current content (head)
+TB.cd('..'); // select parent movieclip (main)
+}}}
+
+
+
