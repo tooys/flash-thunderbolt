@@ -1,0 +1,64 @@
+#summary ThunderBolt using ActionScript 3 including Flex 2 + 3
+
+= ThunderBolt AS3 =
+
+ThunderBolt AS3 is a logger extension for Flex 2 and Flash ActionScript 3 applications using [http://www.getfirebug.com Firebug] within [http://www.mozilla.com/en-US/firefox/ Firefox] as simple as possible. 
+
+It’s open source and based on the [http://www.mozilla.org/MPL/MPL-1.1.html Mozilla Public License 1.1.]
+
+=== Usage ===
+
+1) In Flex Builder add the "ThunderBoltAS3.swc" as your library file 
+(Flex Builder -> Your Project -> Properties -> Flex Build Path -> Library Path -> Add SWC) 
+or use the package located in org.osflash.thunderbolt
+
+2a) Using ThunderBolt's *Logger.as* instance:
+
+{{{
+import org.osflash.thunderbolt.Logger;
+
+var myNumber: int = 5;
+var myString2: String = "Lorem ipsum";
+Logger.error ("Logging two objects: A number typed as int and a string", myNumber, myString2);
+}}}
+
+2b) Or using *ThunderBoltTarget.as* based on the Flex 2.0 Logging Framework:
+
+{{{
+import mx.logging.Log;
+import org.osflash.thunderbolt.ThunderBoltTarget;
+
+// init ThunderBoltTarget
+_target = new ThunderBoltTarget();
+
+/* 				
+ You can disable the time, level or category as well				
+ _target.includeTime = false;
+ _target.includeLevel = false;
+ _target.includeCategory = false;	            
+*/	
+            
+_target.filters = ["de.websector.playground.ThunderBoltTargetExample"];
+Log.addTarget(_target);
+
+// start logging
+Log.getLogger("de.websector.playground.ThunderBoltTargetExample").info("Just an info message.");
+}}}
+
+
+=== Tutorials ===
+
+Check out [http://www.websector.de/blog/?s=thunderbolt the tutorials] on [http://www.websector.de/blog/ WS-Blog].
+
+=== Example ===
+
+_[http://flash-thunderbolt.googlecode.com/files/thunderboltFlex2Example.html Example on WS-Blog]_
+
+=== Download source ===
+
+Grab the latest ThunderBolt AS3 package (two classes only) or the .swc file [http://code.google.com/p/flash-thunderbolt/source from its repository] via SVN or [http://flash-thunderbolt.googlecode.com/svn/trunk/as3/ download it] directly. 
+
+
+
+
+
