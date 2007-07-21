@@ -82,5 +82,10 @@ TB.inspect('_y'); // y position of current content (head)
 TB.cd('..'); // select parent movieclip (main)
 }}}
 
+=== Acknowledgment ===
+
+  * [http://manfred.dschini.org/ Manfred Weber]
+  * [http://www.flashhilfe.de/ Sebastian Wichmann]
+  * [http://www.websector.de/ Jens Krause]
 
 
