@@ -1,5 +1,5 @@
 #summary ThunderBolt AS2 for logging ActionScript 2 applications
-#labels Phase-Implementation,Phase-Deploy
+#labels Phase-Implementation,Phase-Deploy,Featured
 
 = ThunderBolt AS2 =
 
