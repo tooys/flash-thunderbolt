@@ -52,7 +52,7 @@ Check out [http://www.websector.de/blog/?s=thunderbolt the tutorials] on [http:/
 
 === Example ===
 
-_[http://flash-thunderbolt.googlecode.com/files/thunderboltFlex2Example.html Example on WS-Blog]_
+_[http://www.websector.de/blog/2007/06/20/update-part-2-logging-flex-2-and-as3-applications-with-firebug-and-thunderbolt/ Example on WS-Blog]_
 
 === Download source ===
 
