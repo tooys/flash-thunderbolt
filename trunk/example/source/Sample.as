@@ -26,6 +26,8 @@ class Sample {
 	
 	private function init():Void{
 		
+		trace(this);
+		
 		for (var all in _root){
 				
 			_root[all].onRelease = function(){
