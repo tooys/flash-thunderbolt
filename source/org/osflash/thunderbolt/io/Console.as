@@ -92,19 +92,22 @@ class org.osflash.thunderbolt.io.Console {
 			parameter = [];	
 		}
 	
-		if (Settings.USE_EXTERNAL_INTERFACE){
+		if (Console.enabled){
 	
-			// the External Interface is more stable than the
-			// getURL(JavaScript) version
-			var execute = ExternalInterface.call("thunderbolt_external_interface", method, parameter);
-			
-			if (execute) {
-			
-				return;
-			}
-		} 
+			if (Settings.USE_EXTERNAL_INTERFACE){
 		
-		getURL("javascript:console." + method + "(" + parameter + ");");	
+				// the External Interface is more stable than the
+				// getURL(JavaScript) version
+				var execute = ExternalInterface.call("thunderbolt_external_interface", method, parameter);
+				
+				if (execute) {
+				
+					return;
+				}
+			} 
+			
+			getURL("javascript:console." + method + "(" + parameter + ");");
+		}
 
 	}
 	
@@ -135,7 +138,7 @@ class org.osflash.thunderbolt.io.Console {
 			
 		} else {
 			
-			Console.version = Number(ExternalInterface.call("function(){ return console && console.firebug}", true));
+			Console.version = Number(ExternalInterface.call("function(){ return window.console && console.firebug}", true));
 			Console._enabled = Console.version > 0;
 			
 			if (Console._enabled){

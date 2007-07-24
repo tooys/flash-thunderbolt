@@ -1,4 +1,5 @@
 import org.osflash.thunderbolt.Settings;
+import org.osflash.thunderbolt.io.Console;
 /**
  * @author Martin Kleppe <kleppe@gmail.com>
  */
@@ -97,8 +98,12 @@ class org.osflash.thunderbolt.io.JavaScriptInterface {
 		
 	public static function injectCode():Boolean{
 	
-		getURL("javascript:" + JavaScriptInterface.codeSnippet);
-		return true;
+		if (Console.enabled){
+			
+			getURL("javascript:" + JavaScriptInterface.codeSnippet);
+		}
+		
+		return Console.enabled;
 	};
 	
 	private static var enabled:Boolean = JavaScriptInterface.injectCode();
