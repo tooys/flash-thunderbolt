@@ -1,6 +1,3 @@
-#labels ant
-#build.xml sample to use in you projects.
-
 = Ant Build File =
 
 Use this [http://ant.apache.org/manual/ Ant file] in your projects to quickly enable debugging:
