@@ -114,6 +114,7 @@ class org.osflash.thunderbolt.io.Console {
 	// Inject some JavaScript code to pass complex objects to FireBug
 	private static function initExternalInterface():Void{
 
+/*
 		getURL("javascript:" +
 		"	var thunderbolt_external_interface = function(method, parameter){" +
 		"		var output = [];" +
@@ -126,7 +127,9 @@ class org.osflash.thunderbolt.io.Console {
 		"			console.error(e);"+
 		"		};" +
 		"		return true;" +
-		"	}");			
+		"	}");	
+		 
+ */		
 	}
 	
 	// Check if Firebug is enabled

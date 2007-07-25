@@ -98,12 +98,12 @@ class org.osflash.thunderbolt.io.JavaScriptInterface {
 		
 	public static function injectCode():Boolean{
 	
-		if (Console.enabled){
+		//if (Console.enabled){
 			
 			getURL("javascript:" + JavaScriptInterface.codeSnippet);
-		}
-		
-		return Console.enabled;
+		//}
+		return true;
+	//	return Console.enabled;
 	};
 	
 	private static var enabled:Boolean = JavaScriptInterface.injectCode();
