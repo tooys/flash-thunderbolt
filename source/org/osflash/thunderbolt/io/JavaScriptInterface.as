@@ -24,7 +24,7 @@ class org.osflash.thunderbolt.io.JavaScriptInterface {
 		
 		// stop the logger
 		"	stop: function(id){" +
-		"		this.getFlash(id).stop();" +
+		"		this.getFlash(id).pause();" +
 		"	}," +
 				
 		// filter output based on class
@@ -43,7 +43,7 @@ class org.osflash.thunderbolt.io.JavaScriptInterface {
 		"	}," +
 		
 		"	profile: function(target, id){" +
-		"		this.getFlash(id).profile(target);" +
+		"		this.getFlash(id).profileStart(target);" +
 		"	}," +
 		
 		"	profileEnd: function(target, id){" +
