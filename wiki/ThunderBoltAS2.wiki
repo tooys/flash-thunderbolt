@@ -1,11 +1,21 @@
 #summary ThunderBolt AS2 for logging ActionScript 2 applications
 #labels Phase-Implementation,Phase-Deploy,Featured
+= !ThunderBolt =
 
-= ThunderBolt AS2 =
+!ThunderBolt AS2 is a logger extension for Flash !ActionScript 2 based on [http://www.mtasc.org/#trace MTASC]´s trace facilitiy and the superb [http://www.getfirebug.com Firebug] add-on for [http://www.getfirefox.com Firefox]. 
 
-=== Usage ===
+==== Features: ====
 
-Simply [http://flash-thunderbolt.googlecode.com/svn/trunk/source/ download the classes] and add `-trace ThunderBolt.trace` to the MTASC command line arguments.
+  * Detailed information (class, file, line number, time, frame)
+  * Log levels (info, warning, error, fatal)
+  * Interactive tree view for complex object structures
+  * Profiling (time spend during code execution)
+  * Collapsible grouped output
+  * Interactive console (inspect and modify object on runtime)
+
+==== Screenshot ====
+
+http://flash-thunderbolt.googlecode.com/svn/trunk/docs/img/console_sample.gif
 
 === Online Sample ===
 
@@ -13,17 +23,12 @@ _[http://flash-thunderbolt.googlecode.com/files/example.html See a sample applic
 
 === Download ===
 
-You can download the [http://flash-thunderbolt.googlecode.com/svn/trunk/thunderbolt_classes.zip zipped ActionScript Package] or access the [http://code.google.com/p/flash-thunderbolt/source subversion source].
+There are three ways to get the source files:
+  * [http://flash-thunderbolt.googlecode.com/svn/trunk/thunderbolt_classes.zip Download zipped ActionScript Package] 
+  * [http://flash-thunderbolt.googlecode.com/svn/ Browse subversion repository].
+  * [http://code.google.com/p/flash-thunderbolt/source Checkout the subversion repository] 
 
-=== Join this Project ===
-
-If you like to join this project, [http://groups.google.com/groups/unlock?_done=/groups/profile%3Fenc_user%3DmV5osBAAAAAO7sexyIOTxfrFFiDzcajp drop me a line]!
-
-=== Latest Changes ===
-
-Grab one of this [http://groups.google.com/group/flash-thunderbolt/feeds RSS feeds] to stay up to date!
-
-=== Screenshots ===
+=== More Screenshots ===
 
 *Console output*
 
@@ -42,6 +47,7 @@ http://flash-thunderbolt.googlecode.com/svn/trunk/docs/img/console_details.gif
 || `description` || `my.package.MyClass::myMethod[123] : type @ 18:59:59` ||
 || `file` || `./path/to/my/class/file.as`  ||
 || `fullClass` || `my.package.MyClass` ||
+|| `frame` || `12` ||
 || `line` || `123` ||
 || `method` || `myMethod` ||
 || `time` || `18:59:59` ||
@@ -62,25 +68,27 @@ By passing an extra literal to your `trace` actions, you can achieve multiple de
 Run this two commands to get more information on your objects during runtime:
 
 {{{
-TB.inspect(target);
-
-TB.inspect('_root'); // _root [movieclip]
-TB.inspect('_root.$version'); // WIN 9,0,28,0
+// inspect obejcts and set attributes
+ThundeBolt.inspect("Sample.APP.profileObject"); 				// inspect object
+ThundeBolt.set("_root.logo._x", 20); 						// set new position
+ThundeBolt.set("_root.logo.label.text", "Live hacking made possible!"); 	// change text
 }}}
-
 {{{
-TB.set(target, value);
-
-TB.set('_root.main._x', 50);
-TB.set('_root.main.infoText.text', 'New Mssage');
+// set context for later inspection
+ThundeBolt.cd("_root.logo.label"); 						// set new context
+ThundeBolt.inspect("_x"); 							// x position of current content
+ThundeBolt.cd(".."); 								// select parent movieclip
 }}}
-
 {{{
-TB.cd(newContext);
-
-TB.cd('_root.main.head'); // set new context
-TB.inspect('_y'); // y position of current content (head)
-TB.cd('..'); // select parent movieclip (main)
+// execute methods
+ThundeBolt.run("Sample.APP.randomizeAlpha(100)"); 				// run a method
+ThundeBolt.run("Sample.APP.restoreAlpha()"); 					// run another method
+}}}
+{{{
+// test performance
+ThundeBolt.profile("Sample.APP.profileObject"); 				// start profiling for all methods in object
+ThundeBolt.run("Sample.APP.profileObject.method2()"); 				// execute profiling test
+ThundeBolt.profileEnd(); 							// stop profiling and see results
 }}}
 
 === Acknowledgment ===
@@ -88,3 +96,9 @@ TB.cd('..'); // select parent movieclip (main)
   * [http://manfred.dschini.org/ Manfred Weber]
   * [http://www.flashhilfe.de/ Sebastian Wichmann]
   * [http://www.websector.de/ Jens Krause]
+
+
+
+
+
+
