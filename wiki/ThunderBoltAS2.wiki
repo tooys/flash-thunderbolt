@@ -19,7 +19,7 @@ http://flash-thunderbolt.googlecode.com/svn/trunk/docs/img/console_sample.gif
 
 === Online Sample ===
 
-_[http://flash-thunderbolt.googlecode.com/files/example.html See a sample application in action.]_
+_[http://flash-thunderbolt.googlecode.com/svn/trunk/example/deploy/thunderbolt.html See a sample application in action.]_
 
 === Download ===
 
@@ -96,9 +96,3 @@ ThundeBolt.profileEnd(); 							// stop profiling and see results
   * [http://manfred.dschini.org/ Manfred Weber]
   * [http://www.flashhilfe.de/ Sebastian Wichmann]
   * [http://www.websector.de/ Jens Krause]
-
-
-
-
-
-
