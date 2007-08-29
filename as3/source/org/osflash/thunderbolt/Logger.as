@@ -1,9 +1,9 @@
 /**
 * Logging Flex and AS3 projects with Firebug using ThunderBolt AS3
 * 
-* @version	0.9.2
+* @version	0.9.3
 * @author	Jens Krause [www.websector.de]
-* @date		07/21/07
+* @date		08/29/07
 * @see		http://www.websector.de/blog/?s=thunderbolt
 * @see		http://code.google.com/p/flash-thunderbolt/
 * @source	http://flash-thunderbolt.googlecode.com/svn/trunk/as3/
@@ -18,6 +18,7 @@ package org.osflash.thunderbolt
 {
 	import flash.external.ExternalInterface;
 	import flash.utils.describeType;
+	import flash.system.Security;
 	
 	/**
 	* Thunderbolts AS3 Logger class
@@ -97,7 +98,7 @@ package org.osflash.thunderbolt
 		 */			 
 		public static function trace (level: String, msg: String = null, ... logObjects): void
 		{
-		 	depth = 0;
+			depth = 0;
 		 	// get log level
 		 	logLevel = level;
 		 	// add log level to log messagef
@@ -241,8 +242,6 @@ package org.osflash.thunderbolt
     		var currentDate: Date = new Date();
     		
 			var currentTime: String = 	"time "
-										+ timeToValidString(currentDate.getHours()) 
-										+ ":"
 										+ timeToValidString(currentDate.getHours()) 
 										+ ":" 
 										+ timeToValidString(currentDate.getMinutes()) 
