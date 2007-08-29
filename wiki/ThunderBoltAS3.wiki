@@ -59,6 +59,7 @@ Copy *ThunderBoltAS3_Flash.swc* to it.
 
 2) Open Flash IDE and select on the Component Panels (Windows -> Components) the Options menu  to refresh its view ("Reload"). You'll see a folder named "ThunderBoltAS3" within the Component Panel. Open this folder and drag the component called "Logger" to the Stage. Remove it. Then you'll have a ThunderBoltAS3 component in your library.
  
+
 3) Using ThunderBolt's *Logger.as* instance:
 
 {{{
