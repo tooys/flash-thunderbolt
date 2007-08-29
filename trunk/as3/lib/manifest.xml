@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+	
+	
+	Create a swc-component of ThunderBolt AS3 using FlexBuilder 
+	@author:	Jens Krause [www.websector.de]
+	@date: 		08/29/07
+	
+	
+	- First of all: Create a Flex Library Project in your Flex Builder
+	- copy the ThunderBolt core classes located in {svnFolder}/trunk/as3/source/ to your source folder
+	
+	*** Flex component with all classes ***
+	- Project -> Build project (Build Automaticilly is unchecked)
+	
+	*** Flash component only with Logger ***
+	- comment out ThunderBoltTarget oomponent in "manifest.xml"
+	- remove ThudnerBoltTarget.as
+	- Project -> Build project (Build Automaticilly is unchecked)
+	
+	
+	P.S. For more information about creating swc components check: 
+	http://www.adobe.com/devnet/flex/quickstart/deploying_components/
+	
+	Have fun!
+
+ -->
+
+<componentPackage>
+    <component 
+    	id="Logger" 
+    	class="org.osflash.thunderbolt.Logger"
+    />
+    <component 
+    	id="ThunderBoltTarget" 
+    	class="org.osflash.thunderbolt.ThunderBoltTarget"
+    />
+</componentPackage>

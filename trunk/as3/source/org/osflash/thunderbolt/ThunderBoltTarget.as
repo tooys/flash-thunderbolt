@@ -1,9 +1,9 @@
 /**
 * Logging Flex apps with Firebug using ThunderBolt
 * 
-* @version	0.9.2
+* @version	0.9.3
 * @author	Jens Krause [www.websector.de]
-* @date		07/21/07
+* @date		08/29/07
 * @see		http://www.websector.de/blog/?s=thunderbolt
 * @see		http://code.google.com/p/flash-thunderbolt/
 * @source	http://flash-thunderbolt.googlecode.com/svn/trunk/as3/
