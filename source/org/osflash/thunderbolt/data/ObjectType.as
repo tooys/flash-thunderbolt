@@ -4,7 +4,6 @@
 class org.osflash.thunderbolt.data.ObjectType {
 	
 	private static var simpleTypes:Array = [
-	
 		"string", 
 		"boolean",
 		"number", 
@@ -13,7 +12,6 @@ class org.osflash.thunderbolt.data.ObjectType {
 	];
 	
 	private static var complexTypes:Object = {
-			
 		xmlnode: 	XMLNode,
 		xml: 		XML,
 		textfield: 	TextField,
@@ -33,23 +31,16 @@ class org.osflash.thunderbolt.data.ObjectType {
 	 * @return 	Object type.
 	 */
 	static function get(target:Object):String{
-	
 		for (var i:Number=0; i<ObjectType.simpleTypes.length; i++) {
-			
 			if (ObjectType.simpleTypes[i] == typeof(target)){
-			
 				return ObjectType.simpleTypes[i];	
 			}
 		}
-		
 		for (var type:String in ObjectType.complexTypes) {
-		
 			if (target instanceof ObjectType.complexTypes[type]){
-			
 				return type;	
 			}
 		}
-		
 		return typeof target;
 	}
 
@@ -62,8 +53,6 @@ class org.osflash.thunderbolt.data.ObjectType {
      * @return 			True if object type is complex
      */
     static function isComplex(type:Object):Boolean{
-    	
     	return type == "object" || type == "movieclip";
     } 	
-	
 }

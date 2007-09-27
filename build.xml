@@ -1,79 +1,57 @@
 <?xml version='1.0' encoding="utf-8"?>
-<project name="ThunderBolt" default="run" basedir=".">
+<project name="ThunderBolt AS2 Logger" default="Compile and Launch" basedir=".">
 	<description>
 		ThunderBolt example Main Build File
 	</description>
 	
 	<!-- 
-		global properties "mtasc", "firefox" and "flash.classpath" need to be set up as 
-		global ant parameters!
-		
+		global properties "mtasc", "firefox" and "flash.classpath" need to be set up as global ant parameters!
 		eclipse > window > preferences > ant > runtime > properties  
 	-->
 
 	<property name="example.classpath" 		value=".\example\source\" /> 
-	<property name="deploy.folder" 			value=".\example\deploy\" />
+	<property name="example.folder" 		value=".\example\deploy\" />
+	<property name="example.html" 			value="thunderbolt.html"/>
 
 	<property name="thunderbolt.classpath" 	value=".\source\" /> 
-
-	<property name="targethtml" 			value="thunderbolt.html"/>
 	
-	<!-- compile example swf using mtasc -->
-	<target name="deploy" description="compile example swf using mtasc">
-		
-		<property name="targetswf" 			value="thunderbolt.swf"/>
-		<property name="mainclass" 			value="Sample.as" />	
+	<target name="Compile SWF" description="compile example swf using mtasc">
+		<property name="example.swf" 			value="thunderbolt.swf"/>
+		<property name="example.main" 			value="Sample.as" />	
 
-		<echo>Compile ${targetswf}</echo>
-		<echo>Class: ${mainclass}</echo>		
+		<echo>SWF:  ${targetswf}</echo>
+		<echo>Main: ${mainclass}</echo>		
 		
 		<exec executable="${mtasc}" failonerror="true">
-
-			<!-- add standard class paths -->
-			<arg value="-cp"/>
-			<arg value="${example.classpath}"/>
-
-			<arg value="-cp"/>
-			<arg value="${flash.classpath}"/>
-			
 			<!-- set swf version -->
-			<arg value="-version"/>
-			<arg value="8"/>
-
-			<!-- set output file -->
-			<arg value="-swf"/>
-			<arg value="${deploy.folder}\${targetswf}"/>
+			<arg line="-v -mx -version 8"/>
 			
-			<!-- call main entry point -->
-			<arg value="-main"/>
-			<arg value="${mainclass}"/>			
+			<!-- add example class paths and set output file -->
+			<arg line="-cp ${example.classpath}"/>
+			<arg line="-swf ${example.folder}\${example.swf}"/>
+			<arg line="-main ${example.main}"/>		
 			
-			<!-- add thunderbolt classes -->
-			<arg value="-cp"/>
-			<arg value="${thunderbolt.classpath}"/>
-			
-			<!-- set thunderbolt trace facility  -->
-			<arg value="-trace"/>
-			<arg value="org.osflash.thunderbolt.Logger.trace"/>
-			<arg value="org/osflash/thunderbolt/Logger"/>
-			
+			<!-- add thunderbolt classes and trace facilities-->
+			<arg line="-cp ${thunderbolt.classpath}"/>
+			<arg line="-trace org.osflash.thunderbolt.Logger.trace org/osflash/thunderbolt/Logger"/>
+		</exec>
+	</target>
+	
+	<target name="Launch HTML" description="Open HTML in Firefox">
+		<echo>Open Firefox: ${firefox} ${deploy.folder}${targethtml}</echo>
+		<exec executable="${firefox}" spawn="true">
+			<arg value="${example.folder}${example.html}"/>
 		</exec>
 		
 	</target>
 	
-	<!-- Open Firefox -->
-	<target name="run" depends="deploy" description="Open Firefox">
-		
-		<echo>Open Firefox</echo>
-		<echo>${firefox}</echo>
-		
-		<exec executable="${firefox}" spawn="true">
-			<arg value="${deploy.folder}${targethtml}"/>
-		</exec> 
+	<target name="Compile and Launch">
+		<antcall target="Compile SWF"/>
+		<antcall target="Launch HTML"/>
 	</target>
 	
 	<!-- Compile a single ZIP containing all package source files -->
-	<target name="zip" depends="deploy" description="Create ZIP file of classe">
+	<target name="Create ZIP" depends="Compile SWF" description="Create ZIP file of classes">
 		<echo>Create ZIP...</echo>
 		<zip destfile="thunderbolt_classes.zip" basedir="${thunderbolt.classpath}" />	
 	</target>

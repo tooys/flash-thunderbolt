@@ -14,24 +14,17 @@ class org.osflash.thunderbolt.logging.LogInfo {
 	public var fullClassWithMethodName:String;
 	
 	public var fileName:String;
-	
 	public var classParts:Array;
-	
 	public var methodName:String;
 	public var fullClass:String;
-	
 	public var className:String;
-	
 	public var traceObject:Object;
-	
 	public var lineNumber:Number;
 	public var objectType:String;
 	
-	private static var lastFrame:Number;
 	public static var frameNumber:Number;
-	
+	private static var lastFrame:Number;
 	private static var _movieUrl:String;
-	
 	private static var frameCounter:MovieClip;
 	
 	/**
@@ -54,11 +47,8 @@ class org.osflash.thunderbolt.logging.LogInfo {
 		this.className = String(fullClass.split(".").pop()) || "Thunderbolt";
 		
 		if (!LogInfo.frameNumber){
-		
 			LogInfo.frameNumber = 1;
-			
 			if (Settings.USE_FRAME_COUNTER){
-			
 				LogInfo.initializeFrameCounter();
 			}
 		}
@@ -67,20 +57,15 @@ class org.osflash.thunderbolt.logging.LogInfo {
 	public function matchClassFilter():Boolean {
 		
 		if (Settings.CLASS_FILTER == "" || Settings.CLASS_FILTER == "*"){
-		
 			return true;	
 		}
 		
 		var isPackage:Boolean = Settings.CLASS_FILTER.indexOf("*") > -1;
 		
 		if (isPackage){
-			
 			var match:String = Settings.CLASS_FILTER.split("*")[0];
-			
 			return this.fullClass.indexOf(match) == 0;
-				
 		} else {
-			
 			return this.fullClass == Settings.CLASS_FILTER;
 		}
 	}
@@ -90,14 +75,10 @@ class org.osflash.thunderbolt.logging.LogInfo {
 	 * @return The movieclip that is listening.
 	 */
 	private static function initializeFrameCounter():MovieClip{
-	
 		LogInfo.frameCounter = _root.createEmptyMovieClip("thunderbolt_frame_listener_mc", _root.getNextHighestDepth());
-		
 		LogInfo.frameCounter.onEnterFrame = function(){
-		
 			LogInfo.frameNumber++;
 		};
-		
 		return LogInfo.frameCounter;
 	}
 	
@@ -108,12 +89,9 @@ class org.osflash.thunderbolt.logging.LogInfo {
 	 * @return String in JavaScript object notation (JSON).
 	 */
 	public function toString():String{
-
 		var description:String = this.fullClassWithMethodName + "[" + this.lineNumber + "] : " + this.objectType + " @ " + this.time;
-				
 		// cunstruct info object
 		return "{" +
-		
 			'description:"' + description 				+ '",' +  
 			'method:"'		+ methodName				+ '",' +
 			'line:"'		+ lineNumber				+ '",' +
@@ -131,7 +109,6 @@ class org.osflash.thunderbolt.logging.LogInfo {
 	 * @return	Current time
 	 */
 	private function get time():String{
-
 		return (new Date()).toString().split(" ")[3];	
 	}
 	
@@ -140,12 +117,9 @@ class org.osflash.thunderbolt.logging.LogInfo {
 	 * @return 	Name of the swf.
 	 */
 	private static function get movieUrl():String{
-		
 		if (!LogInfo._movieUrl){
-			
 			LogInfo._movieUrl = _root._url.split("\\").pop().split("/").pop();	
 		}
-		
 		return LogInfo._movieUrl;
 	}
 	
@@ -153,13 +127,9 @@ class org.osflash.thunderbolt.logging.LogInfo {
 	 * Test if there is an open frame group and close it
 	 */
 	public function checkFrameGroup():Void{
-		
 		if (LogInfo.frameNumber != LogInfo.lastFrame){
-			
 			Console.groupEnd();
-
 			Console.group(LogInfo.movieUrl + " [frame " + LogInfo.frameNumber + "] @ " + this.time);
-			
 			LogInfo.lastFrame = LogInfo.frameNumber;
 		}		
 	}	

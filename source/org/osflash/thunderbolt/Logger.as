@@ -34,19 +34,16 @@ import org.osflash.thunderbolt.Settings;
 /**
  * @author Martin Kleppe <kleppe@gmail.com>
  * @link http://code.google.com/p/flash-thunderbolt/
- * @version 0.03
  */
  
 class org.osflash.thunderbolt.Logger {
 	
 	private static var initialized:Boolean = Logger.initialize();
+	public static var stopped:Boolean;
 	
 	private var classes:Array = [Commandline];
-	
-	public static var stopped:Boolean;
 
 	private static function initialize():Boolean{
-		
 		Logger.stopped = Settings.INITALLY_STOPPED;
 		return true;
 	}
@@ -62,17 +59,12 @@ class org.osflash.thunderbolt.Logger {
 		// send traces to console 
 		// but only if Firebug is available
 		if (Console.enabled){
-
 			if (Logger.stopped){
-			
 				return;	
 			}
-
 			// get more detailed information about current trace
 			var info:LogInfo = new LogInfo(traceObject, fullClassWithMethodName, fileName, lineNumber);
-			
 			if (!info.matchClassFilter()){
-			
 				return;	
 			}
 			
@@ -80,59 +72,42 @@ class org.osflash.thunderbolt.Logger {
 			info.checkFrameGroup();
 				
 			if (String(traceObject).indexOf("+++") == 0){
-			
 				if (Settings.LOG_LEVEL == LogLevel.LOG){
-			
 					var message:String = String(traceObject).slice(String(traceObject).charAt(3) == " " ? 4 : 3);
-				
 					// open group	
 					Console.group(message + (message ? " " : "") + "(" + fullClassWithMethodName + ")");
 				}
-				
 			} else if (traceObject == "---"){
-				
 				if (Settings.LOG_LEVEL == LogLevel.LOG){
 					// close group
 					Console.groupEnd();
 				}
-				
 			} else {
-	
 				// switch between console actions: log, info, warn, error
 				var logLevel:LogLevel = new LogLevel(traceObject);
 				
 				if (logLevel.sendToOutput){
-	
 					// check if message should be sliced									
 					traceObject = logLevel.messageModified ? logLevel.message : traceObject;
-					
 					// start group for xml output
 	//				if (info.objectType == "xml" || info.objectType == "xmlnode"){
+					//TODO: to debug XML output
 					if (false){
-						
 						Console.group(info, new StringyfiedObject(traceObject));
 						Console.dirxml(traceObject);
 						Console.groupEnd();
-							
 					// group multi line strings			
 					} else if (typeof traceObject == "string" && traceObject.indexOf("\n") > -1 && logLevel.console == Console.log) {
-						
 						// begin group
 						Console.group(info);
-			
 						// log single lines
 						var lines:Array = traceObject.split("\n");
-						
 						for (var i:Number = 0; i < lines.length; i++){
-							
 							Console.log(lines[i]);		
 						}
-						
 						// end group
 						Console.groupEnd();
-						
 					} else {
-						
 						// request javascript action
 						logLevel.console(info, ":", new StringyfiedObject(traceObject));				
 					}

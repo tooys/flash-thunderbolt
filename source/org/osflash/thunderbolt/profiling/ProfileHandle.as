@@ -13,11 +13,9 @@ class org.osflash.thunderbolt.profiling.ProfileHandle {
 	public var maxTime:Number;
 
 	public function ProfileHandle(target:Object, methodName:String){
-		
 		this.target = target;
 		this.methodName = methodName;
 		this.method = target[methodName];
-		
 		this.executionCount = 0;
 		this.totalTime = 0;
 		this.maxTime = 0;
@@ -25,7 +23,6 @@ class org.osflash.thunderbolt.profiling.ProfileHandle {
 	}
 	
 	public function log(time:Number){
-	
 		this.executionCount++;
 		this.totalTime += time;
 		this.maxTime = Math.max(this.maxTime, time);
@@ -33,8 +30,6 @@ class org.osflash.thunderbolt.profiling.ProfileHandle {
 	}
 	
 	public function get averageTime():Number{
-		
 		return this.totalTime / this.executionCount;	
 	}
-	
 }

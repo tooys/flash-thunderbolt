@@ -17,7 +17,6 @@ class org.osflash.thunderbolt.data.StringyfiedObject {
 	 * @return 			A new instance holding the parsed object data
 	 */
 	function StringyfiedObject(data:Object, depth:Number, label:String){
-	
 		this.dataString = Parser.stringify(data, depth, label);	
 	}
 	
@@ -26,7 +25,6 @@ class org.osflash.thunderbolt.data.StringyfiedObject {
 	 * @return 	The parsed JSON string;
 	 */
 	public function toString():String{
-		
 		return dataString;
 	}
 }

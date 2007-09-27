@@ -97,11 +97,9 @@ class org.osflash.thunderbolt.io.JavaScriptInterface {
 		"var " + Settings.JAVASCRIPT_CONSOLE_SHORTCUT + " = ThunderBolt;";
 		
 	public static function injectCode():Boolean{
-	
-		//if (Console.enabled){
-			
+		if (System.capabilities.playerType == "PlugIn"){
 			getURL("javascript:" + JavaScriptInterface.codeSnippet);
-		//}
+		}
 		return true;
 	//	return Console.enabled;
 	};
