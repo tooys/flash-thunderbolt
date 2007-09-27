@@ -37,14 +37,10 @@ class org.osflash.thunderbolt.logging.LogLevel {
 	 * @param	fullMessage	The message to analyse.
 	 */
 	function LogLevel(fullMessage:Object){
-		
 		this.level = LogLevel.LOG;
 		this.messageModified = false;
-		
 		if (typeof fullMessage == "string" && fullMessage.charAt(1) == " ") {
-			
 			// TODO: "ERROR:", "INFO:" ... should also be parsed
-			
 			switch (fullMessage.charAt(0).toLowerCase()) {
 			
 				case "d": this.level = LogLevel.LOG;		break;
@@ -53,7 +49,6 @@ class org.osflash.thunderbolt.logging.LogLevel {
 				case "e": this.level = LogLevel.ERROR;		break;
 				case "f": this.level = LogLevel.FATAL;		break;
 			}
-			
 			this.message = String(fullMessage).slice(2);
 			this.messageModified = true;
 		}	
@@ -63,14 +58,11 @@ class org.osflash.thunderbolt.logging.LogLevel {
 	 * Match string based level with numeric index. 
 	 */	
 	public static function getLevelIndex(level:String):Number{
-	
 		switch (level){
-			
 			case LogLevel.INFO: 	return 1;	
 			case LogLevel.WARNING: 	return 2;	
 			case LogLevel.ERROR: 	return 3;	
 			case LogLevel.FATAL: 	return 4;
-			
 			default: 				return 0;
 		}
 	}
@@ -82,7 +74,6 @@ class org.osflash.thunderbolt.logging.LogLevel {
 	 * @return true if log should be send to output.
 	 */
 	public function get sendToOutput():Boolean {
-		
 		return (LogLevel.getLevelIndex(this.level) >= LogLevel.getLevelIndex(Settings.LOG_LEVEL));
 	}
 	
@@ -93,15 +84,12 @@ class org.osflash.thunderbolt.logging.LogLevel {
 	 * @return Console method call.
 	 */
 	public function get console():Function{
-		
 		switch (this.level){
-			
 			case LogLevel.LOG: 		return Console.log; 
 			case LogLevel.INFO: 	return Console.info; 
 			case LogLevel.WARNING: 	return Console.warn; 
 			case LogLevel.ERROR: 	return Console.error; 
 			case LogLevel.FATAL: 	return Console.error; 
-			
 			default:				return Console.log;
 		};
 	}
