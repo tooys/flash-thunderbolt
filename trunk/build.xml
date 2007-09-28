@@ -12,6 +12,7 @@
 	<property name="example.classpath" 		value=".\example\source\" /> 
 	<property name="example.folder" 		value=".\example\deploy\" />
 	<property name="example.html" 			value="thunderbolt.html"/>
+	<property name="example.zip" 			value="thunderbolt_classes.zip"/>
 
 	<property name="thunderbolt.classpath" 	value=".\source\" /> 
 	
@@ -19,8 +20,8 @@
 		<property name="example.swf" 			value="thunderbolt.swf"/>
 		<property name="example.main" 			value="Sample.as" />	
 
-		<echo>SWF:  ${targetswf}</echo>
-		<echo>Main: ${mainclass}</echo>		
+		<echo>SWF:  ${example.swf}</echo>
+		<echo>Main: ${example.main}</echo>		
 		
 		<exec executable="${mtasc}" failonerror="true">
 			<!-- set swf version -->
@@ -38,7 +39,7 @@
 	</target>
 	
 	<target name="Launch HTML" description="Open HTML in Firefox">
-		<echo>Open Firefox: ${firefox} ${deploy.folder}${targethtml}</echo>
+		<echo>Open Firefox: ${firefox} ${example.folder}${example.html}</echo>
 		<exec executable="${firefox}" spawn="true">
 			<arg value="${example.folder}${example.html}"/>
 		</exec>
