@@ -101,12 +101,13 @@ For more information check Adobes Flex 2 Developer's Guide: "  [http://livedocs.
 
 You'll find [http://www.websector.de/blog/category/thunderbolt/ tutorials for using ThunderBolt AS3] on [http://www.websector.de/blog/ WS-Blog].
 
-=== Example ===
+=== Examples ===
 
-_[http://www.websector.de/blog/2007/06/20/update-part-2-logging-flex-2-and-as3-applications-with-firebug-and-thunderbolt/ Example on WS-Blog]_
+[http://www.websector.de/blog/2007/10/14/thunderbolt-as3-10-released-a-lightweight-logging-tool-for-flex-2-and-flash-cs3-applications/ Examples on WS-Blog]_
 
 === Download source ===
 
-Grab the latest ThunderBolt AS3 package (two classes only) or the .swc file [http://code.google.com/p/flash-thunderbolt/source from its repository] via SVN or [http://flash-thunderbolt.googlecode.com/svn/trunk/as3/ download it] directly. 
+Grab the latest ThunderBolt AS3 package (two classes only) or the .swc file [http://code.google.com/p/flash-thunderbolt/source from its repository] via SVN or [http://flash-thunderbolt.googlecode.com/svn/trunk/as3/ download it] directly.
 
-
+=== Author ===
+[http://www.websector.de/blog/ Jens Krause] (aka sectore) 
