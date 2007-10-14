@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+* Logging Flex projects using Firebug and ThunderBolt AS3
+* 
+* @version	1.0
+* @author	Jens Krause [www.websector.de]
+* @date		10/14/07
+* @see		http://www.websector.de/blog/category/thunderbolt/
+* @see		http://code.google.com/p/flash-thunderbolt/
+* @source	http://flash-thunderbolt.googlecode.com/svn/trunk/as3/
+* 
+* ***********************
+* HAPPY LOGGING ;-)
+* ***********************
+* 
+-->
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+	initialize="onAppInitialize()">
+	
+	<mx:Script>
+        <![CDATA[
+        	import org.osflash.thunderbolt.Logger;
+            import flash.events.Event;
+            
+            private function traceToFirebug(event:Event):void  
+            {
+				var myNumber: int = 5;
+				var myString: String = "Lorem ipsum";
+				var myArray: Array = ["firstValue",{x: 100, y: 200}, "secondValue"];
+				
+				var id: String = event.target.id;
+			
+				switch (id)
+				{
+					case "infoButton":
+						Log.getLogger("de.websector.playground.ThunderBoltTargetExample").info("Just an info message.");
+					break;
+					case "warnButton":
+						Log.getLogger("de.websector.playground.ThunderBoltTargetExample").warn("Here is the value of the String named myString: {0}", myString);
+					break;
+					case "errorButton":
+						Log.getLogger("de.websector.playground.ThunderBoltTargetExample").error("Calling two objects, a number myNumber and a nested array called myArray: {0}, {1}", myNumber, myArray);
+					break;
+					case "debugButton":
+						Log.getLogger("de.websector.playground.ThunderBoltTargetExample").debug("Just a debug message.");
+					break;
+					case "memButton":
+						Log.getLogger("de.websector.playground.ThunderBoltTargetExample").info(Logger.memorySnapshot());
+					break;
+					default:
+						Logger.error ("No button found with an ID named " + id);
+				}
+            }
+
+            import mx.logging.Log;
+            import org.osflash.thunderbolt.ThunderBoltTarget;
+            
+            private var _target: ThunderBoltTarget;
+            
+            private function onAppInitialize( ):void
+            {
+                _target = new ThunderBoltTarget();
+				/* 
+				You can disable the time, level or category as follow				
+	            _target.includeTime = false;
+	            _target.includeLevel = false;
+	            _target.includeCategory = false;	            
+	            */	            
+                _target.filters = ["de.websector.playground.ThunderBoltTargetExample"];
+                Log.addTarget(_target);
+            }
+
+            private function hideThunderBolt(event:Event):void
+            {
+             	Logger.hide = event.target.selected;
+            }	
+            	
+      ]]>
+    </mx:Script>
+	<mx:Style source="logger.css"/>
+	<mx:VBox width="440">
+	    <mx:HBox horizontalGap="10">
+			 <mx:Button label="info" 
+						click="traceToFirebug(event);" id="infoButton" width="80" height="40"/> 
+			 <mx:Button label="warn" 
+						click="traceToFirebug(event);" id="warnButton" width="80" height="40"/> 
+			 <mx:Button label="error" 
+						click="traceToFirebug(event);" id="errorButton" width="80" height="40"/>   	
+			 <mx:Button label="debug" 
+						click="traceToFirebug(event);" id="debugButton" width="80" height="40"/>
+			 <mx:Button label="memory" 
+						click="traceToFirebug(event);" id="memButton" width="80" height="40"/>
+	    </mx:HBox>
+		<mx:CheckBox id="hideChB"
+			label="Stop Logging"
+			click="hideThunderBolt(event)" 
+			paddingTop="20"/>
+	</mx:VBox>
+</mx:Application>

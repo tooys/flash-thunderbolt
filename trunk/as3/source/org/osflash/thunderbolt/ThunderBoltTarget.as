@@ -1,10 +1,10 @@
 /**
-* Logging Flex apps with Firebug using ThunderBolt
+* Logging Flex and Flash projects using Firebug and ThunderBolt AS3
 * 
-* @version	0.9.3
+* @version	1.0
 * @author	Jens Krause [www.websector.de]
-* @date		08/29/07
-* @see		http://www.websector.de/blog/?s=thunderbolt
+* @date		10/14/07
+* @see		http://www.websector.de/blog/category/thunderbolt/
 * @see		http://code.google.com/p/flash-thunderbolt/
 * @source	http://flash-thunderbolt.googlecode.com/svn/trunk/as3/
 * 
@@ -40,7 +40,7 @@ package org.osflash.thunderbolt
 	     *  Listens to an log event based on Flex 2 Logging Framework
 	     * 	and calls ThunderBolt trace method
 	     * 
-		 * @param 	event	LogEvent
+		 * @param 	Event	LogEvent
 		 * 
 	     */
 	    override public function logEvent(event: LogEvent):void
@@ -59,7 +59,7 @@ package org.osflash.thunderbolt
 			//
 			// logs message
 			if (event.message.length) message += event.message;
-			else message += "log message has'nt defined... ;-)";
+			else message += "Log message has'nt defined...";
 	    	//
 	    	// calls ThunderBolt	
 	    	Logger.trace (level, message);
@@ -69,8 +69,8 @@ package org.osflash.thunderbolt
 		/**
 		 * Translates Flex log levels to Firebugs log levels
 		 * 
-		 * @param 	msg
-		 * @return 	level description
+		 * @param 	int			log level as integer
+		 * @return 	String		level description
 		 * 
 		 */		
 		private static function getLogLevel (logLevel: int): String
@@ -89,13 +89,11 @@ package org.osflash.thunderbolt
 					level = Logger.ERROR;
 				break;
 				// Firebug doesn't support a fatal level
-				// so we use here Firebugs ERROR level when you're using ThunderBoltTarget
 				case LogEventLevel.FATAL:
 					level = Logger.ERROR;
 				break;
 				default:
 					// LogLevel.DEBUG && LogLevel.ALL
-					// we use here Firebugs LOG level when you're using ThunderBoltTarget
 					level = Logger.LOG;
 			}
 
