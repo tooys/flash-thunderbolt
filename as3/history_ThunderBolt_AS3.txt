@@ -2,7 +2,7 @@
 * Logging Flex and AS3 projects with Firebug using ThunderBolt AS3
 * 
 * @author	Jens Krause [www.websector.de]
-* @see		http://www.websector.de/blog/?s=thunderbolt
+* @see		http://www.websector.de/blog/category/thunderbolt/
 * @see		http://code.google.com/p/flash-thunderbolt/
 * @source	http://flash-thunderbolt.googlecode.com/svn/trunk/as3/
 *
@@ -13,6 +13,14 @@
 --------------------------------
  HISTORY
 --------------------------------
+
+Version	1.0 (10/14/07)
+--------------------------------
+- memory snapshot in use by Flash Player added ->  calling Logger.info(Logger.memorySnapshot());
+- stop logging flag added -> calling Logger.hide = false; or calling Logger.hide = true; 
+- information about() added -> calling Logger.about();
+- new AS3 examples using Flex and Flash added
+
 
 Version	0.9.3 (08/28/07)
 --------------------------------
