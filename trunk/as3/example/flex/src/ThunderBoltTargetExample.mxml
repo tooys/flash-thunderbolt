@@ -79,7 +79,8 @@
     </mx:Script>
 	<mx:Style source="logger.css"/>
 	<mx:VBox width="440">
-	    <mx:HBox horizontalGap="10">
+	    <mx:HBox horizontalGap="10"
+	    	paddingBottom="20">
 			 <mx:Button label="info" 
 						click="traceToFirebug(event);" id="infoButton" width="80" height="40"/> 
 			 <mx:Button label="warn" 
@@ -93,7 +94,6 @@
 	    </mx:HBox>
 		<mx:CheckBox id="hideChB"
 			label="Stop Logging"
-			click="hideThunderBolt(event)" 
-			paddingTop="20"/>
+			click="hideThunderBolt(event)"/>
 	</mx:VBox>
 </mx:Application>
