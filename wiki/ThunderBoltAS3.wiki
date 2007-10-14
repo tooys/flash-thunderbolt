@@ -1,4 +1,4 @@
-#summary ThunderBolt AS3 for logging ActionScript 3 including Flex 2 + 3 projects
+#summary ThunderBolt AS3 for logging ActionScript 3 including Flex 2 projects
 #labels Phase-Implementation,Phase-Deploy,Featured
 
 = ThunderBolt AS3 =
@@ -73,7 +73,7 @@ Logger.error ("Logging two objects: A number typed as int and a string", myNumbe
 
 === Additional features ===
 
-1) Create a snapshot the memory in use by Flash Player:
+1) Get the info about the memory in use by Flash Player:
 
 {{{
 Logger.info(Logger.memorySnapshot());
@@ -108,7 +108,5 @@ _[http://www.websector.de/blog/2007/06/20/update-part-2-logging-flex-2-and-as3-a
 === Download source ===
 
 Grab the latest ThunderBolt AS3 package (two classes only) or the .swc file [http://code.google.com/p/flash-thunderbolt/source from its repository] via SVN or [http://flash-thunderbolt.googlecode.com/svn/trunk/as3/ download it] directly. 
-
-
 
 
