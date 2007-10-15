@@ -107,7 +107,7 @@ You'll find [http://www.websector.de/blog/category/thunderbolt/ tutorials for us
 
 === Download source ===
 
-Grab the latest ThunderBolt AS3 package (two classes only) or the .swc file [http://code.google.com/p/flash-thunderbolt/source from its repository] via SVN or [http://flash-thunderbolt.googlecode.com/svn/trunk/as3/ download it] directly.
+Grab [http://code.google.com/p/flash-thunderbolt/downloads/list here] the latest ThunderBolt AS3 package.
 
 === Author ===
 [http://www.websector.de/blog/ Jens Krause] (aka sectore) 
