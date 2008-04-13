@@ -1,0 +1,25 @@
+body {
+	background-color:#FFFFFF;
+	color:#242E35;
+	font-family:"Lucida Grande","Lucida Sans Unicode",Arial,Helvetica,sans-serif;
+	font-size:12px;
+	margin:10px 10px;
+}		
+
+#code_samples{
+	
+	font-family: "Courier New", Courier, monospace;
+	font-size: 12px;
+	color: #666666;
+}
+
+#code_samples a{
+	
+	text-decoration: none;
+	color: #000099;
+}
+
+#code_samples a:hover{
+	
+	text-decoration: underline;
+}
