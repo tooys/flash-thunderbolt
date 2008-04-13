@@ -2,9 +2,9 @@
 <!--
 * Logging Flex projects using Firebug and ThunderBolt AS3
 * 
-* @version	1.0
+* @version	1.1
 * @author	Jens Krause [www.websector.de]
-* @date		10/14/07
+* @date		04/12/08
 * @see		http://www.websector.de/blog/category/thunderbolt/
 * @see		http://code.google.com/p/flash-thunderbolt/
 * @source	http://flash-thunderbolt.googlecode.com/svn/trunk/as3/
@@ -48,7 +48,7 @@
 						Log.getLogger("de.websector.playground.ThunderBoltTargetExample").info(Logger.memorySnapshot());
 					break;
 					default:
-						Logger.error ("No button found with an ID named " + id);
+						Logger.error ("A button with an ID named " + id + " is not found");
 				}
             }
 
