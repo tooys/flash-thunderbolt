@@ -1,4 +1,4 @@
-#summary MTASC command line options to enable debugging.
+#summary MTASC command line options to enable debugging using ThunderBolt AS2.
 
 = MTASC command line options=
 
