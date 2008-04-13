@@ -1,4 +1,4 @@
-#summary Sample build.xml to use in your AS 2 projects.
+#summary Sample build.xml to use ThunderBolt AS2 in your projects.
 = Ant Build File for ThunderBolt AS2 =
 
 Use this [http://ant.apache.org/manual/ Ant file] in your projects to quickly enable debugging:
