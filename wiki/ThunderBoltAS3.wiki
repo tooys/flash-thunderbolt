@@ -3,7 +3,7 @@
 
 = ThunderBolt AS3 =
 
-ThunderBolt AS3 is a logger extension for Flex 2 and Flash ActionScript 3 applications using [http://www.getfirebug.com Firebug] within [http://www.mozilla.com/en-US/firefox/ Firefox] as simple as possible. 
+ThunderBolt AS3 is a lightweight logger extension for Flex 2/3 and Flash ActionScript 3 applications using [http://www.getfirebug.com Firebug] within [http://www.mozilla.com/en-US/firefox/ Firefox] as simple as possible. 
 
 It’s open source and based on the [http://www.mozilla.org/MPL/MPL-1.1.html Mozilla Public License 1.1.]
 
