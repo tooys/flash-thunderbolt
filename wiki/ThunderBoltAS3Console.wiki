@@ -5,3 +5,13 @@
 === What is the ThunderBolt AS3 Console (beta)? ===
 
 coming soon
+
+
+=== Install instruction ===
+
+coming soon
+
+
+=== Usage ===
+
+coming soon
