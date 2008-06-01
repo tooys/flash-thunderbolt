@@ -2,9 +2,11 @@
 
 = ThunderBolt AS3 Console (beta) =
 
+
 === What is the ThunderBolt AS3 Console (beta)? ===
 
-coming soon
+
+http://flash-thunderbolt.googlecode.com/svn/trunk/as3/images/ThunderBoltAS3_console_screen.png
 
 
 === Install instruction ===
