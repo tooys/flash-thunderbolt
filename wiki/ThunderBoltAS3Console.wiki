@@ -17,7 +17,7 @@ Full source is available, which based on [http://www.mozilla.org/MPL/MPL-1.1.htm
 
 === Install instruction ===
 
-Just grab the [http://code.google.com/p/flash-thunderbolt/downloads/list ThunderBoltAS3Console.zip and run its AIR install file. For this issue you have to installed the latest [http://www.adobe.com/products/air/ Adobe® AIR™ runtime].
+Just grab the [http://code.google.com/p/flash-thunderbolt/downloads/list ThunderBoltAS3Console.zip] and run its AIR install file. For this issue you have to installed the latest [http://www.adobe.com/products/air/ Adobe® AIR™ runtime].
 
 
 === Usage ===
