@@ -33,12 +33,12 @@ First of all: To use ThunderBolt AS3 Console you have to check if you've install
 Run the ThunderBoltAS3Console.app and follow the instruction to point out the [http://livedocs.adobe.com/flex/3/html/logging_04.html flashlog.txt]. Log your application  as described here: [http://code.google.com/p/flash-thunderbolt/wiki/ThunderBoltAS3 ThunderBolt AS3 for logging ActionScript 3 including Flex 2/3 projects]
 
 
-=== Behind the scenes ===
 
+=== Behind the scenes ===
 ThunderBolt AS3 Console (beta) is an [http://www.adobe.com/products/air/ Adobe AIR] application developed by [http://www.websector.de/blog/ Jens Krause] (aka sectore). 
 
 
-The architecture based on [http://www.tombray.com/category/easymvc/ Tom Bray’seasyMVC concept], which helps to build a well structured application as quick as possible using the MVC pattern.
+The architecture based on [http://www.tombray.com/category/easymvc/ Tom Bray’s easyMVC concept], which helps to build a well structured application as quick as possible using the MVC pattern.
 
 ThunderBolt AS3 Console uses the following libraries as well:
  * [http://developer.yahoo.com/yui/treeview/ Yahoo! UI Library TreeView] for the logging tree. Well, it based on HTML and JavaScript using the [http://livedocs.adobe.com/flex/3/langref/mx/controls/HTML.html AIR based HTML component]
@@ -46,4 +46,4 @@ ThunderBolt AS3 Console uses the following libraries as well:
 
 
 
-=== Have fun!=== 
+=== Have fun ;) === 
