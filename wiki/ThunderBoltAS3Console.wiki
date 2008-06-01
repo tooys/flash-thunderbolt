@@ -27,7 +27,7 @@ Run the ThunderBoltAS3Console.app and follow the instruction to point out the [h
 
 Log your application  as described here: [http://code.google.com/p/flash-thunderbolt/wiki/ThunderBoltAS3 ThunderBolt AS3 for logging ActionScript 3 including Flex 2/3 projects]
 
-*Note:* ThunderBolt AS3 Console uses the latest version of ThunderBolt AS3 version 2.0Beta, which is located within the *.zip package mentioned above as well! 
+*Note:* ThunderBolt AS3 Console uses the latest version of ThunderBolt AS3 version 2.0Beta, which is located within the .zip package mentioned above as well! 
 
 === Behind the scenes ===
 ThunderBolt AS3 Console (beta) is an [http://www.adobe.com/products/air/ Adobe AIR] application developed by [http://www.websector.de/blog/ Jens Krause] (aka sectore). 
