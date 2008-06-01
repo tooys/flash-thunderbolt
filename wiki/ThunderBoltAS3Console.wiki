@@ -36,7 +36,7 @@ ThunderBolt AS3 Console (beta) is an [http://www.adobe.com/products/air/ Adobe A
 The architecture based on [http://www.tombray.com/category/easymvc/ Tom Bray’seasyMVC concept], which helps to build a well structured application as quick as possible using the MVC pattern.
 
 ThunderBolt AS3 Console uses the following libraries as well:
- * [http://developer.yahoo.com/yui/treeview/ Yahoo! UI Library TreeView] for the log tree. Well, it based on HTML and JavaScript using the [http://livedocs.adobe.com/flex/3/langref/mx/controls/HTML.html AIR based HTML component]
+ * [http://developer.yahoo.com/yui/treeview/ Yahoo! UI Library TreeView] for the logging tree. Well, it based on HTML and JavaScript using the [http://livedocs.adobe.com/flex/3/langref/mx/controls/HTML.html AIR based HTML component]
  * [http://www.degrafa.com/ Degrafa] for all the skinning stuff.
 
 
