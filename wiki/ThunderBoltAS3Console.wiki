@@ -17,13 +17,18 @@ Full source is available, which based on [http://www.mozilla.org/MPL/MPL-1.1.htm
 
 === Install instruction ===
 
-Just grab the [http://flash-thunderbolt.googlecode.com/svn/trunk/console/ThunderBoltAS3Console.air AIR install file called "ThunderBoltAS3Console.air"] and run it. 
+Just grab the [http://flash-thunderbolt.googlecode.com/svn/trunk/console/ThunderBoltAS3Console.air AIR install file called "ThunderBoltAS3Console.air"] and run it. You have to installed the latest [http://www.adobe.com/products/air/ Adobe® AIR™ runtime].
 
-Note: You have to installed the latest AIR runtime.
+Furthermore you have to download the ThunderBolt AS3 version 2.0Beta using the repository:
+[http://flash-thunderbolt.googlecode.com/svn/trunk/as3_v2_beta/source/ http://flash-thunderbolt.googlecode.com/svn/trunk/as3_v2_beta/source/]
+
+*Note:* ThunderBolt AS3 Console uses the latest version of ThunderBolt AS3 mentioned above! 
+
 
 
 === Usage ===
 First of all: To use ThunderBolt AS3 Console you have to check if you've installed the [http://www.adobe.com/support/flashplayer/downloads.html Flash Debug Player 9.0.115 or above]. 
+
  
 Run the ThunderBoltAS3Console.app and follow the instruction to point out the [http://livedocs.adobe.com/flex/3/html/logging_04.html flashlog.txt]. Log your application  as described here: [http://code.google.com/p/flash-thunderbolt/wiki/ThunderBoltAS3 ThunderBolt AS3 for logging ActionScript 3 including Flex 2/3 projects]
 
