@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:component="org.osflash.thunderbolt.console.mvc.view.components.*"
+	creationComplete="creationCompleteHandler(event)">
+	
+
+	<mx:Script>
+		<![CDATA[
+			import mx.effects.easing.Circular;
+			import gs.TweenLite;
+			import flash.utils.clearInterval;
+			import skins.AssetLib;
+			import mx.effects.Tween;
+			import mx.events.IndexChangedEvent;
+			import org.osflash.thunderbolt.console.events.ConsoleEvent;
+			import org.osflash.thunderbolt.console.mvc.model.AppModel;
+			import mx.binding.utils.ChangeWatcher;
+			import mx.events.PropertyChangeEvent;
+			import org.osflash.thunderbolt.Logger;
+			import mx.events.FlexEvent;
+
+
+			private var logLines: int = 0;
+
+			private var _logOutputReady: Boolean = false;
+			private var _debugOutputReady: Boolean = false;			
+			private var _infoOutputReady: Boolean = false;
+			private var _warnOutputReady: Boolean = false;			
+			private var _errorOutputReady: Boolean = false;				
+
+			[Bindable]	private var _appModel: AppModel = AppModel.getInstance();
+									
+			private var _logDataWatcher: ChangeWatcher = ChangeWatcher.watch(_appModel, "logData", logDataChangedHandler);
+			private var _logDebugDataWatcher: ChangeWatcher = ChangeWatcher.watch(_appModel, "logDebugData", debugDataChangedHandler);				
+			private var _logInfoDataWatcher: ChangeWatcher = ChangeWatcher.watch(_appModel, "logInfoData", infoDataChangedHandler);				
+			private var _logWarnDataWatcher: ChangeWatcher = ChangeWatcher.watch(_appModel, "logWarnData", warnDataChangedHandler);	
+			private var _logErrorDataWatcher: ChangeWatcher = ChangeWatcher.watch(_appModel, "logErrorData", errorDataChangedHandler);					
+
+
+			/**
+			* Callback handler when the app is complete created
+			* @param event	FlexEvent	
+			* 
+			*/	
+			private function creationCompleteHandler(event: FlexEvent): void
+			{			
+
+			}
+			
+
+			/**
+			* Callback handler to determine if the model logData is changed
+			* @param event	PropertyChangeEvent	
+			* 
+			*/	
+			private function logDataChangedHandler(event: PropertyChangeEvent = null): void
+			{
+				if (_logOutputReady) 
+				{
+					showLogData(_appModel.logData, logOutput.htmlLoader.window);
+				}
+			}
+			
+			/**
+			* Callback handler to determine if the model logDebugData is changed
+			* @param event	PropertyChangeEvent	
+			* 
+			*/	
+			private function debugDataChangedHandler(event: PropertyChangeEvent = null): void
+			{
+				if (_debugOutputReady) 
+				{
+					showLogData(_appModel.logDebugData, debugOutput.htmlLoader.window);
+				}
+			}
+			
+			/**
+			* Callback handler to determine if the model logInfoData is changed
+			* @param event	PropertyChangeEvent	
+			* 
+			*/							
+			private function infoDataChangedHandler(event: PropertyChangeEvent = null): void
+			{
+				if (_infoOutputReady) 
+				{
+					showLogData(_appModel.logInfoData, infoOutput.htmlLoader.window);
+				}
+			}
+
+			/**
+			* Callback handler to determine if the model logWarnData is changed
+			* @param event	PropertyChangeEvent	
+			* 
+			*/				
+			private function warnDataChangedHandler(event: PropertyChangeEvent = null): void
+			{
+				if (_warnOutputReady) 
+				{
+					showLogData(_appModel.logWarnData, warnOutput.htmlLoader.window);
+				}
+			}
+
+			/**
+			* Callback handler to determine if the model logErrorData is changed
+			* @param event	PropertyChangeEvent	
+			* 
+			*/	
+			private function errorDataChangedHandler(event: PropertyChangeEvent = null): void
+			{
+				if (_errorOutputReady) 
+				{
+					showLogData(_appModel.logErrorData, errorOutput.htmlLoader.window);
+				}
+			}	
+
+			/**
+			* Show log data in a HTML component
+			* @param logData	Array		logoData	
+			* @param dom		Object		dom object of the HTML component	
+			 * 
+			*/													
+			private function showLogData (logData: Array, dom: Object): void
+			{
+			
+				var max: int = logData.length;
+				var i: int = 0;
+				for (i; i < max; i++)
+				{
+					var data: Object = logData[i];
+					
+					if ( data.action == "group" )
+					{
+						dom.addTree(dom.getLastNodeParent(), data.msg);
+						// adds the first tree under the group tree
+						dom.addTree(dom.lastNode, "Childs: ");		
+					}
+					else if ( data.action == "groupEnd" )
+					{
+						// sets the new parentNode to the parent of the latest node only
+						// without adding a tree
+						dom.setParentNode();							
+					}
+					else
+					{
+						dom.addTree(dom.getLastNodeParent(), data.msg);	
+					}
+				
+				}
+				// draw tree
+				dom.drawTree();
+
+			}			
+
+			/**
+			* Callback handler clicking the start button
+			* @param event	MouseEvent	
+			* 
+			*/					
+			private function clickStartButtonHandler(event: MouseEvent): void
+			{
+				var type:String = (_appModel.isWatching) ? ConsoleEvent.STOP_LOG_WATCHING : ConsoleEvent.START_LOG_WATCHING;
+				var viewEvent: ConsoleEvent = new ConsoleEvent(type);
+				this.dispatchEvent(viewEvent);
+			}	
+
+			/**
+			* Callback handler if a HTML component has been updated 
+			* @param event	Event	
+			* 
+			*/				
+			private function updateHTMLHandler(event: Event):void
+			{
+				var html: HTML = event.target as HTML;
+				
+				if (_appModel.isWatching)
+				{
+										
+					TweenLite.to(	html, 
+									.25, 
+									{
+										verticalScrollPosition: html.maxVerticalScrollPosition,
+										ease: Circular.easeOut
+									});							
+				}
+				// without tween				
+				// html.verticalScrollPosition = html.maxVerticalScrollPosition;
+				
+			}
+
+											
+		]]>
+	</mx:Script>		
+
+
+	<mx:HBox 
+		width="100%" height="40" 
+		horizontalAlign="right"
+		verticalAlign="bottom"
+		horizontalGap="10"
+		paddingRight="20">
+		<mx:Button id="startButton"
+			width="85" height="20"
+			toggle="true"
+			label="{ (_appModel.isWatching) ? 'STOP' : 'START'}" 
+			styleName="standardButton"
+			click="clickStartButtonHandler(event);" 
+			/>
+		<mx:Button id="clearButton"
+			width="85" height="20"
+			label="CLEAR"
+			styleName="standardButton"
+			click="this.dispatchEvent( new ConsoleEvent(ConsoleEvent.CLEAR_LOG) );" 
+			/>
+		
+	</mx:HBox>
+			
+	<component:ConsoleTabNavigator id="tabNav" 
+		width="100%" height="100%"
+		creationPolicy="all"
+		>
+		
+		<mx:Canvas 
+			width="100%"
+			label="ALL"
+			>
+			<mx:HTML id="logOutput"
+				height="100%" width="100%"
+				location="{_appModel.htmlPage}"
+				complete="_logOutputReady = true"
+				updateComplete="updateHTMLHandler(event)"
+				/>
+		</mx:Canvas>
+
+		<mx:Canvas 
+			label="DEBUG"
+			width="100%"
+			>
+			
+			<mx:HTML id="debugOutput"
+				height="100%" width="100%"
+				location="{_appModel.htmlPage}"
+				complete="_debugOutputReady = true"
+				updateComplete="updateHTMLHandler(event)"
+				/>
+			
+		</mx:Canvas>
+					
+		<mx:Canvas 
+			label="INFO"
+			width="100%">
+			
+			<mx:HTML id="infoOutput"
+				height="100%" width="100%"
+				location="{_appModel.htmlPage}"
+				complete="_infoOutputReady = true"
+				updateComplete="updateHTMLHandler(event)"
+				/>
+			
+		</mx:Canvas>
+		
+		<mx:Canvas 
+			label="WARN"
+			width="100%">
+			
+			<mx:HTML id="warnOutput"
+				height="100%" width="100%"
+				location="{_appModel.htmlPage}" 
+				complete="_warnOutputReady = true"
+				updateComplete="updateHTMLHandler(event)"
+				/>
+			
+		</mx:Canvas>
+
+		<mx:Canvas 
+			label="ERROR"
+			width="100%">
+			
+			
+			<mx:HTML id="errorOutput"
+				height="100%" width="100%"
+				location="{_appModel.htmlPage}" 
+				complete="_errorOutputReady = true"
+				updateComplete="updateHTMLHandler(event)"
+				/>
+			
+		</mx:Canvas>
+		
+	</component:ConsoleTabNavigator>
+			
+</mx:VBox>	
