@@ -1,8 +1,8 @@
 /**
 * Logging Flash, Flex or AIR projects based on AS3 using Firebug or ThunderBolt AS3 Console
 * 
-* @version	2.0 Beta
-* @date		06/01/08
+* @version	2.01 Beta
+* @date		06/03/08
 * 
 * @author	Jens Krause [www.websector.de]
 * 
