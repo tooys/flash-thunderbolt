@@ -127,9 +127,18 @@
 				
 	    </mx:HBox>
 	    
-		<mx:CheckBox id="hideChB"
-			label="Stop Logging"
-			click="{ Logger.hide = event.target.selected }"/>
+	    <mx:HBox
+	    	horizontalGap="20">
+	    
+			<mx:CheckBox id="hideChB"
+				label="Stop Logging"
+				click="{ Logger.hide = event.target.selected }"/>
+
+			<mx:CheckBox id="consoleChB"
+				label="ThunderBolt AS3 Console"
+				click="{ Logger.console = event.target.selected }"/>
+					    	
+	    </mx:HBox>
 	</mx:VBox>
 		  
 </mx:Application>

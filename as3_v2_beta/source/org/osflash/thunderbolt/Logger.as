@@ -191,11 +191,14 @@ package org.osflash.thunderbolt
 			 	// send message	to the logging system
 			 	Logger.call( logMsg );
 			 	// log objects	
-			 	var i: int = 0, l: int = logObjects.length;	 	
-				for (i = 0; i < l; i++) 
+				if (logObjects != null)
 				{
-		        	Logger.logObject(logObjects[i]);
-		    	}				
+				 	var i: int = 0, l: int = logObjects.length;	 	
+					for (i = 0; i < l; i++) 
+					{
+			        	Logger.logObject(logObjects[i]);
+			    	}					
+				}				
 			}
 	 	
 		}
