@@ -41,4 +41,11 @@ ThunderBolt AS3 Console uses the following libraries as well:
 
 
 
-=== Have fun ;) === 
+=== Known issue ===
+
+On Windows the "flashlog.txt" is locked by an opened AIR app. That means, the ThunderBolt AS3 Logger can't log any information to "flashlog.txt" on Windows. 
+
+This is an known issues, which is already posted at Adobes Bug System: [http://bugs.adobe.com/jira/browse/SDK-14536 AIR puts a read-only lock on flashlog.txt]. Oliver Goldman, an Engineer of the Adobe AIR Team, confirms this issue: [http://www.adobe.com/cfusion/webforums/forum/messageview.cfm?catid=697&threadid=1368880 "Why does AIR lock the flashlog.txt on Windows?"] 
+
+Sorry for all the Windows user :-(
+
