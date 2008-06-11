@@ -12,13 +12,11 @@ package org.osflash.thunderbolt.console.mvc.model
 {
 	
 	public class ConsoleConstants
-	{
-		public static const TRACE_INFO: String = "[INFO]";
-		public static const TRACE_WARN: String = "[WARN]";
-		public static const TRACE_ERROR: String = "[ERROR]";
-		public static const TRACE_DEBUG: String = "[DEBUG]";
-		public static const TRACE: String = "[TRACE]";		
-	
+	{	
+		public static const ACTION_GROUP: String = "group";
+		public static const ACTION_GROUP_END: String = "groupEnd";
+		public static const ACTION_NONE: String = "none";
+		
 		//
 		// short cuts which will traced by ThunderBolt's Logger logging within flashlog.txt
 		// Use constant to avoid issues using these pretty crazy short cuts ;-)
@@ -34,13 +32,19 @@ package org.osflash.thunderbolt.console.mvc.model
 		public static const ERROR_GROUP_START: String = "egr";
 		public static const ERROR_GROUP_END: String = "ege";
 
-		public static const DEBUG: String = "d__";		
-		public static const DEBUG_GROUP_START: String = "dgr";
-		public static const DEBUG_GROUP_END: String = "dge";
+		public static const DEBUG: String = "debug";		
+		public static const DEBUG_GROUP_START: String = "debug.group";
+		public static const DEBUG_GROUP_END: String = "debug.groupEnd";
 
-		public static const LOG: String = "l__";		
-		public static const LOG_GROUP_START: String = "lgr";
-		public static const LOG_GROUP_END: String = "lge";
-				
+		public static const LOG: String = "log";		
+		public static const LOG_GROUP_START: String = "log.group";
+		public static const LOG_GROUP_END: String = "log.groupEnd";
+
+		public static const GROUP_START: String = ".group";
+		public static const SPACE: String = " ";
+		
+		
+		
+						
 	}
 }
