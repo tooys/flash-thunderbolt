@@ -17,6 +17,7 @@
 
 	<mx:Script>
 		<![CDATA[
+			import mx.effects.Move;
 			import mx.effects.easing.Circular;
 			import gs.TweenLite;
 			import flash.utils.clearInterval;
@@ -25,8 +26,6 @@
 			import mx.events.IndexChangedEvent;
 			import org.osflash.thunderbolt.console.events.ConsoleEvent;
 			import org.osflash.thunderbolt.console.mvc.model.AppModel;
-			import mx.binding.utils.ChangeWatcher;
-			import mx.events.PropertyChangeEvent;
 			import org.osflash.thunderbolt.Logger;
 			import mx.events.FlexEvent;
 
@@ -40,13 +39,6 @@
 			private var _errorOutputReady: Boolean = false;				
 
 			[Bindable]	private var _appModel: AppModel = AppModel.getInstance();
-									
-			private var _logDataWatcher: ChangeWatcher = ChangeWatcher.watch(_appModel, "logData", logDataChangedHandler);
-			private var _logDebugDataWatcher: ChangeWatcher = ChangeWatcher.watch(_appModel, "logDebugData", debugDataChangedHandler);				
-			private var _logInfoDataWatcher: ChangeWatcher = ChangeWatcher.watch(_appModel, "logInfoData", infoDataChangedHandler);				
-			private var _logWarnDataWatcher: ChangeWatcher = ChangeWatcher.watch(_appModel, "logWarnData", warnDataChangedHandler);	
-			private var _logErrorDataWatcher: ChangeWatcher = ChangeWatcher.watch(_appModel, "logErrorData", errorDataChangedHandler);					
-
 
 			/**
 			* Callback handler when the app is complete created
@@ -56,67 +48,63 @@
 			private function creationCompleteHandler(event: FlexEvent): void
 			{			
 
-			}
-			
+			}			
 
 			/**
-			* Callback handler to determine if the model logData is changed
-			* @param event	PropertyChangeEvent	
+			* Setter which is binded to models logData
+			* @param value	Array	
 			* 
 			*/	
-			private function logDataChangedHandler(event: PropertyChangeEvent = null): void
+			private function set logData(value: Array):void
 			{
 				if (_logOutputReady) 
 				{
 					showLogData(_appModel.logData, logOutput.htmlLoader.window);
-				}
+				}			
 			}
-			
+						
 			/**
-			* Callback handler to determine if the model logDebugData is changed
-			* @param event	PropertyChangeEvent	
+			* Setter which is binded to models logDebugData
+			* @param value	Array	
 			* 
 			*/	
-			private function debugDataChangedHandler(event: PropertyChangeEvent = null): void
+			private function set logDebugData(value: Array):void
 			{
 				if (_debugOutputReady) 
 				{
-					showLogData(_appModel.logDebugData, debugOutput.htmlLoader.window);
-				}
-			}
-			
+					showLogData( value, debugOutput.htmlLoader.window);
+				}			
+			}			
 			/**
-			* Callback handler to determine if the model logInfoData is changed
-			* @param event	PropertyChangeEvent	
+			* Setter which is binded to models logInfoData
+			* @param value	Array	
 			* 
-			*/							
-			private function infoDataChangedHandler(event: PropertyChangeEvent = null): void
+			*/	
+			private function set logInfoData(value: Array):void
 			{
 				if (_infoOutputReady) 
 				{
 					showLogData(_appModel.logInfoData, infoOutput.htmlLoader.window);
-				}
+				}		
 			}
-
 			/**
-			* Callback handler to determine if the model logWarnData is changed
-			* @param event	PropertyChangeEvent	
+			* Setter which is binded to models logWarnData
+			* @param value	Array	
 			* 
-			*/				
-			private function warnDataChangedHandler(event: PropertyChangeEvent = null): void
+			*/	
+			private function set logWarnData(value: Array):void
 			{
 				if (_warnOutputReady) 
 				{
 					showLogData(_appModel.logWarnData, warnOutput.htmlLoader.window);
-				}
+				}	
 			}
-
 			/**
-			* Callback handler to determine if the model logErrorData is changed
-			* @param event	PropertyChangeEvent	
+			* Setter which is binded to models logErrorData
+			* @param value	Array	
 			* 
 			*/	
-			private function errorDataChangedHandler(event: PropertyChangeEvent = null): void
+			private function set logErrorData(value: Array):void
 			{
 				if (_errorOutputReady) 
 				{
@@ -186,12 +174,13 @@
 				if (_appModel.isWatching)
 				{
 										
-					TweenLite.to(	html, 
+ 					TweenLite.to(	html, 
 									.25, 
 									{
 										verticalScrollPosition: html.maxVerticalScrollPosition,
 										ease: Circular.easeOut
-									});							
+									});	 		
+					
 				}
 				// without tween				
 				// html.verticalScrollPosition = html.maxVerticalScrollPosition;
@@ -202,7 +191,12 @@
 		]]>
 	</mx:Script>		
 
-
+	<mx:Binding source="_appModel.logData" destination="logData" />	
+	<mx:Binding source="_appModel.logDebugData" destination="logDebugData" />	
+	<mx:Binding source="_appModel.logInfoData" destination="logInfoData" />
+	<mx:Binding source="_appModel.logWarnData" destination="logWarnData" />	
+	<mx:Binding source="_appModel.logErrorData" destination="logErrorData" />	
+			
 	<mx:HBox 
 		width="100%" height="40" 
 		horizontalAlign="right"

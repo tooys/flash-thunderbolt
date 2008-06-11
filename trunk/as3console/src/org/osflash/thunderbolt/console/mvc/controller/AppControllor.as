@@ -27,6 +27,7 @@ package org.osflash.thunderbolt.console.mvc.controller
 	import org.osflash.thunderbolt.console.events.ConsoleEvent;
 	import org.osflash.thunderbolt.console.events.ViewEvent;
 	import org.osflash.thunderbolt.console.mvc.model.AppModel;
+	import org.osflash.thunderbolt.console.mvc.model.ConsoleConstants;
 	/**
 	* AppControllor
     * @author Jens Krause [www.websector.de]
@@ -164,26 +165,22 @@ package org.osflash.thunderbolt.console.mvc.controller
 			// just some logger outputs
 			
 			
-/*  			Logger.console = true;
+/*   			Logger.console = true;
   			Logger.warn("-- WARN -- openLogFile");
 			Logger.error("-- ERROR -- fileReadHandler");	
 			var array: Array = [1, "hello", 3];
-			var array2: Array = [1, "hello", array];
-			var array3: Array = [array2, "array2", 33];
-			Logger.debug("-- ERROR -- fileReadHandler", array3);	
+			var array2: Array = [1, "hello array2", array];
+			var array3: Array = [array2, "hello array3", 33];
+			Logger.debug("-- DEBUG -- fileReadHandler", array3);	
 			
-			Logger.info("-- ERROR -- fileReadHandler", array2);	
+			Logger.info("-- INFO -- fileReadHandler", array2);	
 			
 			trace ("just a trace "); 
 			
 			var array: Array = [1, "hello", 3];
 			var array2: Array = [array, 1, "here", "are some ", "strings"];
 			var array3: Array = [array2, "array2", 33];
-			Logger.warn("-- ERROR -- fileReadHandler", array3);	 
-			
-			
-			 
-			
+			Logger.warn("-- WARN -- fileReadHandler", array3);	  
 			var obj: Object = {testNumber: 11, testNumber22: 22.34, testString: "yuhuu" };
 			Logger.info("obj", obj); */	  
 								
@@ -232,32 +229,35 @@ package org.osflash.thunderbolt.console.mvc.controller
 				// debug log
 				// !! Note !! Don't be confused parsing "log" instead "debug". ThunderBolt used to use only a log level
 				// for logging debug levels. Because Firebug has 4 log levels only (no debug level).
-				if ( line.search( new RegExp("log") ) == 0 )
+				if ( line.search( new RegExp( ConsoleConstants.LOG ) ) == 0 )
 				{
 					var debugPrefix: String = '<span class="debug">debug</span>';
 					// check the begin of a debug group
-					if ( line.search( new RegExp("log.group ") ) == 0)
+					if ( line.search( new RegExp( ConsoleConstants.LOG_GROUP_START + ConsoleConstants.SPACE ) ) == 0)
 					{					
-						line = line.replace( new RegExp("log.group"), "debug");
-						line = line.replace( new RegExp("debug"), debugPrefix);
+						line = line.replace( 	new RegExp( ConsoleConstants.LOG_GROUP_START ), 
+												ConsoleConstants.DEBUG);
+												
+						line = line.replace( new RegExp( ConsoleConstants.DEBUG ), 
+											debugPrefix);
 						
-						logObject = {action: "group", msg: line};
+						logObject = {action: ConsoleConstants.ACTION_GROUP, msg: line};
 									
 					} // check the end of a debug group
-					else if( line.search( new RegExp("log.groupEnd ") ) == 0) 
+					else if( line.search( new RegExp( ConsoleConstants.LOG_GROUP_END + ConsoleConstants.SPACE ) ) == 0) 
 					{
-						logObject = {action: "groupEnd"};						
+						logObject = {action: ConsoleConstants.ACTION_GROUP_END };						
 					} // store debug data
 					else
 					{
-						line = line.replace( new RegExp("log"), debugPrefix);
+						line = line.replace( new RegExp( ConsoleConstants.LOG ), debugPrefix);
 						
-						logObject = {action: "none", msg: line};
+						logObject = {action: ConsoleConstants.ACTION_NONE, msg: line};
 					}	
 					
 					arr_logDebugData.push( logObject );
-					arr_logData.push( logObject );	
-
+					arr_logData.push( logObject );		
+					
 				}				
 				//
 				// info log				
