@@ -114,9 +114,9 @@ Feel free to post your issues on ThunderBolts [http://code.google.com/p/flash-th
 
 You'll find [http://www.websector.de/blog/category/thunderbolt/ tutorials, tips and tricks for using ThunderBolt AS3] on [http://www.websector.de/blog/ WS-Blog].
 
-=== Examples ===
+=== Live examples ===
 
-[http://www.websector.de/blog/2007/10/14/thunderbolt-as3-10-released-a-lightweight-logging-tool-for-flex-2-and-flash-cs3-applications/ Examples on WS-Blog]_
+[http://www.websector.de/blog/2007/10/14/thunderbolt-as3-10-released-a-lightweight-logging-tool-for-flex-2-and-flash-cs3-applications/ Live examples on WS-Blog]_
 
 === Download source ===
 
