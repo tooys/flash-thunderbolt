@@ -110,9 +110,9 @@ Please reload your site and try it again. It could be an issue connecting Firebu
 
 Feel free to post your issues on ThunderBolts [http://code.google.com/p/flash-thunderbolt/issues/list Issue page] or describe it on [http://groups.google.com/group/flash-thunderbolt Google Thunderbolt Group]
 
-=== Tutorials ===
+=== Tutorials / Tips 'n' Tricks ===
 
-You'll find [http://www.websector.de/blog/category/thunderbolt/ tutorials for using ThunderBolt AS3] on [http://www.websector.de/blog/ WS-Blog].
+You'll find [http://www.websector.de/blog/category/thunderbolt/ tutorials, tips and tricks for using ThunderBolt AS3] on [http://www.websector.de/blog/ WS-Blog].
 
 === Examples ===
 
