@@ -17,6 +17,11 @@
 
 	<mx:Script>
 		<![CDATA[
+			import mx.effects.Sequence;
+			import mx.effects.TweenEffect;
+			import mx.effects.AnimateProperty;
+			import mx.effects.easing.Cubic;
+			import mx.effects.Effect;
 			import mx.effects.Move;
 			import mx.effects.easing.Circular;
 			import gs.TweenLite;
@@ -174,12 +179,24 @@
 				if (_appModel.isWatching)
 				{
 										
- 					TweenLite.to(	html, 
+   					TweenLite.to(	html, 
 									.25, 
 									{
 										verticalScrollPosition: html.maxVerticalScrollPosition,
 										ease: Circular.easeOut
-									});	 		
+									});	   		
+
+/* 				var scrollAnimation:Sequence = new Sequence();
+					
+				var scrollDownAnimateProperty:AnimateProperty = new AnimateProperty( html );
+                scrollDownAnimateProperty.property = "verticalScrollPosition";
+                scrollDownAnimateProperty.fromValue = html.verticalScrollPosition;
+                scrollDownAnimateProperty.toValue = html.maxVerticalScrollPosition;
+                scrollDownAnimateProperty.duration = 250;
+                scrollDownAnimateProperty.easingFunction = Circular.easeOut;
+
+				scrollAnimation.addChild(scrollDownAnimateProperty);
+				scrollAnimation.play(); */
 					
 				}
 				// without tween				
