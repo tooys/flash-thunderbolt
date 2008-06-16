@@ -22,7 +22,6 @@ package org.osflash.thunderbolt.console.mvc.controller
 	import mx.core.UIComponent;
 	import mx.events.FlexEvent;
 	
-	import org.osflash.thunderbolt.Logger;
 	import org.osflash.thunderbolt.console.events.ConfigEvent;
 	import org.osflash.thunderbolt.console.events.ConsoleEvent;
 	import org.osflash.thunderbolt.console.events.ViewEvent;
@@ -165,7 +164,9 @@ package org.osflash.thunderbolt.console.mvc.controller
 			// just some logger outputs
 			
 			
-/*   			Logger.console = true;
+			/*
+			
+   			Logger.console = true;
   			Logger.warn("-- WARN -- openLogFile");
 			Logger.error("-- ERROR -- fileReadHandler");	
 			var array: Array = [1, "hello", 3];
@@ -173,6 +174,7 @@ package org.osflash.thunderbolt.console.mvc.controller
 			var array3: Array = [array2, "hello array3", 33];
 			Logger.debug("-- DEBUG -- fileReadHandler", array3);	
 			
+			Logger.debug("-- DEBUG -- fileReadHandler");
 			Logger.info("-- INFO -- fileReadHandler", array2);	
 			
 			trace ("just a trace "); 
@@ -182,7 +184,9 @@ package org.osflash.thunderbolt.console.mvc.controller
 			var array3: Array = [array2, "array2", 33];
 			Logger.warn("-- WARN -- fileReadHandler", array3);	  
 			var obj: Object = {testNumber: 11, testNumber22: 22.34, testString: "yuhuu" };
-			Logger.info("obj", obj); */	  
+			Logger.info("obj", obj);   
+			
+			*/
 								
 			if (fileStream != null)
 			{			    
@@ -225,21 +229,23 @@ package org.osflash.thunderbolt.console.mvc.controller
 			{
 				var line: String = lines[i];
 				var logObject: Object = {};
+				
 				//
-				// debug log
-				// !! Note !! Don't be confused parsing "log" instead "debug". ThunderBolt used to use only a log level
-				// for logging debug levels. Because Firebug has 4 log levels only (no debug level).
+				// log level
+				// Note: Don't be confused about changing a log level to a debug level. 
+				// Because Firebug has 4 log levels only (no debug level)
 				if ( line.search( new RegExp( ConsoleConstants.LOG ) ) == 0 )
 				{
-					var debugPrefix: String = '<span class="debug">debug</span>';
+					var logPrefix: String = '<span class="debug">debug</span>';
 					// check the begin of a debug group
 					if ( line.search( new RegExp( ConsoleConstants.LOG_GROUP_START + ConsoleConstants.SPACE ) ) == 0)
-					{					
+					{		
+						// replace "log.group" to "debug"		
 						line = line.replace( 	new RegExp( ConsoleConstants.LOG_GROUP_START ), 
 												ConsoleConstants.DEBUG);
-												
+						// replace debug to html						
 						line = line.replace( new RegExp( ConsoleConstants.DEBUG ), 
-											debugPrefix);
+											logPrefix);
 						
 						logObject = {action: ConsoleConstants.ACTION_GROUP, msg: line};
 									
@@ -250,7 +256,7 @@ package org.osflash.thunderbolt.console.mvc.controller
 					} // store debug data
 					else
 					{
-						line = line.replace( new RegExp( ConsoleConstants.LOG ), debugPrefix);
+						line = line.replace( new RegExp( ConsoleConstants.LOG ), logPrefix);
 						
 						logObject = {action: ConsoleConstants.ACTION_NONE, msg: line};
 					}	
@@ -260,15 +266,44 @@ package org.osflash.thunderbolt.console.mvc.controller
 					
 				}				
 				//
-				// info log				
-				else if ( line.search( new RegExp("info") ) == 0)
+				// debug level				
+				else if ( line.search( new RegExp( ConsoleConstants.DEBUG ) ) == 0)
+				{
+					var debugPrefix: String = '<span class="debug">debug</span>';
+					// check the begin of an info group
+					if ( line.search( new RegExp( "debug.group" ) ) == 0)
+					{	
+						// remove ".group"					
+						line = line.replace( new RegExp( ".group" ), "");
+						// replace "info" to html
+						line = line.replace( new RegExp( "debug" ), debugPrefix);						
+						logObject = {action: "group", msg: line};
+			
+					} // check the end of a debug group
+					else if( line.search( new RegExp("debug.groupEnd ") ) == 0) 
+					{
+						logObject = {action: "groupEnd"};						
+					} // store info data
+					else
+					{
+						line = line.replace( new RegExp("debug"), debugPrefix);						
+						logObject = {action: "none", msg: line};						
+					}
+					arr_logDebugData.push( logObject );
+					arr_logData.push( logObject );				
+				}
+				//
+				// info level				
+				else if ( line.search( new RegExp( ConsoleConstants.INFO ) ) == 0)
 				{
 					var infoPrefix: String = '<span class="info">info</span>';
 
 					// check the begin of an info group
-					if ( line.search( new RegExp("info.group ") ) == 0)
-					{						
+					if ( line.search( new RegExp( ConsoleConstants.INFO_GROUP_START + ConsoleConstants.SPACE ) ) == 0)
+					{	
+						// remove ".group"					
 						line = line.replace( new RegExp(".group"), "");
+						// replace "info" to html
 						line = line.replace( new RegExp("info"), infoPrefix);						
 						logObject = {action: "group", msg: line};
 			
@@ -286,7 +321,7 @@ package org.osflash.thunderbolt.console.mvc.controller
 					arr_logData.push( logObject );				
 				}
 				//
-				// warn log				
+				// warn level				
 				else if ( line.search( new RegExp("warn") ) == 0)
 				{
 					var warnPrefix: String = '<span class="warn">warn</span>';
@@ -314,7 +349,7 @@ package org.osflash.thunderbolt.console.mvc.controller
 					arr_logData.push( logObject );				
 				}
 				//
-				// error log				
+				// error level				
 				else if ( line.search( new RegExp("error") ) == 0)
 				{
 					var errorPrefix: String = '<span class="error">error</span>';

@@ -19,23 +19,22 @@ package org.osflash.thunderbolt.console.mvc.model
 		
 		//
 		// short cuts which will traced by ThunderBolt's Logger logging within flashlog.txt
-		// Use constant to avoid issues using these pretty crazy short cuts ;-)
-		public static const INFO: String = "i__";		
-		public static const INFO_GROUP_START: String = "igr";
-		public static const INFO_GROUP_END: String = "ige";
+		public static const INFO: String = "info";		
+		public static const INFO_GROUP_START: String = "info.group";
+		public static const INFO_GROUP_END: String = "info.groupEnd";
 
-		public static const WARN: String = "w__";		
-		public static const WARN_GROUP_START: String = "wgr";
-		public static const WARN_GROUP_END: String = "wge";
+		public static const WARN: String = "warn";		
+		public static const WARN_GROUP_START: String = "warn.group";
+		public static const WARN_GROUP_END: String = "warn.groupEnd";
 
-		public static const ERROR: String = "e__";		
-		public static const ERROR_GROUP_START: String = "egr";
-		public static const ERROR_GROUP_END: String = "ege";
+		public static const ERROR: String = "error";		
+		public static const ERROR_GROUP_START: String = "error.group";
+		public static const ERROR_GROUP_END: String = "error.groupEnd";
 
 		public static const DEBUG: String = "debug";		
 		public static const DEBUG_GROUP_START: String = "debug.group";
 		public static const DEBUG_GROUP_END: String = "debug.groupEnd";
-
+		
 		public static const LOG: String = "log";		
 		public static const LOG_GROUP_START: String = "log.group";
 		public static const LOG_GROUP_END: String = "log.groupEnd";
