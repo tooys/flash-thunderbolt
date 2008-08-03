@@ -22,6 +22,7 @@ package org.osflash.thunderbolt.console.mvc.controller
 	import mx.core.UIComponent;
 	import mx.events.FlexEvent;
 	
+	import org.osflash.thunderbolt.Logger;
 	import org.osflash.thunderbolt.console.events.ConfigEvent;
 	import org.osflash.thunderbolt.console.events.ConsoleEvent;
 	import org.osflash.thunderbolt.console.events.ViewEvent;
@@ -87,6 +88,7 @@ package org.osflash.thunderbolt.console.mvc.controller
 			systemManager.addEventListener(ConsoleEvent.START_LOG_WATCHING, startLogWatching);
 			systemManager.addEventListener(ConsoleEvent.STOP_LOG_WATCHING, stopLogWatching);
 			systemManager.addEventListener(ConsoleEvent.CLEAR_LOG, clearLogHandler);
+			systemManager.addEventListener( ConsoleEvent.HIDE_TRACE_LOGGING, traceLoggingHandler );
 			
 			//
 			// start view state
@@ -160,11 +162,15 @@ package org.osflash.thunderbolt.console.mvc.controller
 					
 		private function openLogFile(event: Event = null):void
 		{
-			// For testing the console only
-			// just some logger outputs
-			
-			
+			// For "inHouse" testing only ;)
+			// just some log outputs
+ 		
 			/*
+			
+			Logger.includeTime = false;
+			trace ("http://i.ligatus.de/ads/1687_90x75.jpg and http://i.ligatus.de/ads/1687_90x75.jpg AND ftp://i.ligatus.de/ads/1687_90x75.jpg"); 
+			
+			Logger.debug("-- DEBUG -- fileReadHandler"); 
 			
    			Logger.console = true;
   			Logger.warn("-- WARN -- openLogFile");
@@ -177,7 +183,6 @@ package org.osflash.thunderbolt.console.mvc.controller
 			Logger.debug("-- DEBUG -- fileReadHandler");
 			Logger.info("-- INFO -- fileReadHandler", array2);	
 			
-			trace ("just a trace "); 
 			
 			var array: Array = [1, "hello", 3];
 			var array2: Array = [array, 1, "here", "are some ", "strings"];
@@ -227,7 +232,7 @@ package org.osflash.thunderbolt.console.mvc.controller
 				
 			for (i; i < max; i++)
 			{
-				var line: String = lines[i];
+				var line: String = clearLog( lines[i] );
 				var logObject: Object = {};
 				
 				//
@@ -375,9 +380,12 @@ package org.osflash.thunderbolt.console.mvc.controller
 				}
 				else
 				{
-					line = '<span class="log">trace</span> ' + line;
-					logObject = {action: "none", msg: line};
-					arr_logData.push( logObject );
+					if ( !_appModel.hideTraceLogs )
+					{
+						line = '<span class="log">trace</span> ' + line;
+						logObject = {action: "none", msg: line};
+						arr_logData.push( logObject );					
+					}
 				}
 
 				
@@ -407,9 +415,36 @@ package org.osflash.thunderbolt.console.mvc.controller
 		
 		}
 
+		private function traceLoggingHandler(event: ConsoleEvent = null):void
+		{
+			
+			_appModel.hideTraceLogs = event.hideTraceLogs;	
+		
+		}
+
 		private function readIOErrorHandler(event: IOErrorEvent): void
 		{
+			
+		}
 		
+		
+		/**
+		 * Helper method to clear up the logData to avoid showing or playing real content within HTML component 
+		 * @see: http://code.google.com/p/flash-thunderbolt/issues/detail?id=6
+		 * 
+		 * @param value 	String of logged data
+		 * @return 			String of a "cleared" log
+		 * 
+		 */		
+		private function clearLog(value: String): String
+		{
+			var logData: String = value;
+			
+			// just wrapping a <span> tag to set a "invalid" url
+			logData = logData.replace( new RegExp("http://", "g"), "<span>http://</span>");
+			logData = logData.replace( new RegExp("ftp://", "g"), "<span>ftp://</span>");
+			
+			return logData;
 		}	
 
 	
