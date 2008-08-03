@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+* ThunderBolt meets Gumbo ;)
+* 
+* @version	2.0
+* @date		08/03/08
+* 
+* @author	Jens Krause [www.websector.de]
+* 
+* @see		http://www.websector.de/blog/category/thunderbolt/
+* @see		http://code.google.com/p/flash-thunderbolt/
+* @source	http://flash-thunderbolt.googlecode.com/svn/trunk/as3/
+
+
+-->
+
+<gumbo:Skin 
+	xmlns="http://ns.adobe.com/mxml/2009"
+	xmlns:gumbo="library:adobe/flex/gumbo"
+  	xmlns:mx="library:adobe/flex/halo"
+	>
+	  		
+    <gumbo:states>   	
+        <State name="up" />
+        <State name="over" />
+        <State name="down" />
+        <State name="disabled" />
+	</gumbo:states>
+    
+
+    <gumbo:content>
+	
+		<!-- background -->
+		<Rect id="bg" 
+			radiusX="4" radiusY="4" 
+			top="0" right="0" bottom="0" left="0"
+			>
+			<fill>
+				<LinearGradient 
+					x="0" y="0" 
+					rotation="90">
+					<GradientEntry 
+						color="#666666" 
+						color.over="#E3FF74"
+						color.down="#E3FF74"
+						ratio="0" 
+						/>
+					<GradientEntry 
+						color="#000000" 
+						color.over="#DCFF55"
+						color.down="#DCFF55"
+						ratio="1"
+						/> 
+				</LinearGradient>
+			</fill>
+		</Rect>
+		
+		<!-- label -->
+		<TextBox id="label"
+				top="15" right="2" left="2"
+				text="{ data.label.toUpperCase() }"
+				fontFamily="Arial"
+				fontSize="13"
+				color="#FFFFFF"
+				color.over="#666666"
+				color.down="#666666"
+				alpha="1"
+				textAlign="center"
+				alpha.over=".85"
+				/>
+	
+		<!-- highlight -->
+		<Rect
+			radiusX="4" radiusY="4"
+			top="2" left="2" right="2"
+			height="{bg.height * .5 - 2}"
+			>
+			<fill>
+				<LinearGradient 
+					x="0" y="0" 
+					rotation="90">
+					<GradientEntry 
+						color="#ffffff" 
+						ratio="0" 
+						alpha=".3"/>
+					<GradientEntry 
+						color="#ffffff" 
+						ratio="1" 
+						alpha=".1"/>
+				</LinearGradient>
+			</fill>
+		</Rect>
+
+    </gumbo:content>
+
+</gumbo:Skin>
