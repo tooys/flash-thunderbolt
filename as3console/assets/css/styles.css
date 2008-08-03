@@ -57,6 +57,7 @@ TabNavigator
 								#D134D1;								
 }
 
+
 .tabs
 {
 	padding-top: 3;
@@ -104,6 +105,15 @@ Button
 	selectedOverSkin: ClassReference("skins.StandardButtonSkin");	
 	selectedDownSkin: ClassReference("skins.StandardButtonSkin");	
 }
+
+.standardCheckBox
+{
+	font-size: 11;
+	color: #333333;
+	text-roll-over-color: #000000;
+	borderColor: 0;
+}
+
 
 .footer
 {
