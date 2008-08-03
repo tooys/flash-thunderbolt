@@ -1,9 +1,11 @@
 /**
-* Logging Flex and Flash projects using Firebug and ThunderBolt AS3
+* Logging Flash, Flex or AIR projects based on AS3 using Firebug or ThunderBolt AS3 Console
 * 
-* @version	1.0
+* @version	2.0
+* @date		08/03/08
+* 
 * @author	Jens Krause [www.websector.de]
-* @date		10/14/07
+* 
 * @see		http://www.websector.de/blog/category/thunderbolt/
 * @see		http://code.google.com/p/flash-thunderbolt/
 * @source	http://flash-thunderbolt.googlecode.com/svn/trunk/as3/
@@ -17,11 +19,13 @@
 package org.osflash.thunderbolt
 {
 	import flash.external.ExternalInterface;
+	import flash.system.Capabilities;
 	import flash.system.System;
 	import flash.utils.describeType;
 	
 	/**
 	* Thunderbolts AS3 Logger class
+	* 
 	*/
 	
 	public class Logger
@@ -33,9 +37,11 @@ package org.osflash.thunderbolt
 		public static const ERROR: String = "error";
 		public static const LOG: String = "log";
 
-		private static const FIELD_SEPERATOR: String = " :: ";		
+		private static const GROUP_START: String = "group";
+		private static const GROUP_END: String = "groupEnd";
+		private static const FIELD_SEPERATOR: String = " :: ";
 		private static const MAX_DEPTH: int = 255;
-		private static const VERSION: String = "1.0";
+		private static const VERSION: String = "2.0 Beta";
 		private static const AUTHOR: String = "Jens Krause [www.websector.de]"
 		//
 		// private vars	
@@ -46,29 +52,39 @@ package org.osflash.thunderbolt
 		// public vars
 		public static var includeTime: Boolean = true;
 		private static var _hide: Boolean = false;
-		
+		private static var _firstRun: Boolean = true;
+		private static var _firebug: Boolean = false;	
+			
 		/**
 		 * Information about the current version of ThunderBoltAS3
 		 *
 		 */		 
 		public static function about():void
 	    {
-	        var message: String = "+++ Welcome to ThunderBolt AS3 | VERSION: " + Logger.VERSION + " | AUTHOR: " + Logger.AUTHOR + " | Happy logging ;-) +++";
-			Logger.trace (Logger.INFO, message);
+	        var message: String = 	"+++ Welcome to ThunderBolt AS3 | VERSION: " 
+	        						+ Logger.VERSION 
+	        						+ " | AUTHOR: " 
+	        						+ Logger.AUTHOR 
+	        						+ " | Happy logging +++";
+			Logger.info (message);
 	    }
 	
 		/**
 		 * Calculates the amount of memory in MB and Kb currently in use by Flash Player
 		 * @return 	String		Message about the current value of memory in use
 		 *
-		 * Tip: For detecting memory leaks in Flash or Flex check out WSMonitor, too ;-)
+		 * Tip: For detecting memory leaks in Flash or Flex check out WSMonitor, too.
 		 * @see: http://www.websector.de/blog/2007/10/01/detecting-memory-leaks-in-flash-or-flex-applications-using-wsmonitor/ 
 		 *
 		 */		 
 		public static function memorySnapshot():String
 	    {
 	        var currentMemValue: uint = System.totalMemory;
-			var message: String = "Memory Snapshot: " + Math.round(currentMemValue / 1024 / 1024 * 100) / 100 + " MB (" + Math.round(currentMemValue / 1024) + " kb)";
+			var message: String = 	"Memory Snapshot: " 
+									+ Math.round(currentMemValue / 1024 / 1024 * 100) / 100 
+									+ " MB (" 
+									+ Math.round(currentMemValue / 1024) 
+									+ " kb)";
 			return message;
 	    }
 				
@@ -79,9 +95,9 @@ package org.osflash.thunderbolt
 		 * @param 	logObjects		Array		Array of log objects using rest parameter
 		 * 
 		 */		
-		public static function info (msg: String = null, ... logObjects): void
+		public static function info (msg: String = null, ...logObjects): void
 		{
-			Logger.trace(Logger.INFO, msg, logObjects);			
+			Logger.log( Logger.INFO, msg, logObjects );			
 		}
 		
 		/**
@@ -91,9 +107,9 @@ package org.osflash.thunderbolt
 		 * @param 	logObjects		Array		Array of log objects using rest parameter
 		 * 
 		 */		
-		public static function warn (msg: String = null, ... logObjects): void
+		public static function warn (msg: String = null, ...logObjects): void
 		{
-			Logger.trace(Logger.WARN, msg, logObjects);			
+			Logger.log( Logger.WARN, msg, logObjects );			
 		}
 
 		/**
@@ -103,9 +119,9 @@ package org.osflash.thunderbolt
 		 * @param 	logObjects		Array		Array of log objects using rest parameter
 		 * 
 		 */		
-		public static function error (msg: String = null, ... logObjects): void
+		public static function error (msg: String = null, ...logObjects): void
 		{
-			Logger.trace(Logger.ERROR, msg, logObjects);			
+			Logger.log( Logger.ERROR, msg, logObjects );			
 		}
 		
 		/**
@@ -115,48 +131,79 @@ package org.osflash.thunderbolt
 		 * @param 	logObjects		Array		Array of log objects using rest parameter
 		 * 
 		 */		
-		public static function debug (msg: String = null, ... logObjects): void
+		public static function debug (msg: String = null, ...logObjects): void
 		{
-			Logger.trace(Logger.LOG, msg, logObjects);			
+			Logger.log( Logger.LOG, msg, logObjects );			
 		}		
 			
 		/**
 		 * Hides the logging process calling Firebug
-		 * @param 	value	Boolean     Hide or show the logs of ThunderBolt within Firebug
+		 * @param 	value	Boolean     Hide or show the logs of ThunderBolt within Firebug. Default value is "false"
 		 */		 
 		public static function set hide(value: Boolean):void
 	    {
 	        _hide = value;
 	    }
-					 
+
+		/**
+		 * Flag to use console trace() methods
+		 * @param 	value	Boolean     Flag to use Firebug or not. Default value is "true".
+		 */		 
+		public static function set console(value: Boolean):void
+	    {
+	    	_firstRun = false;
+	        _firebug = !value;
+	    }
+	    					 
 		/**
 		 * Calls Firebugs command line API to write log information
 		 * 
 		 * @param 	level		String			log level 
  		 * @param 	msg			String			log message 
-		 * @param 	logObjects	Array			Array of log objects using rest parameter
+		 * @param 	logObjects	Array			Array of log objects
 		 */			 
-		public static function trace (level: String, msg: String = "", ... logObjects): void
+		public static function log (level: String, msg: String = "", logObjects: Array = null): void
 		{
 			if(!_hide)
 			{
+				// at first run check
+				// using browser or not and check if firebug is enabled
+				if (_firstRun)
+				{					
+					var isBrowser: Boolean = ( Capabilities.playerType == "ActiveX" || Capabilities.playerType == "PlugIn" );
+					
+					trace ("isBrowser " + isBrowser);
+										
+					if ( isBrowser && ExternalInterface.available )
+					{
+						// check if firebug installed and enabled
+						if ( ExternalInterface.call( "function(){ return typeof window.console == 'object' && typeof console.firebug == 'string'}" ) )						
+							_firebug = true;
+					}
+					
+					_firstRun = false;
+				}
+				
 				_depth = 0;
 			 	// get log level
 			 	_logLevel = level;
-			 	// add log level to log messagef
-			 	var logMsg: String = "[" + _logLevel.toUpperCase() + "] ";
+			 	// log message
+			 	var logMsg: String = "";
 		    	// add time	to log message
 	    		if (includeTime) logMsg += getCurrentTime();
 				// add message text to log message
 			 	logMsg += msg;
-			 	// call Firebug		 	
-			 	ExternalInterface.call("console." + _logLevel, logMsg);
+			 	// send message	to the logging system
+			 	Logger.call( logMsg );
 			 	// log objects	
-			 	var i: int, l: int = logObjects.length;	 	
-				for (i = 0; i < l; i++) 
+				if (logObjects != null)
 				{
-		        	Logger.logObject(logObjects[i]);
-		    	}				
+				 	var i: int = 0, l: int = logObjects.length;	 	
+					for (i = 0; i < l; i++) 
+					{
+			        	Logger.logObject(logObjects[i]);
+			    	}					
+				}				
 			}
 	 	
 		}
@@ -167,9 +214,9 @@ package org.osflash.thunderbolt
 		 * @param 	logObj		Object		log object
 		 * @param 	id			String		short description of log object
 		 */	
-		private static function logObject (logObj: *, id: String = null): void
+		private static function logObject (logObj:*, id:String = null): void
 		{				
-			if (_depth < Logger.MAX_DEPTH)
+			if ( _depth < Logger.MAX_DEPTH )
 			{
 				++ _depth;
 				
@@ -182,32 +229,34 @@ package org.osflash.thunderbolt
 					var msg: String = (propID.length) 	? 	"[" + type + "] " + propID + " = " + logObj
 														: 	"[" + type + "] " + logObj;
 															
-					ExternalInterface.call("console." + Logger.LOG, msg);
+					Logger.call( msg );
 				}
 				else if (type == "Object")
 				{
-				  	ExternalInterface.call("console.group", "[Object] " + propID);				  	
+				  	Logger.callGroupAction( GROUP_START, "[Object] " + propID);
+				  	
 				  	for (var element: String in logObj)
 				  	{
-				  		logObject(logObj[element], element);				  		
+					  	logObject(logObj[element], element);	
 				  	}
-				  	ExternalInterface.call("console.groupEnd");
+					Logger.callGroupAction( GROUP_END );
 				}
 				else if (type == "Array")
 				{
-				  	/* don't create a group on depth 1 when we are using the ... (rest) parameter called by Logger.trace() ;-) */
-				  	if (_depth > 1) ExternalInterface.call("console.group", "[Array] " + propID);
+				  	Logger.callGroupAction( GROUP_START, "[Array] " + propID );
 				  	
-				  	var i: int, l: int = logObj.length;					  					  	
-				  	for (i = 0; i < l; i++)
+				  	var i: int = 0, max: int = logObj.length;					  					  	
+				  	for (i; i < max; i++)
 				  	{
-				  		logObject(logObj[i]);				  		
+				  		logObject(logObj[i]);
 				  	}
-				  	ExternalInterface.call("console.groupEnd");					  			
+				  	
+				  	Logger.callGroupAction( GROUP_END );
+				  				  			
 				}
 				else
 				{
-					// log private props as well - thx Rob Herman [http://www.toolsbydesign.com] ;-)
+					// log private props as well - thx to Rob Herman [http://www.toolsbydesign.com]
 					var list: XMLList = description..accessor;					
 					
 					if (list.length())
@@ -224,27 +273,75 @@ package org.osflash.thunderbolt
 								//TODO: filter classes
 								// var classReference: Class = getDefinitionByName(typeItem) as Class;
 								var valueItem: * = logObj[propItem];
-								logObject(valueItem, propItem);
+								Logger.logObject(valueItem, propItem);
 							}
 						}					
 					}
 					else
 					{
-						logObject(logObj, type);					
+						Logger.logObject(logObj, type);					
 					}
 				}
 			}
 			else
 			{
-				// call one stop message only ;-)
+				// call one stop message only
 				if (!_stopLog)
 				{
-					ExternalInterface.call("console." + Logger.WARN, "STOP LOGGING: More than " + _depth + " nested objects or properties.");
+					Logger.call( "STOP LOGGING: More than " + _depth + " nested objects or properties." );
 					_stopLog = true;
 				}			
 			}									
 		}
-			
+		
+		/**
+		 * Call wheter to Firebug console or 
+		 * use the standard trace method logging by flashlog.txt
+		 * 
+		 * @param 	msg			 String			log message
+		 * 
+		 */							
+		private static function call (msg: String = ""): void
+		{
+			if ( _firebug )
+				ExternalInterface.call("console." + _logLevel, msg);			
+			else
+				trace ( _logLevel + " " + msg);	
+
+		}
+		
+		
+		
+		/**
+		 * Calls an action to open or close a group of log properties
+		 * 
+		 * @param 	groupAction		String			Defines the action to open or close a group 
+		 * @param 	msg			 	String			log message
+		 * 
+		 */
+		private static function callGroupAction (groupAction: String, msg: String = ""): void
+		{
+			if ( _firebug )
+			{
+				if (groupAction == GROUP_START) 
+					ExternalInterface.call("console.group", msg);		
+				else if (groupAction == GROUP_END)
+					ExternalInterface.call("console.groupEnd");			
+				else
+					ExternalInterface.call("console." + Logger.ERROR, "group type has not defined");	
+			}
+			else
+			{
+				if (groupAction == GROUP_START) 
+					trace( _logLevel + "." + GROUP_START + " " + msg);			
+				else if (groupAction == GROUP_END)
+					trace( _logLevel + "." + GROUP_END + " " + msg);			
+				else
+					trace ( ERROR + "group type has not defined");					
+			}
+		}
+		
+					
 		/**
 		 * Checking for primitive types
 		 * 
@@ -267,7 +364,7 @@ package org.osflash.thunderbolt
 				case "undefined":
 				case "null":
 					isPrimitiveType = true;
-				break;			
+					break;			
 				default:
 					isPrimitiveType = false;
 			}

@@ -1,9 +1,11 @@
 /**
 * Logging Flex and Flash projects using Firebug and ThunderBolt AS3
 * 
-* @version	1.0
+* @version	2.0
+* @date		08/03/08
+*
 * @author	Jens Krause [www.websector.de]
-* @date		10/14/07
+*
 * @see		http://www.websector.de/blog/category/thunderbolt/
 * @see		http://code.google.com/p/flash-thunderbolt/
 * @source	http://flash-thunderbolt.googlecode.com/svn/trunk/as3/
@@ -37,7 +39,7 @@ package org.osflash.thunderbolt
 
  
 	     /**
-	     *  Listens to an log event based on Flex 2 Logging Framework
+	     *  Listens to an log event based on Flex Logging Framework
 	     * 	and calls ThunderBolt trace method
 	     * 
 		 * @param 	Event	LogEvent
@@ -58,11 +60,13 @@ package org.osflash.thunderbolt
 			if (includeCategory) message += ILogger(event.target).category + FIELD_SEPERATOR;
 			//
 			// logs message
-			if (event.message.length) message += event.message;
-			else message += "Log message has'nt defined...";
+			if (event.message.length) 
+				message += event.message;
+			else 
+				message += "Log message has'nt defined...";
 	    	//
 	    	// calls ThunderBolt	
-	    	Logger.trace (level, message);
+	    	Logger.log (level, message);
 
 	    }   
 
@@ -81,17 +85,17 @@ package org.osflash.thunderbolt
 			{
 				case LogEventLevel.INFO:
 					level = Logger.INFO;
-				break;
+					break;
 				case LogEventLevel.WARN:
 					level = Logger.WARN;
-				break;				
+					break;				
 				case LogEventLevel.ERROR:
 					level = Logger.ERROR;
-				break;
+					break;
 				// Firebug doesn't support a fatal level
 				case LogEventLevel.FATAL:
 					level = Logger.ERROR;
-				break;
+					break;
 				default:
 					// LogLevel.DEBUG && LogLevel.ALL
 					level = Logger.LOG;
