@@ -1,5 +1,5 @@
 /**
-* Logging Flex and AS3 projects with Firebug using ThunderBolt AS3
+* Logging Flex, AIR or Flash projects with Firebug using ThunderBolt AS3 and its Console
 * 
 * @author	Jens Krause [www.websector.de]
 * @see		http://www.websector.de/blog/category/thunderbolt/
@@ -13,6 +13,16 @@
 --------------------------------
  HISTORY
 --------------------------------
+
+Version	2.0 (08/03/08)
+--------------------------------
+- Firefox 3 / Firebug 1.02b supported 
+- ThunderBolt AS3 Console based on AIR added
+- All AS3 examples updated
+
+- bug fixed "Issue 5: Logger doesn't work using Firefox 3 and Firebug 1.2.0b6" -> http://code.google.com/p/flash-thunderbolt/issues/detail?id=5
+- bug fixed "Issue 6:  	 Unwanted playing of videos in console" -> http://code.google.com/p/flash-thunderbolt/issues/detail?id=6
+
 
 Version	1.0 (10/14/07)
 --------------------------------
