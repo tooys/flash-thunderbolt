@@ -1,11 +1,11 @@
-#summary ThunderBolt AS3 for logging ActionScript 3 including Flex 2/3 projects
+#summary ThunderBolt AS3 for logging ActionScript 3 including Flex 2/3/4 projects
 #labels Phase-Implementation,Phase-Deploy,Featured
 
 http://flash-thunderbolt.googlecode.com/svn/trunk/as3/images/ThunderBoltAS3_logo_wiki.png
 
 = ThunderBolt AS3 =
 
-ThunderBolt AS3 is a lightweight logger extension for Flex 2/3 and Flash ActionScript 3 applications using [http://www.getfirebug.com Firebug] within [http://www.mozilla.com/en-US/firefox/ Firefox] as simple as possible. 
+ThunderBolt AS3 is a lightweight logger extension for Flex 2/3/4 and Flash ActionScript 3 applications using [http://www.getfirebug.com Firebug] within [http://www.mozilla.com/en-US/firefox/ Firefox] as simple as possible. 
 
 It’s open source and based on the [http://www.mozilla.org/MPL/MPL-1.1.html Mozilla Public License 1.1.]
 
