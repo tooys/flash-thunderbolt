@@ -1,13 +1,13 @@
 #summary A logging console for using ThunderBolt? AS3 based on Adobe AIR
 #labels Featured
 
-= ThunderBolt AS3 Console (beta) =
+= ThunderBolt AS3 Console =
 
 http://flash-thunderbolt.googlecode.com/svn/trunk/as3/images/ThunderBoltAS3_console_screen.png
 
-=== What is the ThunderBolt AS3 Console (beta)? ===
+=== What is the ThunderBolt AS3 Console? ===
 
-ThunderBolt AS3 Console (beta) is an [http://www.adobe.com/products/air/ Adobe AIR] application to use ThunderBolt AS3 without Firebug. That means, you can use ThunderBolt AS3 without opening your application within Firefox, which is very important for logging any AIR application using Thunderbolt AS3. 
+ThunderBolt AS3 Console is an [http://www.adobe.com/products/air/ Adobe AIR] application to use ThunderBolt AS3 without Firebug. That means, you can use ThunderBolt AS3 without opening your application within Firefox, which is very important for logging any AIR application using Thunderbolt AS3. 
 
 For logging without Firebug, ThunderBolt AS3 uses the well-known trace() methods in a special manner, which are stored in the flashlog.txt. ThunderBolt AS3 Console reads this file and displays all information using different log views in a same way as Firebug it does.
 
@@ -27,10 +27,10 @@ Run the ThunderBoltAS3Console.app and follow the instruction to point out the [h
 
 Log your application  as described here: [http://code.google.com/p/flash-thunderbolt/wiki/ThunderBoltAS3 ThunderBolt AS3 for logging ActionScript 3 including Flex 2/3 projects]
 
-*Note:* ThunderBolt AS3 Console uses the latest version of ThunderBolt AS3 version 2.01Beta, which is located within the .zip package mentioned above as well! 
+*Note:* ThunderBolt AS3 Console uses the latest version of ThunderBolt AS3 version 2.0 or above, which is located within the .zip package mentioned above as well! 
 
 === Behind the scenes ===
-ThunderBolt AS3 Console (beta) is an [http://www.adobe.com/products/air/ Adobe AIR] application developed by [http://www.websector.de/blog/ Jens Krause] (aka sectore). 
+ThunderBolt AS3 Console is an [http://www.adobe.com/products/air/ Adobe AIR] application developed by [http://www.websector.de/blog/ Jens Krause] (aka sectore). 
 
 
 The architecture based on [http://www.tombray.com/category/easymvc/ Tom Bray’s easyMVC concept], which helps to build a well structured application as quick as possible using the MVC pattern.
@@ -48,4 +48,3 @@ On Windows the "flashlog.txt" is locked by an opened AIR app. That means, the Th
 This is an known issues, which is already posted at Adobes Bug System: [http://bugs.adobe.com/jira/browse/SDK-14536 AIR puts a read-only lock on flashlog.txt]. Oliver Goldman, an Engineer of the Adobe AIR Team, confirms this issue: [http://www.adobe.com/cfusion/webforums/forum/messageview.cfm?catid=697&threadid=1368880 "Why does AIR lock the flashlog.txt on Windows?"] 
 
 Sorry for all the Windows user :-(
-
