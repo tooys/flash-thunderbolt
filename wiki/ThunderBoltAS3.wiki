@@ -1,4 +1,4 @@
-#summary ThunderBolt AS3 for logging ActionScript 3 including Flex 2/3/4 projects
+#summary ThunderBolt AS3 for logging ActionScript 3 projects (Flex 2/3/4, AIR, Flash 9-10)
 #labels Phase-Implementation,Phase-Deploy,Featured
 
 http://flash-thunderbolt.googlecode.com/svn/trunk/as3/images/ThunderBoltAS3_logo_wiki.png
