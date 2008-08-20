@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?> 
+  <update xmlns="http://ns.adobe.com/air/framework/update/description/1.0"> 
+    <version>2.1</version> 
+    <url>http://flash-thunderbolt.googlecode.com/files/ThunderBoltAS3Console.air</url> 
+    <description><![CDATA[
+	Version	2.1 (03/08/08)<br />
+	-------------------------------- <br />
+	- Just a test for including the AIR update framework which will be included the next update ;-)  <br />
+	 ]]>
+	</description> 
+</update>
