@@ -11,6 +11,11 @@
 package org.osflash.thunderbolt.console.mvc.controller
 {
 	
+	import air.update.ApplicationUpdaterUI;
+	import air.update.events.UpdateEvent;
+	
+	import flash.display.NativeWindow;
+	import flash.events.ErrorEvent;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.events.TimerEvent;
@@ -19,6 +24,7 @@ package org.osflash.thunderbolt.console.mvc.controller
 	import flash.filesystem.FileStream;
 	import flash.utils.Timer;
 	
+	import mx.controls.Alert;
 	import mx.core.UIComponent;
 	import mx.events.FlexEvent;
 	
@@ -37,7 +43,7 @@ package org.osflash.thunderbolt.console.mvc.controller
 		
 		//
 		// vars
-
+		private var isCheckForUpdateVisible: Boolean = false;
 		//
 		// const	
 		
@@ -45,8 +51,10 @@ package org.osflash.thunderbolt.console.mvc.controller
 		// instances
 		private var _appModel: AppModel;		
 		private var file: File; 
-		private var fileStream:FileStream; 
+		private var fileStream: FileStream; 
 		private var logTimer: Timer;
+		
+		private var appUpdater: ApplicationUpdaterUI = new ApplicationUpdaterUI(); 
 			
 		/**
 		* constructor
@@ -62,18 +70,19 @@ package org.osflash.thunderbolt.console.mvc.controller
 			logTimer = new Timer(500);
 			logTimer.addEventListener(TimerEvent.TIMER, openLogFile);
 			
+			initUpdater();
 			
 			this.addEventListener(FlexEvent.CREATION_COMPLETE, creationCompleteHandler);
+			
 		}
 		
 		private function initFile():void
 		{
 			file = new File();
-			file.nativePath = _appModel.logPath;
-							
-
-			
-		}		
+			file.nativePath = _appModel.logPath;		
+		}	
+		
+	
 		/**
 		* Callback handler 
 		* @param event 	FlexEvent	Dispatched after the app is created
@@ -81,6 +90,8 @@ package org.osflash.thunderbolt.console.mvc.controller
 		*/
 		private function creationCompleteHandler(event: FlexEvent):void
 		{
+			this.removeEventListener( FlexEvent.CREATION_COMPLETE, creationCompleteHandler );
+			
 			systemManager.addEventListener(ConfigEvent.LOG_PATH_CHANGED, logPathChangedHandler);
 
 			systemManager.addEventListener(ViewEvent.CHANGE_VIEW_STATE, changeViewStateHandler);
@@ -88,7 +99,8 @@ package org.osflash.thunderbolt.console.mvc.controller
 			systemManager.addEventListener(ConsoleEvent.START_LOG_WATCHING, startLogWatching);
 			systemManager.addEventListener(ConsoleEvent.STOP_LOG_WATCHING, stopLogWatching);
 			systemManager.addEventListener(ConsoleEvent.CLEAR_LOG, clearLogHandler);
-			systemManager.addEventListener( ConsoleEvent.HIDE_TRACE_LOGGING, traceLoggingHandler );
+						
+			systemManager.addEventListener( ViewEvent.CHECK_FOR_UPDATE, checkForUpdateHandler );
 			
 			//
 			// start view state
@@ -96,6 +108,9 @@ package org.osflash.thunderbolt.console.mvc.controller
 				_appModel.viewState = AppModel.VIEW_CONSOLE;
 			else
 			 	_appModel.viewState = AppModel.VIEW_ADD_FILE; 
+			 	
+			 	
+			 
 	
 		}	
 
@@ -123,6 +138,56 @@ package org.osflash.thunderbolt.console.mvc.controller
 				
 			
 			_appModel.viewState = newViewState;
+		}
+
+		//--------------------------------------------------------------------------
+		//
+		// update
+		//
+		//--------------------------------------------------------------------------
+
+		private function initUpdater():void
+		{
+			appUpdater.configurationFile = new File( ConsoleConstants.UPDATE_CONFIG_PATH );
+			appUpdater.addEventListener(UpdateEvent.INITIALIZED, updaterInitializedHandler );
+			appUpdater.addEventListener( ErrorEvent.ERROR, updaterErrorHandler );
+			
+			appUpdater.initialize();
+
+		}
+
+		private function checkForUpdateHandler( event: ViewEvent ):void
+		{
+			//
+			// after automatic update check restore isCheckForUpdateVisible
+			if ( !isCheckForUpdateVisible )
+			{
+				isCheckForUpdateVisible = true;
+				appUpdater.isCheckForUpdateVisible = true;
+			}
+			
+			appUpdater.checkNow();
+				
+			orderToBackCommand();
+		}
+		
+		private function updaterInitializedHandler( event: UpdateEvent ):void
+		{
+			//
+			// start check for auto update
+			appUpdater.checkNow();
+
+			orderToBackCommand();
+		}
+		
+		private function updaterErrorHandler( event: ErrorEvent ):void
+		{
+			Alert.show( event.toString() );
+		}
+		
+		private function orderToBackCommand():void
+		{
+			NativeWindow(this.stage.nativeWindow).orderToBack();
 		}
 		
 		//--------------------------------------------------------------------------
@@ -165,9 +230,9 @@ package org.osflash.thunderbolt.console.mvc.controller
 			// For "inHouse" testing only ;)
 			// just some log outputs
  		
-			/*
 			
-			Logger.includeTime = false;
+			
+/* 			Logger.includeTime = false;
 			trace ("http://i.ligatus.de/ads/1687_90x75.jpg and http://i.ligatus.de/ads/1687_90x75.jpg AND ftp://i.ligatus.de/ads/1687_90x75.jpg"); 
 			
 			Logger.debug("-- DEBUG -- fileReadHandler"); 
@@ -189,9 +254,9 @@ package org.osflash.thunderbolt.console.mvc.controller
 			var array3: Array = [array2, "array2", 33];
 			Logger.warn("-- WARN -- fileReadHandler", array3);	  
 			var obj: Object = {testNumber: 11, testNumber22: 22.34, testString: "yuhuu" };
-			Logger.info("obj", obj);   
+			Logger.info("obj", obj);  */  
 			
-			*/
+			
 								
 			if (fileStream != null)
 			{			    
@@ -407,11 +472,16 @@ package org.osflash.thunderbolt.console.mvc.controller
 
 		private function clearLogHandler(event: ConsoleEvent = null):void
 		{
+			var resume: Boolean = _appModel.isWatching;
+			
 			stopLogWatching();
 						
 			var newPage: String = _appModel.htmlPage
 			_appModel.htmlPage = "";
 			_appModel.htmlPage = newPage;	
+			
+			if (resume)
+				callLater( startLogWatching );
 		
 		}
 

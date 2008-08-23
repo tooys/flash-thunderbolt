@@ -41,8 +41,8 @@
 	<mx:Button 
 		width="85" height="20"
 		label="{	(_appModel.viewState == AppModel.VIEW_ADD_FILE) 
-					? 'SAVE' 
-					: 'CHANGE' }" 
+					? resourceManager.getString('Resources', 'save').toUpperCase() 
+					: resourceManager.getString('Resources', 'change').toUpperCase()  }" 
 		visible="{_appModel.logPath != null}"
 		styleName="footerButton"
 		click="clickButtonHandler(event)"

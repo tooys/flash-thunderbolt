@@ -22,7 +22,6 @@
 			import mx.controls.Button;
 	
 			private var _styleChanged: Boolean = true;
-			private var _chbTrace: CheckBox;
 
     
 			//--------------------------------------------------------------------------
@@ -52,25 +51,6 @@
 		    		default:	    	
 		    	}	      	
 		    } 
-			
-		    override protected function createChildren():void
-		    {
-		        super.createChildren();
-				
-				//
-				// checkBox
-		        if (!_chbTrace)
-		        {
-		            _chbTrace = new CheckBox();
-		            _chbTrace.label = String('HIDE trace()');
-		            _chbTrace.focusEnabled = false;
-		            _chbTrace.selected = AppModel.getInstance().hideTraceLogs;
-		            _chbTrace.addEventListener( Event.CHANGE, changeTraceLogs );
-		           	_chbTrace.setStyle("styleName", "standardCheckBox" );
-		            rawChildren.addChild( _chbTrace );
-		        }
-		    }
-
 			
 
             override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
@@ -108,35 +88,9 @@
 			        
 			        _styleChanged = false;       	
             	
-            	}
-				
-				//
-				// checkBox				
-				var chBoxWidth: int = _chbTrace.getExplicitOrMeasuredWidth();
-				var chBoxHeight: int = _chbTrace.getExplicitOrMeasuredHeight();
-				
-				_chbTrace.setActualSize(	chBoxWidth, 
-											chBoxHeight );
-											
-				 _chbTrace.move( unscaledWidth - chBoxWidth - 20, 
-				 				tabBar.y + ( tabBar.height - chBoxHeight ) * .5 + 3);							
+            	}						
 		    
-            }
-            
- 			//--------------------------------------------------------------------------
-			//
-			// callbacks
-			//
-			//--------------------------------------------------------------------------
-			
-			private function changeTraceLogs( event: Event):void
-			{
-				var cEvent: ConsoleEvent = new ConsoleEvent( ConsoleEvent.HIDE_TRACE_LOGGING );
-				cEvent.hideTraceLogs = CheckBox(event.target).selected;
-				this.dispatchEvent( cEvent );
-			}
-			           
-            
+            }			                       
 			    		
 	]]>
 </mx:Script>

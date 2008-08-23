@@ -27,7 +27,6 @@ package org.osflash.thunderbolt.console.events
 		public static const STOP_LOG_WATCHING: String = "stopWatching";
 		public static const CLEAR_LOG: String = "clearLog";
 		public static const CHANGE_LOG_PATH: String = "changeLogPath";
-		public static const HIDE_TRACE_LOGGING: String = "hideTraceLogging";	
 		
 		public var hideTraceLogs: Boolean = true;	
 						

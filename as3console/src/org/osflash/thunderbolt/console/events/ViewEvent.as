@@ -24,6 +24,7 @@ package org.osflash.thunderbolt.console.events
 		//
 		// const	
 		public static const CHANGE_VIEW_STATE: String = "changeViewState";
+		public static const CHECK_FOR_UPDATE: String = "checkForUpdate";
 				
 		/**
 		* constructor

@@ -118,7 +118,7 @@
             
 			private function getTopGradientColor():int
 			{
-				var color: int =  (name == 'overSkin' || name == 'selectedSkin') 
+				var color: int =  (name == 'overSkin' || name == 'selectedSkin' || name == 'selectedOverSkin') 
 								? _bgGradientOverColors[0]              			
                 				: _bgGradientColors[0];	
                 				
@@ -127,7 +127,7 @@
  
 			private function getBottomGradientColor():int
 			{
-				var color: int =  (name == 'overSkin' || name == 'selectedSkin') 
+				var color: int =  (name == 'overSkin' || name == 'selectedSkin' || name == 'selectedOverSkin') 
 								? _bgGradientOverColors[1]              			
                 				: _bgGradientColors[1];	
                 				
@@ -136,7 +136,7 @@
 
 			private function getBorderColor():int
 			{
-				var color: int =  (name == 'overSkin' || name == 'selectedSkin') 
+				var color: int =  (name == 'overSkin' || name == 'selectedSkin' || name == 'selectedOverSkin') 
 								? _borderOverColor             			
                 				: _borderColor
                 				

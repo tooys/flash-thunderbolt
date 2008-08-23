@@ -13,6 +13,9 @@ package org.osflash.thunderbolt.console.mvc.model
 	
 	public class ConsoleConstants
 	{	
+		
+		public static const UPDATE_CONFIG_PATH: String = "app:/assets/xml/update-config.xml";
+		
 		public static const ACTION_GROUP: String = "group";
 		public static const ACTION_GROUP_END: String = "groupEnd";
 		public static const ACTION_NONE: String = "none";
