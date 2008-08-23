@@ -12,10 +12,15 @@
 <mx:VBox 
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
 	xmlns:view="org.osflash.thunderbolt.console.mvc.view.*"
-	width="100%" height="100%">
+	xmlns:comp="org.osflash.thunderbolt.console.mvc.view.components.*"
+	width="100%" height="100%"
+	verticalScrollPolicy="off"
+	>
 
 	<mx:Script>
 		<![CDATA[
+			import gs.TweenLite;
+			import mx.effects.easing.Circular;
 			import skins.AssetLib;
 			import org.osflash.thunderbolt.console.mvc.model.AppModel;
 			import mx.core.Container;
@@ -37,21 +42,10 @@
 				}
 			}
 
-
 		]]>
 	</mx:Script>
 
-	<mx:Box id="header"
-		width="100%" height="84"
-		paddingTop="20" paddingLeft="20"
-		styleName="header">
-		
-
-		<mx:Image source="{AssetLib.logo}"
-			click="{ navigateToURL( new URLRequest('http://www.websector.de/blog/category/thunderbolt/') ); }"
-			buttonMode="true" />
-		
-	</mx:Box>
+	<comp:Header id="header" />
 
 	<mx:ViewStack id="mainViewStack" 
 		height="100%" width="100%"
@@ -65,6 +59,5 @@
 		
 	</mx:ViewStack>
 
-	<footer:Footer
-		xmlns:footer="org.osflash.thunderbolt.console.mvc.view.components.*"	/>
+	<comp:Footer id="footer" />
 </mx:VBox>

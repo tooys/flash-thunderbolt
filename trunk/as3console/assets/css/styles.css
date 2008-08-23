@@ -16,6 +16,39 @@ global
 	theme-color: 0;
 }	
 
+Alert
+{
+	background-color: 0;
+	border-color: 0;
+}
+
+CheckBox
+{
+	color: #FFFFFF;
+	textSelectedColor: #FFFFFF;
+    textRollOverColor: #FFFFFF;
+    fillAlphas: 1, 1, 1, 1;
+   	fillColors: #FFFFFF, #FFFFFF, #FFFFFF, #FFFFFF;
+   	borderSkin: null;
+}
+
+LinkButton
+{
+	color: #FFFFFF;
+}
+Button
+{
+	fontWeight: normal;
+}
+
+.prefLinkButton
+{
+	rollOverColor: #FFFFFF;
+	color: #FFFFFF;
+	textRollOverColor: #000000;
+}
+
+
 .header
 {
     borderSkin:        	ClassReference("com.degrafa.skins.CSSSkin");
@@ -81,11 +114,6 @@ TabNavigator
 	color: #FFFFFF;	
 }
 
-
-Button
-{
-	fontWeight: normal;
-}
 
 
 .standardButton

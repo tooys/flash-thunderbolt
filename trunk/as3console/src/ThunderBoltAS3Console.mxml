@@ -15,12 +15,21 @@
 	backgroundColor="0xFFFFFF"
 	verticalScrollPolicy="off" horizontalScrollPolicy="off"
 	initialize="initializeCompleteHandler(event)"
+	creationComplete="creationCompleteHandler( event )"
 	>
-	
+	<mx:Metadata>
+        [ResourceBundle("Resources")]
+    </mx:Metadata> 
+    	
 	<mx:Script>
 		<![CDATA[
+			import org.osflash.thunderbolt.console.events.ViewEvent;
 			import org.osflash.thunderbolt.console.mvc.model.AppModel;
 			import mx.events.FlexEvent;
+			
+			//
+			// instances
+			[Bindable] private var _appModel: AppModel;
 
 			/**
 			* Callback handler when the app is initialized
@@ -29,14 +38,21 @@
 			*/	
 			private function initializeCompleteHandler(event: FlexEvent): void
 			{
-				var _appModel: AppModel = AppModel.getInstance();
-				_appModel.app = this;
+				_appModel = AppModel.getInstance();
 			}	
 			
+			private function creationCompleteHandler(event: FlexEvent):void
+			{
+				this.dispatchEvent( new ViewEvent( ViewEvent.CHECK_FOR_UPDATE ) );				
+			}
+
+					
 			]]>
 	</mx:Script>	
 	
 	<mx:Style source="../assets/css/styles.css"/>
+	
+	<mx:Binding source="_appModel.alwaysInFront" destination="this.alwaysInFront" />
 				
 	<controller:AppControllor 
 			xmlns:controller="org.osflash.thunderbolt.console.mvc.controller.*"	/>

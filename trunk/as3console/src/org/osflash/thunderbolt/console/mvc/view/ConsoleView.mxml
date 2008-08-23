@@ -9,7 +9,7 @@
 * Source code based on the Mozilla Public License 1.1. Feel free to use it!
 *
 -->
-<mx:VBox 
+<mx:Canvas 
 	xmlns:mx="http://www.adobe.com/2006/mxml" 
 	xmlns:component="org.osflash.thunderbolt.console.mvc.view.components.*"
 	creationComplete="creationCompleteHandler(event)">
@@ -185,18 +185,6 @@
 										verticalScrollPosition: html.maxVerticalScrollPosition,
 										ease: Circular.easeOut
 									});	   		
-
-/* 				var scrollAnimation:Sequence = new Sequence();
-					
-				var scrollDownAnimateProperty:AnimateProperty = new AnimateProperty( html );
-                scrollDownAnimateProperty.property = "verticalScrollPosition";
-                scrollDownAnimateProperty.fromValue = html.verticalScrollPosition;
-                scrollDownAnimateProperty.toValue = html.maxVerticalScrollPosition;
-                scrollDownAnimateProperty.duration = 250;
-                scrollDownAnimateProperty.easingFunction = Circular.easeOut;
-
-				scrollAnimation.addChild(scrollDownAnimateProperty);
-				scrollAnimation.play(); */
 					
 				}
 				// without tween				
@@ -215,21 +203,23 @@
 	<mx:Binding source="_appModel.logErrorData" destination="logErrorData" />	
 			
 	<mx:HBox 
-		width="100%" height="40" 
+		width="100%" 
+		top="15"
 		horizontalAlign="right"
-		verticalAlign="bottom"
 		horizontalGap="10"
 		paddingRight="20">
 		<mx:Button id="startButton"
-			width="85" height="20"
+			width="100" height="20"
 			toggle="true"
-			label="{ (_appModel.isWatching) ? 'STOP' : 'START'}" 
+			label="{ (_appModel.isWatching) 
+						? resourceManager.getString('Resources', 'stop').toUpperCase()  
+						: resourceManager.getString('Resources', 'start').toUpperCase() }" 
 			styleName="standardButton"
 			click="clickStartButtonHandler(event);" 
 			/>
 		<mx:Button id="clearButton"
-			width="85" height="20"
-			label="CLEAR"
+			width="100" height="20"
+			label="{resourceManager.getString('Resources', 'clear').toUpperCase() }"
 			styleName="standardButton"
 			click="this.dispatchEvent( new ConsoleEvent(ConsoleEvent.CLEAR_LOG) );" 
 			/>
@@ -238,6 +228,7 @@
 			
 	<component:ConsoleTabNavigator id="tabNav" 
 		width="100%" height="100%"
+		top="15"
 		creationPolicy="all"
 		>
 		
@@ -309,4 +300,4 @@
 		
 	</component:ConsoleTabNavigator>
 			
-</mx:VBox>	
+</mx:Canvas>	

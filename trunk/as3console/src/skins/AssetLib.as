@@ -10,6 +10,7 @@
 */
 package skins
 {
+	[Bindable]
 	final public class AssetLib
 	{
 
@@ -18,6 +19,12 @@ package skins
 
 		[Embed(source="../../assets/png/dragHere.png")]
 		public static var dragHere:Class;
+
+		[Embed(source="../../assets/png/icon_openOptions.png")]
+		public static var icon_openOptions:Class;
+
+		[Embed(source="../../assets/png/icon_closeOptions.png")]
+		public static var icon_closeOptions:Class;
                            
 	}
 }
