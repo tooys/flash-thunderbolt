@@ -3,7 +3,7 @@
 
 = ThunderBolt AS3 Console =
 
-http://flash-thunderbolt.googlecode.com/svn/trunk/as3/images/ThunderBoltAS3_console_screen.png
+http://flash-thunderbolt.googlecode.com/svn/trunk/as3/images/tbConsole_inaction.png
 
 === What is the ThunderBolt AS3 Console? ===
 
@@ -17,7 +17,7 @@ Full source is available, which based on [http://www.mozilla.org/MPL/MPL-1.1.htm
 
 === Install instruction ===
 
-Just grab the [http://code.google.com/p/flash-thunderbolt/downloads/list ThunderBoltAS3Console.zip] and run its AIR install file. For this issue you have to installed the latest [http://www.adobe.com/products/air/ Adobe® AIR™ runtime].
+Just grab the [http://code.google.com/p/flash-thunderbolt/downloads/list latest version of ThunderBolt AS3 Console] and run its AIR install file. For this issue you have to installed the latest [http://www.adobe.com/products/air/ Adobe® AIR™ runtime].
 
 
 === Usage ===
@@ -48,3 +48,13 @@ On Windows the "flashlog.txt" is locked by an opened AIR app. That means, the Th
 This is an known issues, which is already posted at Adobes Bug System: [http://bugs.adobe.com/jira/browse/SDK-14536 AIR puts a read-only lock on flashlog.txt]. Oliver Goldman, an Engineer of the Adobe AIR Team, confirms this issue: [http://www.adobe.com/cfusion/webforums/forum/messageview.cfm?catid=697&threadid=1368880 "Why does AIR lock the flashlog.txt on Windows?"] 
 
 Sorry for all the Windows user :-(
+
+=== More screen shots ===
+
+http://flash-thunderbolt.googlecode.com/svn/trunk/as3/images/tbConsole_options.png
+
+http://flash-thunderbolt.googlecode.com/svn/trunk/as3/images/tbConsole_flashlog.png
+
+http://flash-thunderbolt.googlecode.com/svn/trunk/as3/images/tbConsole_update.png
+
+
