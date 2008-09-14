@@ -1,4 +1,4 @@
-#summary for using ThunderBolt? AS3
+#summary Tips and tricks for using ThunderBolt? AS3
 
 = 10 tips and tricks using ThunderBolt AS3 =
 
