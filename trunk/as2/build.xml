@@ -8,6 +8,11 @@
 		global properties "mtasc", "firefox" and "flash.classpath" need to be set up as global ant parameters!
 		eclipse > window > preferences > ant > runtime > properties  
 	-->
+	
+	<!--
+	  To compile the sample via command line run:
+	  tools/mtasc -v -mx -version 8 -cp ./example/source/ -swf ./example/deploy/thunderbolt.swf -main Sample.as -cp ./source/ -trace org.osflash.thunderbolt.Logger.trace org/osflash/thunderbolt/Logger
+	-->
 
 	<property name="example.classpath" 		value=".\example\source\" /> 
 	<property name="example.folder" 		value=".\example\deploy\" />
