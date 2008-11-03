@@ -9,7 +9,7 @@ import org.osflash.thunderbolt.io.JavaScriptInterface;
  */
 class org.osflash.thunderbolt.io.Console {
 	
-	public static var version:Number;
+	public static var version:String;
 	private static var _enabled:Boolean;
 	
 	private var classImport:Array = [JavaScriptInterface];
@@ -115,8 +115,8 @@ class org.osflash.thunderbolt.io.Console {
 		if (Console._enabled !== undefined){
 			return Console._enabled;
 		} else {
-			Console.version = Number(ExternalInterface.call("function(){ return window.console && console.firebug}", true));
-			Console._enabled = Console.version > 0;
+			Console.version = String(ExternalInterface.call("function(){ return window.console && console.firebug}", true));
+			Console._enabled = !!Console.version;
 			if (Console._enabled){
 				if (Settings.USE_EXTERNAL_INTERFACE){
 					Console.initExternalInterface();
