@@ -68,9 +68,28 @@ Copy *ThunderBoltAS3_Flash.swc* to it.
 import org.osflash.thunderbolt.Logger;
 
 var myNumber: int = 5;
-var myString2: String = "Lorem ipsum";
+var myString: String = "Lorem ipsum";
 Logger.error ("Logging two objects: A number typed as int and a string", myNumber, myString);
 }}}
+
+=== Using Flash CS4 ===
+
+1) Link the SWC called *ThunderBoltAS3_Flash.swc* to your project using Flash CS 4:
+
+File -> Publish Settings -> Flash -> Settings -> Library path -> Browse to SWC file (red icon) -> Select "ThunderBoltAS3_Flash.swc" (which you have downloaded + saved before) -> Press "Ok"
+
+2) For testing open Action window (Window -> Actions) and type the following lines:
+
+{{{
+import org.osflash.thunderbolt.Logger;
+
+var myNumber: int = 5;
+var myString: String = "Lorem ipsum";
+Logger.error ("Logging two objects: A number typed as int and a string", myNumber, myString);
+}}}
+
+3) Publish movie (File -> Publish) and open generated HTML within Firefox
+
 
 
 === Additional features ===
