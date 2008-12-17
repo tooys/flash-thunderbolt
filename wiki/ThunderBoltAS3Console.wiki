@@ -40,8 +40,27 @@ ThunderBolt AS3 Console uses the following libraries as well:
  * [http://www.degrafa.com/ Degrafa] for all the skinning stuff.
 
 
+=== Known issues ===
 
-=== Known issue ===
+ * *"flashlog.txt" is not found on OS X ("Leopard")*
+
+- Open your HOME folder (named as your username) and create a text file called mm.cfg
+- Type the following lines into mm.cfg. 
+Note: type for {your_username} your user name
+
+{{{
+TraceOutPutFileName=/Users/{your_username}/Library/Preferences/Macromedia/Flash Player/Logs/flashlog.txt
+ErrorReportingEnable=1
+TraceOutputFileEnable=1
+MaxWarnings=10
+}}}
+
+- Create an empty text file called "flashlog.txt" and save it within the folder typed before: /Users/{your_username}/Library/Preferences/Macromedia/Flash Player/Logs/
+
+- Close all opened browser to restart your Flashplayer
+- Open ThunderBolt AS3 Console and "connect" it with the flashlog.txt located in /Users/{your_username}/Library/Preferences/Macromedia/Flash Player/Logs/
+
+ * *On Windows*
 
 On Windows the "flashlog.txt" is locked by an opened AIR app. That means, the ThunderBolt AS3 Logger can't log any information to "flashlog.txt" on Windows. 
 
@@ -56,5 +75,3 @@ http://flash-thunderbolt.googlecode.com/svn/trunk/as3/images/tbConsole_options.p
 http://flash-thunderbolt.googlecode.com/svn/trunk/as3/images/tbConsole_flashlog.png
 
 http://flash-thunderbolt.googlecode.com/svn/trunk/as3/images/tbConsole_update.png
-
-
