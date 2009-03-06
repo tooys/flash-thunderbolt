@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?> 
   <update xmlns="http://ns.adobe.com/air/framework/update/description/1.0"> 
-    <version>2.1</version> 
-    <url>http://flash-thunderbolt.googlecode.com/files/ThunderBoltAS3Console.air</url> 
+    <version>2.2</version> 
+    <!--
+    <url>http://localhost/thunderbolt/ThunderBoltAS3Console_v2.2.air</url> 
+   	--> 
+    <url>http://flash-thunderbolt.googlecode.com/files/ThunderBoltAS3Console_v2.2.air</url>
     <description><![CDATA[
-	Version	2.1 ( 23/08/08 ): new panel called "option " including new feature "always in front", auto update, issue fixed: no stop anymore after clearing  
+	*** Version	2.2 ( 03/06/09 ) *** Certificate of Thawte added sponsored by Adobe - Thanks! *** Updated for using Adobe AIR 1.5.1 *** version number added *** Issue fixed: quit app using Command+Q *** Important note: ThunderBolt AS3 v. 2.2 is out now - http://code.google.com/p/flash-thunderbolt/ *** Have fun! *** 
 	 ]]>
 	</description> 
 </update>
