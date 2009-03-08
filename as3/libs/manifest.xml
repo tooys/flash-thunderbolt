@@ -20,6 +20,16 @@
 	-namespace http://www.osflash.org/thunderbolt manifest.xml 
 	-include-namespaces http://www.osflash.org/thunderbolt
 	
+	// Flex
+	// compc -source-path+=../source -output ThunderBoltAS3_Flex_v2.2.swc -namespace http://www.osflash.org/thunderbolt manifest.xml -include-namespaces http://www.osflash.org/thunderbolt
+	
+	// Gumbo 
+	//compc -source-path+=../source -output ThunderBoltAS3_Gumbo_v2.2.swc -namespace http://www.osflash.org/thunderbolt manifest.xml -include-namespaces http://www.osflash.org/thunderbolt
+	
+	// Flash
+	// compc -source-path+=../source -output ThunderBoltAS3_Flash_v2.2.swc -namespace http://www.osflash.org/thunderbolt manifest.xml -include-namespaces http://www.osflash.org/thunderbolt
+	
+	
 	*** For a Flash ThunderBoltAS3 component ***
 	- comment out ThunderBoltTarget component in "manifest.xml"
 	- remove ThudnerBoltTarget.as
@@ -41,6 +51,7 @@
     	id="Logger" 
     	class="org.osflash.thunderbolt.Logger"
     />
+
     <component 
     	id="ThunderBoltTarget" 
     	class="org.osflash.thunderbolt.ThunderBoltTarget"
