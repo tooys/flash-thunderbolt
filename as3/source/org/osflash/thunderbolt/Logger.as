@@ -1,11 +1,11 @@
 /**
-* Logging Flash, Flex or AIR projects based on AS3 using Firebug or ThunderBolt AS3 Console
+* Logging Flex and Flash projects using Firebug and ThunderBolt AS3
 * 
-* @version	2.0
-* @date		08/03/08
-* 
+* @version	2.2
+* @date		03/06/09
+*
 * @author	Jens Krause [www.websector.de]
-* 
+*
 * @see		http://www.websector.de/blog/category/thunderbolt/
 * @see		http://code.google.com/p/flash-thunderbolt/
 * @source	http://flash-thunderbolt.googlecode.com/svn/trunk/as3/
@@ -39,21 +39,24 @@ package org.osflash.thunderbolt
 
 		private static const GROUP_START: String = "group";
 		private static const GROUP_END: String = "groupEnd";
-		private static const FIELD_SEPERATOR: String = " :: ";
 		private static const MAX_DEPTH: int = 255;
-		private static const VERSION: String = "2.0 Beta";
+		private static const VERSION: String = "2.2";
 		private static const AUTHOR: String = "Jens Krause [www.websector.de]"
+
+		public static const FIELD_SEPERATOR: String = " :: ";
 		//
 		// private vars	
 		private static var _stopLog: Boolean = false;
 		private static var _depth: int;	
-		private static var _logLevel: String;						
-		//
-		// public vars
-		public static var includeTime: Boolean = true;
+		private static var _logLevel: String;
+						
 		private static var _hide: Boolean = false;
 		private static var _firstRun: Boolean = true;
 		private static var _firebug: Boolean = false;	
+		//
+		// public vars
+		public static var includeTime: Boolean = true;
+		public static var showCaller: Boolean = true;
 			
 		/**
 		 * Information about the current version of ThunderBoltAS3
@@ -190,11 +193,23 @@ package org.osflash.thunderbolt
 			 	// log message
 			 	var logMsg: String = "";
 		    	// add time	to log message
-	    		if (includeTime) logMsg += getCurrentTime();
+	    		if (includeTime) 
+	    			logMsg += getCurrentTime();
+			 	
+			 	// get package and class name + line number
+			 	// using getStackTrace(); 
+			 	// @see: http://livedocs.adobe.com/flex/3/langref/Error.html#getStackTrace()
+			 	// Note: For using it the Flash Debug Player has to be installed on your machine!
+				if ( showCaller ) 
+					logMsg += logCaller();            
+ 
+			
 				// add message text to log message
 			 	logMsg += msg;
+			 	
 			 	// send message	to the logging system
 			 	Logger.call( logMsg );
+	    			
 			 	// log objects	
 				if (logObjects != null)
 				{
@@ -402,6 +417,118 @@ package org.osflash.thunderbolt
 	    {
 	        return timeValue > 9 ? timeValue.toString() : "0" + timeValue.toString();
 	    }
+	    
+	    
+	    /** 
+	    * Get details of a caller of the log message
+	    * which based on Jonathan Branams MethodDescription.createFromStackTrace();
+	    * 
+		* @see: http://github.com/jonathanbranam/360flex08_presocode/
+		 * 
+	    */
+		private static function stackDataFromStackTrace(stackTrace: String): StackData
+		{
+			// Check stackTrace
+			// Note: It seems that there some issues to match it using Flash IDE, so we use an empty Array instead
+			var matches:Array = stackTrace.match(/^\tat (?:(.+)::)?(.+)\/(.+)\(\)\[(?:(.+)\:(\d+))?\]$/)
+								|| new Array(); 				
+				
+			var stackData: StackData = new StackData();		
+ 			stackData.packageName = matches[1] || "";
+			stackData.className = matches[2] || "";
+			stackData.methodName = matches[3] || "";
+			stackData.fileName = matches[4] || "";
+			stackData.lineNumber = int( matches[5] ) || 0;	
+
+			return stackData;
+	
+		}	    
+	    /** 
+	    * Message about details of a caller who logs anything
+	    * @return String	message of details
+	    */
+		private static function logCaller(): String
+		{
+ 			var debugError: Error;
+ 			var message: String = '';
+			
+            try {
+				var errorObject: Object;
+                errorObject.halli = "galli";
+            } 
+            catch( error: Error )
+            {
+            	debugError = new Error();
+            }
+            finally
+            {
+            	var stackTrace:String = debugError.getStackTrace();
+            	// track all stacks only if we have a stackTrace
+				if ( stackTrace != null )
+	    		{
+ 		    		var stacks:Array = stackTrace.split("\n");
+
+		    		if ( stacks != null )
+		    		{
+		    			var stackData: StackData;
+		    			
+		    			// stacks data for using Logger 
+		    			
+/* 		    			trace ("stacks.length " + stacks.length); */
+
+		    			if ( stacks.length >= 5 )
+		    				 stackData = Logger.stackDataFromStackTrace( stacks[ 4 ] );
+						
+						// special stack data for using ThunderBoldTarget which is a subclass of mx.logging.AbstractTarget
+						if ( stackData.className == "AbstractTarget" &&  stacks.length >= 9 )
+							stackData = Logger.stackDataFromStackTrace( stacks[ 8 ] );
+
+						// show details of stackData only if it available
+						if ( stackData != null )
+						{
+/* 							trace ("stackData " + stackData.toString() );  */
+							 			
+							message += ( stackData.packageName != "") 
+										? stackData.packageName + "."
+										: stackData.packageName;
+																			
+							message += stackData.className;
+							
+							if ( stackData.lineNumber > 0  )
+								message += " [" + stackData.lineNumber + "]" + Logger.FIELD_SEPERATOR;
+						}							    		
+		    		}  		    			
+	    		}               
+            }
+            
+                       
+            return message;	
+		}	    
+	}
+
+}
+
+/**
+* Stackdata for storing all data throwing by an error
+* 
+*/
+
+internal class StackData
+{
+	public var packageName: String;
+	public var className: String;
+	public var methodName: String;
+	public var fileName: String;
+	public var lineNumber: int;
+	
+	public function toString(): String
+	{
+		var s: String = "packageName " + packageName
+						+ " // className " + className
+						+ " // methodName " + methodName
+						+ " // fileName " + fileName
+						+ "// lineNumber " + lineNumber;
+		return s;
 
 	}
 }

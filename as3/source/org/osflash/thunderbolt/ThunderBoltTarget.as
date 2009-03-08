@@ -1,8 +1,8 @@
 /**
 * Logging Flex and Flash projects using Firebug and ThunderBolt AS3
 * 
-* @version	2.0
-* @date		08/03/08
+* @version	2.2
+* @date		03/06/09
 *
 * @author	Jens Krause [www.websector.de]
 *
@@ -19,18 +19,20 @@
 package org.osflash.thunderbolt
 {
 	import mx.logging.AbstractTarget;
+	import mx.logging.ILogger;
 	import mx.logging.LogEvent;
-	import mx.logging.LogEventLevel;
-	import mx.logging.ILogger;	
+	import mx.logging.LogEventLevel;	
 	
 	public class ThunderBoltTarget extends AbstractTarget
 	{
-		public var includeTime: Boolean = true;
-		public var includeLevel: Boolean = true;   	    	
-		public var includeCategory: Boolean = true;
+		//
+		// vars
+		[Inspectable(category="General", defaultValue="true")]	   	    	
+		public var includeLevel: Boolean = true;
 		
-		protected static const FIELD_SEPERATOR: String = " :: ";
-		
+		[Inspectable(category="General", defaultValue="false")]	   	    	
+		public var includeCategory: Boolean = false;
+	
 		 
 		public function ThunderBoltTarget ()
 		{
@@ -45,28 +47,27 @@ package org.osflash.thunderbolt
 		 * @param 	Event	LogEvent
 		 * 
 	     */
-	    override public function logEvent(event: LogEvent):void
-	    {		
-			//
-			// adds a timestamp
-    		Logger.includeTime = includeTime;	    	
+	    override public function logEvent( event: LogEvent ):void
+	    {			    	
 	    	//
-	    	// logs level
+	    	// log level
 	        var level: String;
-	        if (includeLevel) level = getLogLevel(event.level);	
+	        if (includeLevel) 
+	        	level = getLogLevel( event.level );	
 			//
-			// logs category
+			// log category
 	    	var message: String = "";
-			if (includeCategory) message += ILogger(event.target).category + FIELD_SEPERATOR;
+			if ( includeCategory ) 
+				message += ILogger( event.target ).category + Logger.FIELD_SEPERATOR;
 			//
-			// logs message
-			if (event.message.length) 
+			// log message
+			if ( event.message.length ) 
 				message += event.message;
 			else 
-				message += "Log message has'nt defined...";
+				message += "";
 	    	//
 	    	// calls ThunderBolt	
-	    	Logger.log (level, message);
+	    	Logger.log ( level, message );
 
 	    }   
 
@@ -102,7 +103,73 @@ package org.osflash.thunderbolt
 			}
 
 			return level;
-		}        		
+		} 
+		    
+    		
+	     /**
+	     *  Setter method to stop logs
+	     * 
+		 * @param 	value	Boolean - default value is "false"
+		 * 
+	     */
+		[Inspectable(category="General", defaultValue="false")]		
+		public function set hide( value: Boolean ):void
+		{
+			Logger.hide = value;
+		}   		
+
+	     /**
+	     *  Setter method for using a timestamp
+	     * 
+		 * @param 	value	Boolean - default value is "true"
+		 * 
+	     */
+		[Inspectable(category="General", defaultValue="true")]		
+		public function set includeTime( value: Boolean ):void
+		{
+			Logger.includeTime = value;
+		}   		
+    		
+	     /**
+	     *  Setter method for using ThunderBolt AS3 console or not
+	     * 
+		 * @param 	value	Boolean for using console or not. Default value is "false"
+		 * 
+	     */
+		[Inspectable(category="General", defaultValue="false")]		
+		public function set console( value: Boolean ):void
+		{
+			Logger.console = value;
+		}   		
+    		
+	     /**
+	     *  Setter method for showing caller of a log message
+	     * 
+		 * @param 	value	Boolean Default value is "true"
+		 * 
+	     */
+		[Inspectable(category="General", defaultValue="true")]		
+		public function set showCaller( value: Boolean ):void
+		{
+			Logger.showCaller = value;
+		}   
+
+	     /**
+	     *  Setter method for filters
+	     * 
+		 * @param 	value	Filters of classes
+		 * 
+	     */		
+		override public function set filters( value: Array ):void
+    	{
+    		super.filters = value;
+    		
+    		//
+    		// includeCategory if we have filters
+    		this.includeCategory = ( filters != null && filters.length > 0 );
+    		
+    	} 	
+  		
 	}
 
 }
