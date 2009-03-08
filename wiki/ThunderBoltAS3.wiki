@@ -28,24 +28,29 @@ Logger.error ("Logging two objects: A number typed as int and a string", myNumbe
 2b) Or using *ThunderBoltTarget.as* based on the Flex Logging Framework:
 
 {{{
-import mx.logging.Log;
-import org.osflash.thunderbolt.ThunderBoltTarget;
 
-// init ThunderBoltTarget
-_target = new ThunderBoltTarget();
-
-/* 				
- You can disable the time, level or category as well				
- _target.includeTime = false;
- _target.includeLevel = false;
- _target.includeCategory = false;	            
-*/	
-            
-_target.filters = ["de.websector.playground.ThunderBoltTargetExample"];
-Log.addTarget(_target);
-
-// start logging
-Log.getLogger("de.websector.playground.ThunderBoltTargetExample").info("Just an info message.");
+<!--
+	Using ThunderBoltTarget
+	
+	You can disable the time, level or category as follow:				
+    includeTime = "false";
+    includeLevel = "false";
+    includeCategory = "false;"
+    
+    To use the TunderBolt AS3 Console set: 
+    console="true"
+    
+    Using filters:          
+	filters="{ ['ThunderBoltTargetExample'] }"
+	
+	Hide or show categories  
+	includeCategory = true
+	includeCategory = false
+-->
+	
+<tb:ThunderBoltTarget id="tbTarget"
+	xmlns:tb="org.osflash.thunderbolt.*"
+	/>
 }}}
 
 
@@ -135,11 +140,11 @@ You'll find [http://www.websector.de/blog/category/thunderbolt/ tutorials, tips 
 
 === Live examples ===
 
-[http://www.websector.de/blog/2007/10/14/thunderbolt-as3-10-released-a-lightweight-logging-tool-for-flex-2-and-flash-cs3-applications/ Live examples on WS-Blog]_
+[http://www.websector.de/blog/2007/10/14/thunderbolt-as3-10-released-a-lightweight-logging-tool-for-flex-2-and-flash-cs3-applications/ Live examples of ThunderBolt AS3 v.1.0 on WS-Blog]_ 
 
 === Download source ===
 
 Grab [http://code.google.com/p/flash-thunderbolt/downloads/list here] the latest ThunderBolt AS3 package.
 
 === Author ===
-[http://www.websector.de/blog/ Jens Krause] (aka sectore) 
+[http://www.websector.de/blog/ Jens Krause] (aka sectore)
