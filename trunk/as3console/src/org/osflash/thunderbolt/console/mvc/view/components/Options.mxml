@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox 
 	xmlns:mx="http://www.adobe.com/2006/mxml"
+	creationComplete="creationCompleteHandler( event )"
 	>
 
 	<mx:Script>
 		<![CDATA[
+			import mx.events.FlexEvent;
 
 			import org.osflash.thunderbolt.console.mvc.model.AppModel;
 			import org.osflash.thunderbolt.console.events.ViewEvent;
@@ -32,6 +34,13 @@
 				this.dispatchEvent( new ViewEvent( ViewEvent.CHECK_FOR_UPDATE ) );
 			}			
 
+			private function creationCompleteHandler(event: FlexEvent):void
+			{					 	
+ 				var appXML:XML = NativeApplication.nativeApplication.applicationDescriptor;
+				var air:Namespace = appXML.namespaceDeclarations()[0];
+				txtVersion.text = resourceManager.getString('Resources', 'opt_version', [ appXML.air::version ] ); 
+
+			}
 			
 		]]>
 	</mx:Script>
@@ -46,10 +55,10 @@
 			change="_appModel.hideTraceLogs = cbTrace.selected"
 			/>
 			
-		<mx:CheckBox id="chFront"
+		<mx:CheckBox id="cbFront"
 			label="Console always in front"
 			selected="{ _appModel.alwaysInFront }"
-			change="_appModel.alwaysInFront = chFront.selected"
+			change="_appModel.alwaysInFront = cbFront.selected"
 			/>
 			
 		<mx:Button id="bUpdated"
@@ -59,13 +68,17 @@
 				styleName="standardButton"
 				click="bUpdatedClickedHandler( event )"
 				/>	
+		
+		<mx:Text id="txtVersion"
+			styleName="txtVersion"
+			/>
 						
 	</mx:HBox>
 	
 	<mx:LinkButton
 		styleName="prefLinkButton"
 		label="{resourceManager.getString('Resources', 'opt_author')}" 
-		click="{ navigateToURL( new URLRequest('http://www.websector.de/') ); }"
+		click="{ navigateToURL( new URLRequest( resourceManager.getString('Resources', 'opt_author_url') ) ); }"
 		 />
 			 
 </mx:VBox>

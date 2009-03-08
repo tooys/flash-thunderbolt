@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <actionScriptProperties mainApplicationPath="ThunderBoltAS3Console.mxml" version="3">
-<compiler additionalCompilerArguments="-locale en_US  -source-path+=./locale/{locale}" copyDependentFiles="true" enableModuleDebug="true" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersion="9.0.28" htmlPlayerVersionCheck="true" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" useApolloConfig="true" verifyDigests="true" warn="true">
+<compiler additionalCompilerArguments="-locale en_US -source-path+=../locale/{locale}" copyDependentFiles="true" enableModuleDebug="true" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersion="9.0.124" htmlPlayerVersionCheck="true" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" useApolloConfig="true" verifyDigests="true" warn="true">
 <compilerSourcePath/>
 <libraryPath defaultLinkType="1">
 <libraryPathEntry kind="4" path=""/>
@@ -9,10 +9,7 @@
 <sourceAttachmentPath/>
 </compiler>
 <applications>
-<application path="ThunderBoltAS3Console/ThunderBoltAS3Console.air"/>
 <application path="ThunderBoltAS3Console.mxml"/>
-<application path="ws/svn/thunderbolt/as3console/ThunderBoltAS3Console.air"/>
-<application path="/ws/svn/thunderbolt/as3console/ThunderBoltAS3Console.air"/>
 </applications>
 <modules/>
 <buildCSSFiles/>

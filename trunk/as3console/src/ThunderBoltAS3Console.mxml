@@ -50,14 +50,21 @@
 			]]>
 	</mx:Script>	
 	
-	<mx:Style source="../assets/css/styles.css"/>
+	<mx:Style 
+		source="../assets/css/styles.css"
+		/>
 	
-	<mx:Binding source="_appModel.alwaysInFront" destination="this.alwaysInFront" />
+	<mx:Binding 
+		source="_appModel.alwaysInFront" 
+		destination="this.alwaysInFront" 
+		/>
 				
-	<controller:AppControllor 
-			xmlns:controller="org.osflash.thunderbolt.console.mvc.controller.*"	/>
+	<controller:AppControllor
+			xmlns:controller="org.osflash.thunderbolt.console.mvc.controller.*"	
+			/>
 	
 	<view:MainView id="mainView" 
-		xmlns:view="org.osflash.thunderbolt.console.mvc.view.*"	/>
+		xmlns:view="org.osflash.thunderbolt.console.mvc.view.*"	
+		/>
 	
 </mx:WindowedApplication>
