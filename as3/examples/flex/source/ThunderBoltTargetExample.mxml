@@ -3,8 +3,8 @@
 
 * Logging Flash, Flex or AIR projects based on AS3 using Firebug or ThunderBolt AS3 Console
 * 
-* @version	2.0 Beta
-* @date		06/01/08
+* @version	2.2
+* @date		02/19/09
 * 
 * @author	Jens Krause [www.websector.de]
 * 
@@ -20,29 +20,24 @@
 -->
 <mx:Application 
 	xmlns:mx="http://www.adobe.com/2006/mxml"
-	initialize="initializeHandler()">
+	initialize="initializeHandler( event )"
+	>
 	
 	<mx:Script>
         <![CDATA[
         	import org.osflash.thunderbolt.Logger;
+
+        	import mx.logging.ILogger;
+        	import mx.events.FlexEvent;
             import flash.events.Event;
             import mx.logging.Log;
-            import org.osflash.thunderbolt.ThunderBoltTarget;
+
+			
+			private static const logger:ILogger = Log.getLogger("ThunderBoltTargetExample");
             
-            
-            private var _target: ThunderBoltTarget;
-            
-            private function initializeHandler( ):void
+            private function initializeHandler( event: FlexEvent ):void
             {
-                _target = new ThunderBoltTarget();
-				/* 
-				You can disable the time, level or category as follow				
-	            _target.includeTime = false;
-	            _target.includeLevel = false;
-	            _target.includeCategory = false;	            
-	            */	            
-                _target.filters = ["de.websector.playground.ThunderBoltTargetExample"];
-                Log.addTarget(_target);
+
             }
             
                                     
@@ -60,22 +55,22 @@
 				switch (id)
 				{
 					case "infoButton":
-						Log.getLogger("de.websector.playground.ThunderBoltTargetExample").info("Just an info message.");
+						logger.info("Just an info message.");
 						break;
 					case "warnButton":
-						Log.getLogger("de.websector.playground.ThunderBoltTargetExample").warn("Here is the value of the String named myString: {0}", myString);
+						logger.warn("Here is the value of the String named myString: {0}", myString);
 						break;
 					case "errorButton":
-						Log.getLogger("de.websector.playground.ThunderBoltTargetExample").error("Calling two objects, a number myNumber and a nested array called myArray: {0}, {1}", myNumber, myArray);
+						logger.error("Calling two objects, a number myNumber and a nested array called myArray: {0}, {1}", myNumber, myArray);
 						break;
 					case "debugButton":
-						Log.getLogger("de.websector.playground.ThunderBoltTargetExample").debug("Just a debug message.");
+						logger.debug("Just a debug message.");
 						break;
 					case "memButton":
-						Log.getLogger("de.websector.playground.ThunderBoltTargetExample").info(Logger.memorySnapshot());
+						logger.info( Logger.memorySnapshot());
 						break;
 					default:
-						Logger.error ("A button with an ID named " + id + " is not found");
+						logger.error ("A button with an ID named " + id + " is not found");
 				}
             }
 
@@ -87,12 +82,38 @@
     </mx:Script>
     
 	<mx:Style source="logger.css"/>
+
+<!--
+	Using ThunderBoltTarget
 	
+	You can disable the time, level or category as follow:				
+    includeTime = "false";
+    includeLevel = "false";
+    includeCategory = "false;"
+    
+    To use the TunderBolt AS3 Console set: 
+    console="true"
+    
+    Using filters:          
+	filters="{ ['ThunderBoltTargetExample'] }"
+	
+	Hide or show categories  
+	includeCategory = true
+	includeCategory = false
+-->
+	
+<tb:ThunderBoltTarget id="tbTarget"
+	xmlns:tb="org.osflash.thunderbolt.*"
+	/>
+	            
+	            	
 	<mx:VBox 
-		width="440">
+		width="440"
+		>
 	    <mx:HBox 
 	    	horizontalGap="10"
-	    	paddingBottom="20">
+	    	paddingBottom="20"
+	    	>
 	    	
 			 <mx:Button id="infoButton" 
 			 	width="80" height="40"
@@ -127,15 +148,18 @@
 	    </mx:HBox>
 	    
 	    <mx:HBox
-	    	horizontalGap="20">
+	    	horizontalGap="20"
+	    	>
 	    
 			<mx:CheckBox id="hideChB"
 				label="Stop Logging"
-				click="{ Logger.hide = event.target.selected }"/>
+				click="{ tbTarget.hide = event.target.selected }"
+				/>
 
 			<mx:CheckBox id="consoleChB"
-				label="ThunderBolt AS3 Console"
-				click="{ Logger.console = event.target.selected }"/>
+				label="Log to ThunderBolt AS3 Console"
+				click="{ tbTarget.console = event.target.selected }"
+				/>
 					    	
 	    </mx:HBox>
 			

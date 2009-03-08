@@ -3,8 +3,8 @@
 
 * Logging Flash, Flex or AIR projects based on AS3 using Firebug or ThunderBolt AS3 Console
 * 
-* @version	2.0 Beta
-* @date		06/01/08
+* @version	2.2
+* @date		02/19/09
 * 
 * @author	Jens Krause [www.websector.de]
 * 
@@ -20,7 +20,8 @@
 -->
 <mx:Application 
 	xmlns:mx="http://www.adobe.com/2006/mxml"
-	initialize="initializeHandler()">
+	initialize="initializeHandler()"
+	>
 
 	<mx:Script>
         <![CDATA[
@@ -29,8 +30,9 @@
             private function initializeHandler( ):void
             {
                 // First of all show an information about ThunderBolt AS3
-               // Logger.console = true;
                 Logger.about();
+                // using ThunderBolt AS3 console or not
+                // Logger.console = true;
             }
                         
             private function traceToFirebug(event:Event):void  
@@ -79,7 +81,7 @@
 						Logger.info( Logger.memorySnapshot() );
 						break;
 					default:
-						Logger.error ("Flex is calling: A button with an ID named " + id + " is not found");
+						Logger.error( "Flex is calling: A button with an ID named " + id + " is not found");
 
 				}
             }           
@@ -87,13 +89,17 @@
       ]]>
     </mx:Script>
     
-	<mx:Style source="logger.css"/>
+	<mx:Style 
+		source="logger.css"
+		/>
 	
-	<mx:VBox width="440">
+	<mx:VBox width="440"
+		>
 	
 	    <mx:HBox 
 	    	horizontalGap="10"
-	    	paddingBottom="20">
+	    	paddingBottom="20"
+	    	>
 	    	
 			 <mx:Button id="infoButton" 
 			 	width="80" height="40"
@@ -128,15 +134,18 @@
 	    </mx:HBox>
 	    
 	    <mx:HBox
-	    	horizontalGap="20">
+	    	horizontalGap="20"
+	    	>
 	    
 			<mx:CheckBox id="hideChB"
 				label="Stop Logging"
-				click="{ Logger.hide = event.target.selected }"/>
+				click="{ Logger.hide = event.target.selected }"
+				/>
 
 			<mx:CheckBox id="consoleChB"
 				label="ThunderBolt AS3 Console"
-				click="{ Logger.console = event.target.selected }"/>
+				click="{ Logger.console = event.target.selected }"
+				/>
 					    	
 	    </mx:HBox>
 	</mx:VBox>
