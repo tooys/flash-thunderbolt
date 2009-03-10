@@ -35,11 +35,13 @@
 			}			
 
 			private function creationCompleteHandler(event: FlexEvent):void
-			{					 	
- 				var appXML:XML = NativeApplication.nativeApplication.applicationDescriptor;
-				var air:Namespace = appXML.namespaceDeclarations()[0];
-				txtVersion.text = resourceManager.getString('Resources', 'opt_version', [ appXML.air::version ] ); 
-
+			{	
+				// Reading the application descriptor file
+				// @see: http://help.adobe.com/en_US/AIR/1.5/devappsflex/WS5b3ccc516d4fbf351e63e3d118676a5e5e-7fff.html		
+				var appXml:XML = NativeApplication.nativeApplication.applicationDescriptor; 
+				var ns:Namespace = appXml.namespace();
+				var appVersion: String = appXml.ns::version[0]; 			
+				txtVersion.text = resourceManager.getString('Resources', 'opt_version', [ appVersion ] );
 			}
 			
 		]]>
