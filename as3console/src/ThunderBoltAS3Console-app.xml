@@ -23,7 +23,7 @@
 	<name>ThunderBoltAS3Console</name>
 
 	<!-- An application version designator (such as "v1", "2.5", or "Alpha 1"). Required. -->
-	<version>2.2</version>
+	<version>2.2.1</version>
 
 	<!-- Description, displayed in the AIR application installer. Optional. -->
 	<description>ThunderBolt AS3 is a lightweight logger extension for Flex 2-4, AIR and Flash ActionScript 3 applications. Check it's project page at: http://code.google.com/p/flash-thunderbolt/</description>

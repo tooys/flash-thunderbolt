@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?> 
   <update xmlns="http://ns.adobe.com/air/framework/update/description/1.0"> 
-    <version>2.2</version> 
+    <version>2.2.1</version> 
     <!--
-    <url>http://localhost/thunderbolt/ThunderBoltAS3Console_v2.2.air</url> 
+    <url>http://localhost/thunderbolt/ThunderBoltAS3Console_v2.2.1.air</url> 
    	--> 
-    <url>http://flash-thunderbolt.googlecode.com/files/ThunderBoltAS3Console_v2.2.air</url>
+    <url>http://flash-thunderbolt.googlecode.com/files/ThunderBoltAS3Console_v2.2.1.air</url>
     <description><![CDATA[
-	*** Version	2.2 ( 03/06/09 ) *** Certificate of Thawte added sponsored by Adobe - Thanks! *** Updated for using Adobe AIR 1.5.1 *** version number added *** Issue fixed: quit app using Command+Q *** Important note: ThunderBolt AS3 v. 2.2 is out now - http://code.google.com/p/flash-thunderbolt/ *** Have fun! *** 
+	*** Version	2.2.1 ( 03/10/09 ) *** Issue 11 fixed: http://code.google.com/p/flash-thunderbolt/issues/detail?id=11 *** Have fun! *** 
 	 ]]>
 	</description> 
 </update>
