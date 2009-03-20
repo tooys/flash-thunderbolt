@@ -123,8 +123,11 @@ Logger.about();
 
 1)  ...Flash Player security sandbox?
 
-If you have any security issues with the Flash Player security sandbox set on your HTML page the value of the "allowScriptAccess" parameter to "always". 
-For more information check Adobes Flex 2 Developer's Guide: "  [http://livedocs.adobe.com/flex/201/html/passingarguments_086_19.html About ExternalInterface API security in Flex]"
+If you have any security issues with the Flash Player security sandbox set on your HTML page the value of the "allowScriptAccess" parameter to "always".
+
+Note: "For SWF files running locally, calls to ExternalInterface.call() is sucessful only if the SWF file and the containing web page (if there is one) are in the local-trusted security sandbox. Calls to these methods fail if the content is in the local-with-networking or local-with-filesystem sandbox." (@see: [http://livedocs.adobe.com/flex/3/html/05B_Security_14.html#131683 Flash Player security: Controlling access to scripts in a host web page])
+
+For more information check Adobes Flex 3 Developer's Guide: "[http://livedocs.adobe.com/flex/3/html/passingarguments_6.html About ExternalInterface API security in Flex]" and [http://livedocs.adobe.com/flex/3/html/05B_Security_04.html#136901 "Flash Player security: Security sandboxes"]
 
 2) ...receiving empty messages in Firebugs console?
 
