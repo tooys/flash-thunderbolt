@@ -4,7 +4,7 @@
 	xmlns:s="library://ns.adobe.com/flex/spark" 
 	xmlns:mx="library://ns.adobe.com/flex/halo" 
 	xmlns:view="org.osflash.thunderbolt.console.view.*"
-	initialize="this.currentState = 'consoleViewState' "
+	initialize=" this.currentState = 'configFileViewState' "
 	>
 	
 	<!-- states -->		

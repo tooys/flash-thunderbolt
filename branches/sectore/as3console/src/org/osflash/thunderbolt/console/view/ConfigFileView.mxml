@@ -5,4 +5,49 @@
 	xmlns:mx="library://ns.adobe.com/flex/halo"
 	>
 	
+	
+	
+	<!-- bg -->		
+	<s:Rect
+		height="100%" width="100%"
+		>
+		<s:fill>
+			<s:SolidColor
+				color="0xFFFFFF"
+				/>
+		</s:fill>
+	</s:Rect>
+	
+	<s:BitmapImage
+		source="{ StyleManager.getStyleDeclaration('.img').getStyle('document') }"
+		horizontalCenter="130" verticalCenter="-70"
+		/>
+	
+	<s:Path 
+		data="M 476 352 L 473 362 L 434 362 L 435 345 L 385 384 L 435 423 L 434 407 C 434 407 488 407 488 407 C 510 407 519 394 527 368 C 527 368 527 367 527 367 L 531 352 L 476 352 Z " 
+		horizontalCenter="85" verticalCenter="30"		
+		>
+		<s:fill>
+			<s:SolidColor 
+				color="0xfe00b4"
+				/>
+		</s:fill>
+	</s:Path>
+	
+	<s:RichText
+		color="0x000000" 
+		horizontalCenter="-70" verticalCenter="15"
+		>
+		<s:content>
+			<s:p 
+				color="0x666666" 
+				fontFamily="Arial" 
+				fontSize="60" 
+				fontWeight="bold"
+				lineHeight="100%"
+				>Drop it<s:br/>here!
+			</s:p>
+		</s:content>
+	</s:RichText>
+		
 </s:Group>
