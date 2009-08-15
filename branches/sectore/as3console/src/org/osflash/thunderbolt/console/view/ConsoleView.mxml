@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/halo"
+	initialize=" this.currentState = 'allViewState' "
+	>
+	
+	<fx:Script>
+		<![CDATA[
+			
+			protected static const NAV_HEIGHT: int = 25;
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<s:RadioButtonGroup 
+			id="navigationRadioButtonGroup" 
+			change="currentState = event.target.selectedValue.toString();" 
+			/>
+	</fx:Declarations>
+	
+	<!-- states -->		
+	<s:states>
+		<s:State
+			name="allViewState" 
+			/>
+		<s:State
+			name="debugViewState" 
+			/>
+		<s:State
+			name="infoViewState" 
+			/>
+		<s:State
+			name="warnViewState" 
+			/>
+		<s:State
+			name="errorViewState" 
+			/>
+	</s:states>
+	
+	
+	<!-- bg -->		
+	<s:Rect
+		height="100%" width="100%"
+		>
+		<s:fill>
+			<s:SolidColor
+				color="0xFFFFFF"
+				/>
+		</s:fill>
+	</s:Rect>
+	
+	<!-- 
+	Note: As long as we don't have a Spark tab navigator we use a RadioButtonGroup approach by Steven Shongrunden
+	@see: http://flexponential.com/2009/06/19/creating-a-navigation-bar-using-radiobuttons-in-flex-4/	
+	-->
+	
+	<!-- navigation -->
+	<s:HGroup 
+		gap="0"
+		height="{ NAV_HEIGHT }" width="380"
+		>
+		<s:RadioButton 
+			label="ALL" 
+			value="allViewState" 
+			group="{ navigationRadioButtonGroup }"
+			selected="true" 
+			/>
+		<s:RadioButton 
+			label="DEBUG" 
+			value="debugViewState" 
+			group="{ navigationRadioButtonGroup }"
+			/>	
+		<s:RadioButton 
+			label="INFO" 
+			value="infoViewState" 
+			group="{ navigationRadioButtonGroup }"
+			/>
+		<s:RadioButton 
+			label="WARN" 
+			value="warnViewState" 
+			group="{ navigationRadioButtonGroup }"
+			/>	
+		<s:RadioButton 
+			label="ERROR" 
+			value="errorViewState" 
+			group="{ navigationRadioButtonGroup }"
+			/>	
+	</s:HGroup>
+
+	
+	<s:Button
+		right="120"
+		width="100" height="20"
+		label="START"
+		/>
+
+	<s:Button
+		right="10"
+		width="100" height="20"
+		label="{resourceManager.getString('Resources', 'clear').toUpperCase() }"
+		/>
+		
+	
+	<s:TextInput
+		right="10"
+		top="20"
+		width="210"
+		/>	
+	
+	<!-- log views -->
+	<s:Group 
+		id="allViewContainer" 
+		includeIn="allViewState" 
+		itemCreationPolicy="immediate"
+		width="100%" height="100%"
+		top="{ NAV_HEIGHT }" 
+		>
+		<s:SimpleText
+			text="all logs"
+			/>
+	</s:Group>    
+	
+	<s:Group 
+		id="debugViewContainer" 
+		includeIn="debugViewState" 
+		itemCreationPolicy="immediate"
+		width="100%" height="100%"
+		top="{ NAV_HEIGHT }" 
+		>
+		<s:SimpleText
+			text="debug logs"
+			/>
+	</s:Group>    
+	
+	<s:Group 
+		id="infoViewContainer" 
+		includeIn="infoViewState" 
+		itemCreationPolicy="immediate"
+		width="100%" height="100%"
+		top="{ NAV_HEIGHT }" 
+		>
+		<s:SimpleText
+			text="info logs"
+			/>
+	</s:Group>    
+	
+	<s:Group 
+		id="warnViewContainer" 
+		includeIn="warnViewState" 
+		itemCreationPolicy="immediate"
+		width="100%" height="100%"
+		top="{ NAV_HEIGHT }" 
+		>
+		<s:SimpleText
+			text="warn logs"
+			/>
+	</s:Group>    
+	
+	<s:Group 
+		id="errorViewContainer" 
+		includeIn="errorViewState" 
+		itemCreationPolicy="immediate"
+		width="100%" height="100%"
+		top="{ NAV_HEIGHT }" 
+		>
+		<s:SimpleText
+			text="error logs"
+			/>
+	</s:Group>    
+	
+</s:Group>

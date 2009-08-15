@@ -1,0 +1,33 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/halo";
+
+
+/* global definition for all buttons */
+s|Button 
+{
+	color: #FFFFFF;
+	font-weight: bold;
+	
+}
+
+/* 
+content 
+.header 
+{
+	skinClass: ClassReference('org.osflash.thunderbolt.console.skins.HeaderSkin');	
+}
+*/
+
+
+
+/* --------------------------------------------------------------------------
+
+#images
+
+-------------------------------------------------------------------------- */
+
+.img
+{
+	logo:					Embed('../png/logo.png');	
+}

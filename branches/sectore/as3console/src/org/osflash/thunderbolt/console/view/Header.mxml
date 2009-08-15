@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/halo" 
+	initialize="initializeHandler( event )"	
+	>
+	
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			import flash.events.MouseEvent;
+			
+			import spark.effects.easing.IEaser;
+			import spark.effects.easing.EasingFraction;
+			import spark.effects.easing.Sine;
+			
+			
+			//
+			// vars
+			
+			
+			//
+			// const
+
+			public static const OPTIONS_HEIGHT: int = 190;
+			public static const NORMAL_HEIGHT: int = 84;	
+			
+			public static const EASE_FUNC: IEaser = new Sine( EasingFraction.OUT );	
+			public static const TWEEN_TIME: Number = 300;
+			
+			
+			//
+			// instances			
+			
+			
+			//--------------------------------------------------------------------------
+			//
+			// callbacks
+			//
+			//--------------------------------------------------------------------------
+			
+			private function initializeHandler(event: FlexEvent):void
+			{
+				currentState = "hideOptions";
+			}			
+
+			
+		]]>
+	</fx:Script>
+
+	
+	<!-- states -->		
+	<s:states>
+		<s:State
+			name="showOptions" 
+			/>
+		<s:State
+			name="hideOptions" 
+			/>
+	</s:states>
+	
+	
+	<!-- transitions -->	
+	<s:transitions>	
+		<s:Transition
+			fromState="hideOptions" toState="showOptions"
+			autoReverse="true"
+			>
+			<s:Resize 
+				target="{ this }"
+				duration="{ TWEEN_TIME }"
+				easer="{ EASE_FUNC }"
+				heightFrom="{ this.height }"
+				heightTo="{ OPTIONS_HEIGHT }"
+				/>
+		</s:Transition>
+		
+		<s:Transition
+			fromState="showOptions" toState="hideOptions" 
+			autoReverse="true"
+			>
+			<s:Resize 
+				target="{ this }"
+				duration="{ TWEEN_TIME }"
+				easer="{ EASE_FUNC }"
+				heightFrom="{ this.height }"
+				heightTo="{ NORMAL_HEIGHT }"
+				/>
+		</s:Transition>
+		
+	</s:transitions>	
+	
+	<!-- bg -->		
+	<s:Rect
+		height="100%" width="100%"
+		>
+		<s:fill>
+			<s:LinearGradient 
+				rotation="90"
+				>
+				<s:GradientEntry 
+					color="#666666" 
+					ratio="0"
+					/>
+				<s:GradientEntry 
+					color="#000000" 						
+					ratio="1"
+					/>
+			</s:LinearGradient>
+		</s:fill>
+	</s:Rect>
+	
+	<!-- headers top content -->
+	
+	<s:Group
+		left="20" right="20"
+		height="{ OPTIONS_HEIGHT }"
+		>
+		
+		
+		<mx:Image 
+			top="20"
+			buttonMode="true"
+			source="{ StyleManager.getStyleDeclaration('.img').getStyle('logo') }"
+			click="{ navigateToURL( new URLRequest('http://www.websector.de/blog/category/thunderbolt/') ); }"
+			/>
+		
+		<s:Button
+			click=" this.currentState = ( this.currentState == 'showOptions' ) ? 'hideOptions' : 'showOptions' "
+			right="20" top="35"
+			label="Options"
+			/>
+		
+		
+	</s:Group>
+	
+	<!-- options -->
+	<view:Options
+		xmlns:view="org.osflash.thunderbolt.console.view.*"
+		y="{ NORMAL_HEIGHT }"
+		width="100%" 
+		height="{ OPTIONS_HEIGHT - NORMAL_HEIGHT - 20 }"
+		/>
+	
+	
+	
+	
+</s:Group>
