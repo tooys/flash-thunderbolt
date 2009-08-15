@@ -1,70 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-* Logging Flex, AIR and Flash applications using ThunderBolt AS3 Console
-* 
-* @author	Jens Krause [www.websector.de]
-* @see		http://www.websector.de/blog/category/thunderbolt/
-* @see		http://code.google.com/p/flash-thunderbolt/
-* 
-* Source code based on the Mozilla Public License 1.1. Feel free to use it!
-*
--->
-<mx:WindowedApplication 	
-	xmlns:mx="http://www.adobe.com/2006/mxml"
-	layout="absolute"
-	backgroundColor="0xFFFFFF"
-	verticalScrollPolicy="off" horizontalScrollPolicy="off"
-	initialize="initializeCompleteHandler(event)"
-	creationComplete="creationCompleteHandler( event )"
+<s:WindowedApplication 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/halo"
 	>
-	<mx:Metadata>
-        [ResourceBundle("Resources")]
-    </mx:Metadata> 
-    	
-	<mx:Script>
-		<![CDATA[
-			import org.osflash.thunderbolt.console.events.ViewEvent;
-			import org.osflash.thunderbolt.console.mvc.model.AppModel;
-			import mx.events.FlexEvent;
-			
-			//
-			// instances
-			[Bindable] private var _appModel: AppModel;
-
-			/**
-			* Callback handler when the app is initialized
-			* @param event	FlexEvent	
-			* 
-			*/	
-			private function initializeCompleteHandler(event: FlexEvent): void
-			{
-				_appModel = AppModel.getInstance();
-			}	
-			
-			private function creationCompleteHandler(event: FlexEvent):void
-			{
-				this.dispatchEvent( new ViewEvent( ViewEvent.CHECK_FOR_UPDATE ) );				
-			}
-
-					
-			]]>
-	</mx:Script>	
 	
-	<mx:Style 
+	<!-- meta data -->
+	<fx:Metadata>
+		[ResourceBundle("Resources")]
+	</fx:Metadata> 
+	
+	<!-- styles -->
+	<fx:Style
 		source="../assets/css/styles.css"
 		/>
 	
-	<mx:Binding 
-		source="_appModel.alwaysInFront" 
-		destination="this.alwaysInFront" 
-		/>
-				
-	<controller:AppControllor
-			xmlns:controller="org.osflash.thunderbolt.console.mvc.controller.*"	
-			/>
 	
-	<view:MainView id="mainView" 
-		xmlns:view="org.osflash.thunderbolt.console.mvc.view.*"	
+	<!-- views -->
+	<view:MainView
+		id="mainView"
+		xmlns:view="org.osflash.thunderbolt.console.view.*"
+		width="100%" height="100%"
 		/>
 	
-</mx:WindowedApplication>
+</s:WindowedApplication>

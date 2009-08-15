@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/halo"
+
+	>	
+	
+	<!-- bg -->		
+	<s:Rect id="bg"
+		left="10" right="10"
+		top="10" bottom="10"
+		>
+		<s:fill>
+			<s:SolidColor
+				color="0x333333"
+				/>
+		</s:fill>
+	</s:Rect>
+	
+	<!-- views -->	
+	<s:VGroup
+		width="100%" height="100%"
+		paddingLeft="20" paddingRight="20"
+		paddingTop="10" paddingBottom="10"
+		>
+		<s:HGroup
+			paddingTop="20" paddingBottom="20"
+			gap="30"
+			>
+			<s:CheckBox
+				id="cbTrace"
+				label="{resourceManager.getString('Resources', 'opt_hideTrace')}" 
+				/>
+			
+			
+			<s:CheckBox 
+				id="cbFront"
+				label="{resourceManager.getString('Resources', 'opt_inFront')}" 
+				/>
+			
+			<s:Button 
+				id="bUpdated"
+				width="120" height="20"
+				label="{resourceManager.getString('Resources', 'opt_checkUpdates')}" 						
+				/>	
+			
+			<s:SimpleText 
+				id="txtVersion"
+				/>
+			
+		</s:HGroup>
+		
+		<s:Button
+			label="{resourceManager.getString('Resources', 'opt_author')}" 
+			click="{ navigateToURL( new URLRequest( resourceManager.getString('Resources', 'opt_author_url') ) ); }"
+			/>
+		
+	</s:VGroup>
+	
+</s:Group>
