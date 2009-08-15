@@ -30,4 +30,5 @@ content
 .img
 {
 	logo:					Embed('../png/logo.png');	
+	document:				Embed('../png/document.png');	
 }
