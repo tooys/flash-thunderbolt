@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EventMap 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/halo" 
+	xmlns="http://mate.asfusion.com/"
+	>
+	
+	
+	<fx:Script>
+		<![CDATA[
+			import org.osflash.thunderbolt.console.events.ViewEvent;
+			import org.osflash.thunderbolt.console.events.OptionsEvent;
+			import com.asfusion.mate.events.UnhandledFaultEvent;
+			import org.osflash.thunderbolt.console.utils.ErrorUtil;
+			import org.osflash.thunderbolt.console.model.domain.MainModel;
+			import mx.events.FlexEvent;
+			import com.asfusion.mate.utils.debug.Debugger;
+		]]>
+	</fx:Script>
+	
+	
+	<!-- declarations -->
+	<fx:Declarations>
+		<Debugger 
+			level="{ Debugger.ALL }" 
+			/>
+		
+		<!-- 
+		FlexEvents 
+		-->		
+		<EventHandlers 
+			type="{ FlexEvent.PREINITIALIZE }"
+			>
+			<ObjectBuilder 
+				generator="{ MainModel }" 
+				/>		
+		</EventHandlers>
+		
+		<!-- 
+		OptionsEvents 
+		-->		
+		<EventHandlers 
+			type="{ OptionsEvent.CHANGE_ALWAYS_IN_FRONT }"
+			>
+			<MethodInvoker 
+				generator="{ MainModel }"
+				method="setAlwaysInFront" 
+				arguments="{ [ event.alwaysInFront ] }" 
+				/>	
+		</EventHandlers>
+		
+		<EventHandlers 
+			type="{ OptionsEvent.CHANGE_HIDE_TRACE_LOGS }"
+			>
+			<MethodInvoker 
+				generator="{ MainModel }"
+				method="setHideTraceLogs" 
+				arguments="{ [ event.hideTraceLogs ] }" 
+				/>	
+		</EventHandlers>
+
+		<EventHandlers 
+			type="{ ViewEvent.CHANGE_VIEW_STATE }"
+			>
+			<MethodInvoker 
+				generator="{ MainModel }"
+				method="setMainViewState" 
+				arguments="{ [ event.newViewState ] }" 
+				/>	
+		</EventHandlers>
+		
+		<!-- 
+		fault handling 
+		-->		
+		<EventHandlers 
+			type="{ UnhandledFaultEvent.FAULT }"
+			>
+			<MethodInvoker 
+				generator="{ ErrorUtil }" 
+				method="showError" 
+				arguments="{ event.fault }"
+				/>
+		</EventHandlers>
+	</fx:Declarations>
+	
+	
+</EventMap>

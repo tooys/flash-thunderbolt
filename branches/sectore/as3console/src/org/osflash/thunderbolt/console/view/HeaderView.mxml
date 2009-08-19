@@ -23,7 +23,7 @@
 			
 			//
 			// const
-
+			
 			public static const OPTIONS_HEIGHT: int = 190;
 			public static const NORMAL_HEIGHT: int = 84;	
 			
@@ -45,11 +45,11 @@
 			{
 				currentState = "hideOptions";
 			}			
-
+			
 			
 		]]>
 	</fx:Script>
-
+	
 	
 	<!-- states -->		
 	<s:states>
@@ -62,11 +62,16 @@
 	</s:states>
 	
 	
-	<!-- transitions -->	
+	<!-- 
+	
+	transitions 
+	
+	disableLayout=true
+	
+	-->	
 	<s:transitions>	
 		<s:Transition
 			fromState="hideOptions" toState="showOptions"
-			autoReverse="true"
 			>
 			<s:Resize 
 				target="{ this }"
@@ -79,7 +84,6 @@
 		
 		<s:Transition
 			fromState="showOptions" toState="hideOptions" 
-			autoReverse="true"
 			>
 			<s:Resize 
 				target="{ this }"

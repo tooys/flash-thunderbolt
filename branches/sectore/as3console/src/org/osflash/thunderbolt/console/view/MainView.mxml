@@ -5,7 +5,20 @@
 	xmlns:mx="library://ns.adobe.com/flex/halo" 
 	xmlns:view="org.osflash.thunderbolt.console.view.*"
 	initialize=" this.currentState = 'configFileViewState' "
+	currentState="{ pModel.viewState }"
 	>
+	
+	<fx:Script>
+		<![CDATA[
+			import org.osflash.thunderbolt.console.model.presentation.IMainViewModel;
+			
+			[Bindable] 
+			public var pModel: IMainViewModel;
+			
+			
+		]]>
+	</fx:Script>
+
 	
 	<!-- states -->		
 	<s:states>
@@ -20,9 +33,9 @@
 	
 	
 	<!-- views -->
-	<view:Header
+	<view:HeaderView
 		id="header"
-		height="{ Header.NORMAL_HEIGHT }" width="100%"
+		height="{ HeaderView.NORMAL_HEIGHT }" width="100%"
 		/>
 	
 	<view:ConfigFileView
@@ -37,8 +50,9 @@
 		includeIn="consoleViewState"
 		/>
 	
-	<view:Footer
+	<view:FooterView
 		width="100%" height="50"
+		pModel="{ pModel }"
 		/>
 	
 </s:VGroup>

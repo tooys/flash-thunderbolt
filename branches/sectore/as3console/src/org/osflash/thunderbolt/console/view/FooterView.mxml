@@ -3,8 +3,28 @@
 	xmlns:fx="http://ns.adobe.com/mxml/2009" 
 	xmlns:s="library://ns.adobe.com/flex/spark" 
 	xmlns:mx="library://ns.adobe.com/flex/halo" 
+	currentState="{ pModel.viewState }"
 	>
 	
+	<fx:Script>
+		<![CDATA[
+			import org.osflash.thunderbolt.console.model.presentation.IMainViewModel;
+			
+			[Bindable]
+			public var pModel: IMainViewModel;
+			
+		]]>
+	</fx:Script>
+	
+	<!-- states -->		
+	<s:states>
+		<s:State
+			name="configFileViewState" 
+			/>
+		<s:State
+			name="consoleViewState" 
+			/>
+	</s:states>	
 	
 	<!-- bg -->		
 	<s:Rect
@@ -25,8 +45,7 @@
 			</s:LinearGradient>
 		</s:fill>
 	</s:Rect>
-	
-	
+
 	<s:HGroup
 		paddingLeft="20" paddingRight="20"
 		width="100%" height="100%"
@@ -35,11 +54,13 @@
 		>
 		
 		<s:Button
-			label="footerButton"
+			label.configFileViewState="{ resourceManager.getString('Resources', 'save').toUpperCase() }"
+			label.consoleViewState="{ resourceManager.getString('Resources', 'change').toUpperCase() }"
+			click="pModel.changeMainViewState();"
 			/>
 		
 		<s:SimpleText
-			text="log path..."
+			text="{ pModel.logPath }"
 			width="100%"
 			paddingLeft="20"
 			color="0xFFFFFF"
