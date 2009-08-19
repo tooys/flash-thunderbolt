@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EventMap
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/halo" 
+	xmlns="http://mate.asfusion.com/"
+	>
+	<fx:Script>
+		<![CDATA[
+			import org.osflash.thunderbolt.console.view.FooterView;
+			import org.osflash.thunderbolt.console.model.presentation.MainViewModel;
+			import org.osflash.thunderbolt.console.view.MainView;
+			import org.osflash.thunderbolt.console.model.domain.MainModel;
+			import org.osflash.thunderbolt.console.model.presentation.OptionsViewModel;
+			import org.osflash.thunderbolt.console.view.Options;
+			import mx.events.FlexEvent;
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		
+		<!--
+		ThunderBoltAS3Console
+		-->
+		<Injectors 
+			target="{ ThunderBoltAS3Console }">
+			<PropertyInjector 
+				targetKey="alwaysInFront" 
+				source="{ MainModel }" 
+				sourceKey="alwaysInFront"
+				/>
+		</Injectors>
+		
+		
+		<!--
+		MainView
+		-->
+		<Injectors 
+			targets="{ [ MainView, FooterView ] }">
+			<ObjectBuilder
+				generator="{ MainViewModel }"				
+				>
+				<Properties 
+					dispatcher="{ scope.dispatcher}"
+					/>
+			</ObjectBuilder>
+			<PropertyInjector 
+				targetKey="pModel" 
+				source="{ lastReturn }" 
+				/>			
+		</Injectors>
+		
+		<Injectors 
+			target="{ MainViewModel }">
+			<PropertyInjector 
+				targetKey="mainViewState" 
+				source="{ MainModel }" 
+				sourceKey="mainViewState"
+				/>		
+			<PropertyInjector 
+				targetKey="logPath" 
+				source="{ MainModel }" 
+				sourceKey="logPath"
+				/>		
+		</Injectors>	
+		
+		<!--
+		Options
+		-->
+		<Injectors 
+			target="{ Options }">
+			<ObjectBuilder 
+				generator="{ OptionsViewModel }" 
+				>
+				<Properties 
+					dispatcher="{ scope.dispatcher}"
+					/>
+			</ObjectBuilder>
+			<PropertyInjector 
+				targetKey="pModel" 
+				source="{ lastReturn }" 
+				/>
+		</Injectors>	
+		
+		<Injectors 
+			target="{ OptionsViewModel }">
+			<PropertyInjector 
+				targetKey="alwaysInFront" 
+				source="{ MainModel }" 
+				sourceKey="alwaysInFront"
+				/>
+			<PropertyInjector 
+				targetKey="hideTraceLogs" 
+				source="{ MainModel }" 
+				sourceKey="hideTraceLogs"
+				/>		
+		</Injectors>			
+		
+		
+	</fx:Declarations>
+	
+</EventMap>

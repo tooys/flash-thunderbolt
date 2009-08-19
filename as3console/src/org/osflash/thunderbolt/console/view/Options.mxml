@@ -6,6 +6,17 @@
 
 	>	
 	
+	
+	<fx:Script>
+		<![CDATA[
+			import org.osflash.thunderbolt.console.model.presentation.IOptionsViewModel;
+		
+			[Bindable]
+			public var pModel: IOptionsViewModel;
+			
+		]]>
+	</fx:Script>
+	
 	<!-- bg -->		
 	<s:Rect id="bg"
 		left="10" right="10"
@@ -31,12 +42,16 @@
 			<s:CheckBox
 				id="cbTrace"
 				label="{resourceManager.getString('Resources', 'opt_hideTrace')}" 
+				selected="{ pModel.hideTraceLogs }"
+				change="pModel.changeHideTraceLogs()"
 				/>
 			
 			
 			<s:CheckBox 
 				id="cbFront"
 				label="{resourceManager.getString('Resources', 'opt_inFront')}" 
+				selected="{ pModel.alwaysInFront }"
+				change="pModel.changeAlwaysInFront()"
 				/>
 			
 			<s:Button 
