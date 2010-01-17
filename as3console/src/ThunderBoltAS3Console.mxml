@@ -9,15 +9,15 @@
 * Source code based on the Mozilla Public License 1.1. Feel free to use it!
 *
 -->
-<mx:WindowedApplication 	
+<mx:WindowedApplication	
 	xmlns:mx="http://www.adobe.com/2006/mxml"
 	layout="absolute"
 	backgroundColor="0xFFFFFF"
 	verticalScrollPolicy="off" horizontalScrollPolicy="off"
 	initialize="initializeCompleteHandler(event)"
 	creationComplete="creationCompleteHandler( event )"
-	>
-	
+	>	
+
 	<mx:Script>
 		<![CDATA[
 			import org.osflash.thunderbolt.console.events.ViewEvent;

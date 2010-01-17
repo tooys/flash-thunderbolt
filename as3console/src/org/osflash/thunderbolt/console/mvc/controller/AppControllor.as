@@ -10,10 +10,12 @@
 */
 package org.osflash.thunderbolt.console.mvc.controller
 {
-	
+
 	import air.update.ApplicationUpdaterUI;
+	import air.update.events.StatusUpdateEvent;
 	import air.update.events.UpdateEvent;
 	
+	import flash.desktop.NativeApplication;
 	import flash.display.NativeWindow;
 	import flash.events.ErrorEvent;
 	import flash.events.Event;
@@ -28,12 +30,12 @@ package org.osflash.thunderbolt.console.mvc.controller
 	import mx.core.UIComponent;
 	import mx.events.FlexEvent;
 	
-	import org.osflash.thunderbolt.Logger;
 	import org.osflash.thunderbolt.console.events.ConfigEvent;
 	import org.osflash.thunderbolt.console.events.ConsoleEvent;
 	import org.osflash.thunderbolt.console.events.ViewEvent;
 	import org.osflash.thunderbolt.console.mvc.model.AppModel;
 	import org.osflash.thunderbolt.console.mvc.model.ConsoleConstants;
+
 	/**
 	* AppControllor
     * @author Jens Krause [www.websector.de]
@@ -148,12 +150,28 @@ package org.osflash.thunderbolt.console.mvc.controller
 
 		private function initUpdater():void
 		{
+			
 			appUpdater.configurationFile = new File( ConsoleConstants.UPDATE_CONFIG_PATH );
 			appUpdater.addEventListener(UpdateEvent.INITIALIZED, updaterInitializedHandler );
 			appUpdater.addEventListener( ErrorEvent.ERROR, updaterErrorHandler );
+			appUpdater.addEventListener( StatusUpdateEvent.UPDATE_STATUS, updaterStatusHandler );
 			
 			appUpdater.initialize();
 
+		}
+		
+		private function updaterStatusHandler( event: StatusUpdateEvent ):void
+		{
+			//
+			// Puuh... F**cking bug using Flex 3.5 + UpdaterUI + Adobe AIR 1.5.3
+			// Big thanks to Richard Legget for his workaround
+			// @see: https://bugs.adobe.com/jira/browse/SDK-24766
+			try
+			{
+				var loader:Object = NativeApplication.nativeApplication.openedWindows[1].stage.getChildAt(0);
+				loader.content.application.visible = true;
+			}
+			catch(e:Error) {} 
 		}
 
 		private function checkForUpdateHandler( event: ViewEvent ):void
