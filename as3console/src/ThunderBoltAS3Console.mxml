@@ -17,10 +17,7 @@
 	initialize="initializeCompleteHandler(event)"
 	creationComplete="creationCompleteHandler( event )"
 	>
-	<mx:Metadata>
-        [ResourceBundle("Resources")]
-    </mx:Metadata> 
-    	
+	
 	<mx:Script>
 		<![CDATA[
 			import org.osflash.thunderbolt.console.events.ViewEvent;
@@ -53,6 +50,10 @@
 	<mx:Style 
 		source="../assets/css/styles.css"
 		/>
+			
+	<mx:Metadata>
+		[ResourceBundle("Resources")]
+	</mx:Metadata>
 	
 	<mx:Binding 
 		source="_appModel.alwaysInFront" 
